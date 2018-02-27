@@ -1,2 +1,2 @@
 # GravityCrusher
-Online multiplayer space game, also University project
+Online multiplayer space game, also a University project
