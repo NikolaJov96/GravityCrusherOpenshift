@@ -1,0 +1,5 @@
+doc/**/*.aux
+doc/**/*.gz
+doc/**/*.log
+doc/**/*.pdf
+doc/**/*.toc

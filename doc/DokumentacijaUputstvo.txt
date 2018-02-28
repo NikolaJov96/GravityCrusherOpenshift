@@ -1,0 +1,38 @@
+Kako bismo lakše pisali dokumentaciju, ovako ćemo da uradimo: Inicijalna moja ideja
+je da sve pišemo u .txt fajlove, poput ovog, a onda da ja to formatiram koristeći
+LaTeX. Ako to ne bude išlo, onda ćemo probati nešto drugo, ali verujem da će ovo
+uspeti. Kako bi meni bilo lakše da to sve obrađujem u LaTeX-u, ovo su stvari koje
+treba da znate kada pišete dokumentaciju.
+
+Primer dokumentacionog fajla koji se ne odnosi na source kod, nego generalno na projekat
+(a to je na primer ovaj prvi dokument koji treba da napišemo):
+
+dokumentacioni_fajl.txt
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\section{Naziv poglavlja 1}
+
+    \subsection{Naziv potpoglavlja 1.1}
+
+        \subsubsection{Naziv potpotpoglavlja 1.1.1}
+
+            Tekst potpotpoglavlja 1.1.1.
+
+        \subsubsection{Naziv potpotpoglavlja 1.1.2}
+
+            Tekst potpotpoglavlja 1.1.2.
+
+    \subsection{Naziv potpoglavlja 1.2}
+
+            Tekst potpoglavlja 1.2.
+
+\section{Naziv poglavlja 2}
+
+Tekst poglavlja 2.
+
+% Komentar do kraja linije
+% Komentar do kraja linije
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Napomena: Nema potrebe da uvlačite tekst. Ja sam ga uvukao samo da biste vizuelno skontali
+šta je poglavlje, šta potpoglavlje itd.
