@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>#CreateRoom</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
+        <a class="navbar-brand" href="file:///D:/GravityCrusher/GravityCrusher/client/index.html">
+          <img src="img/mali-kit-logo.png">
+        </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            
+            <li class="nav-item">
+              <a class="nav-link" href="file:///D:/GravityCrusher/GravityCrusher/client/index.html">Home<span class="sr-only"></span></a>
+            </li>
+            
+            <li class="nav-item active">
+              <a class="nav-link" href="file:///D:/GravityCrusher/GravityCrusher/client/create-room.html">Create Room<span class="sr-only"></span></a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="file:///D:/GravityCrusher/GravityCrusher/client/game-rooms.html">Game Rooms<span class="sr-only"></span></a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="file:///D:/GravityCrusher/GravityCrusher/client/about-us.html">About Us<span class="sr-only"></span></a>
+            </li>
+
+          </ul>
+
+          <form class="form-inline">
+            <a href="file:///D:/GravityCrusher/GravityCrusher/client/sign-up.html">
+              <button type="button" class="btn btn-secondary mr-sm-2" type="button">Sign Up</button>
+            </a>
+          </form>
+
+          <form class="form-inline">
+            <a href="file:///D:/GravityCrusher/GravityCrusher/client/log-in.html">
+              <button type="button" class="btn btn-warning" type="button">Log In</button>
+            </a>
+          </form>
+
+        </div>
+      </nav>
+    </header>
+
+    <div class="jumbotron">
+  
+      <div class="form-group row">
+        <label for="inputRoomName" class="col-sm-2 col-form-label">Room Name</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="RoomName" placeholder=" Room Name">
+          <small id="RoomName" class="form-text text-muted">
+            Type name of the Game Room that you want to create.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="VisibilityOfGame" class="col-sm-2 col-form-label">Visibility of Game</label>
+        <div class="col-sm-10">
+            
+          <select class="form-control" id="PublicOrPrivate">
+            <option>Public Game</option>
+            <option>Private Game</option>
+          </select>
+
+            <small id="VisibilityOfGame" class="form-text text-muted">
+              Select weather game is public or not.(Public games can be joined by any player. Private games can only be joined by players with name that you type in).
+            </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputPlayer2Name" class="col-sm-2 col-form-label">Player 2</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPlayer2Name" placeholder=" Player 2">
+            <small id="Player2" class="form-text text-muted">
+              Type accurately name of the player you want to play against.
+            </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputMap" class="col-sm-2 col-form-label">Player 2</label>
+        <div class="col-sm-10">
+            
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option>Map1</option>
+            <option>Map2</option>
+            <option>Map3</option>
+            <option>Map4</option>
+            <option>Map5</option>
+          </select>
+
+            <small id="Player2" class="form-text text-muted">
+              Select map you want to play.
+            </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="VisibilityOfRoom" class="col-sm-2 col-form-label">Visibility of Room</label>
+        <div class="col-sm-10">
+            
+          <select class="form-control" id="PublicOrPrivate">
+            <option>Public Room</option>
+            <option>Private Room</option>
+          </select>
+
+            <small id="VisibilityOfRoom" class="form-text text-muted">
+              Select weather room is public or not.(Public rooms can be joined by any observer. Private rooms can not be joined by observers).
+            </small>
+        </div>
+      </div>
+
+  
+      <button type="button" class="btn btn-info offset-2">Submit</button>
+
+    </div>
+
+
+    <!-- Na dnu body dela se inkluduju skriptni delovi da bi se manje cekalo otvaranje same stranice, jer u ovom slucaju se prvo ucitaju elementi stranice, pa tek onda funkcionalnot pa korisnik bar moze nesto da cita-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
