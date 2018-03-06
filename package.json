@@ -1,0 +1,25 @@
+{
+  "name": "gravitycrusher",
+  "version": "1.0.0",
+  "description": "multiplayer web game",
+  "main": "app.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikolaJov96/GravityCrusher.git"
+  },
+  "author": "A'Tuin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikolaJov96/GravityCrusher/issues"
+  },
+  "homepage": "https://github.com/NikolaJov96/GravityCrusher#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
