@@ -28,6 +28,6 @@ app.get('/game.html', function(req, res) {
 
 app.use(express.static(__dirname + '/client'));
 
-app.listen(80);
+app.listen(8000);
 
 console.log('Server started.');
