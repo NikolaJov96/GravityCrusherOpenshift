@@ -7,32 +7,44 @@ requests = [
 		file:'/client/index.html'
 	},
 	{
-		URL:'/index.html',
+		URL:'/index',
 		file:'/client/index.html'
 	},
 	{
-		URL:'/create-room.html',
+		URL:'/create-room',
 		file:'/client/create-room.html'
 	},
 	{
-		URL:'/game-rooms.html',
+		URL:'/game-rooms',
 		file:'/client/game-rooms.html'
 	},
 	{
-		URL:'/about-us.html',
+		URL:'/about-us',
 		file:'/client/about-us.html'
 	},
 	{
-		URL:'/sign-up.html',
+		URL:'/sign-up',
 		file:'/client/sign-up.html'
 	},
 	{
-		URL:'/log-in.html',
+		URL:'/log-in',
 		file:'/client/log-in.html'
 	},
 	{
-		URL:'/game.html',
+		URL:'/game',
 		file:'/client/game.html'
+	},
+	{
+		URL:'/game-description',
+		file:'/client/game-description.html'
+	},
+	{
+		URL:'/statistics',
+		file:'/client/statistics.html'
+	},
+	{
+		URL:'/my-profile',
+		file:'/client/my-profile.html'
 	}
 ]
 

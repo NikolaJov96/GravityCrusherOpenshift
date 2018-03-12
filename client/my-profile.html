@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>#CreateRoom</title>
+    <title>#MyProfile</title>
   </head>
   <body>
     <header>
@@ -28,7 +28,7 @@
               <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="create-room">Create Room<span class="sr-only"></span></a>
             </li>
             
@@ -64,7 +64,7 @@
                 <button type="button" class="btn btn-warning mr-sm-2" type="button">Log Out</button>
               </a>
               
-              <a href="my-profile">
+              <a class="navbar-brand" href="my-profile">
                 <img src="img/mali-grifon.jpg">
               </a>
           <!--</div>-->
@@ -73,80 +73,26 @@
     </header>
 
     <div class="jumbotron">
-  
-      <div class="form-group row">
-        <label for="inputRoomName" class="col-sm-2 col-form-label">Room Name</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="RoomName" placeholder=" Room Name">
-          <small id="RoomName" class="form-text text-muted">
-            Type name of the Game Room that you want to create.
-          </small>
+
+      <div class="row">
+        <img src="img/grifon.jpg" class="img-fluid img-thumbnail mx-auto">
+
+        <div class="col-9">
+          <h1>Username: Marko</h1>
         </div>
       </div>
 
-      <div class="form-group row">
-        <label for="VisibilityOfGame" class="col-sm-2 col-form-label">Visibility of Game</label>
-        <div class="col-sm-10">
-            
-          <select class="form-control" id="PublicOrPrivate">
-            <option>Public Game</option>
-            <option>Private Game</option>
-          </select>
-
-            <small id="VisibilityOfGame" class="form-text text-muted">
-              Select weather game is public or not.(Public games can be joined by any player. Private games can only be joined by players with name that you type in).
-            </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="inputPlayer2Name" class="col-sm-2 col-form-label">Player 2</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputPlayer2Name" placeholder=" Player 2">
-            <small id="Player2" class="form-text text-muted">
-              Type accurately name of the player you want to play against.
-            </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="inputMap" class="col-sm-2 col-form-label">Map</label>
-        <div class="col-sm-10">
-            
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>Map1</option>
-            <option>Map2</option>
-            <option>Map3</option>
-            <option>Map4</option>
-            <option>Map5</option>
-          </select>
-
-            <small id="Player2" class="form-text text-muted">
-              Select map you want to play.
-            </small>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label for="VisibilityOfRoom" class="col-sm-2 col-form-label">Visibility of Room</label>
-        <div class="col-sm-10">
-            
-          <select class="form-control" id="PublicOrPrivate">
-            <option>Public Room</option>
-            <option>Private Room</option>
-          </select>
-
-            <small id="VisibilityOfRoom" class="form-text text-muted">
-              Select weather room is public or not.(Public rooms can be joined by any observer. Private rooms can not be joined by observers).
-            </small>
-        </div>
-      </div>
-
-  
-      <button type="button" class="btn btn-info offset-2">Submit</button>
+      <div class="row">
+        <a href="/"><div class="offset-1"><button type="button" class="btn btn-dark  mx-auto bottom-buffer">Deactive Profile</button></div></a>
+        <a href="/"><div class="offset-1"><button type="button" class="btn btn-dark  mx-auto bottom-buffer">Change Password</button></div></a>
+      </div>      
 
     </div>
 
+    <style type="text/css">
+      .slika{ background: black; }
+      .bottom-buffer { margin-bottom:10px; }
+    </style>
 
     <!-- Na dnu body dela se inkluduju skriptni delovi da bi se manje cekalo otvaranje same stranice, jer u ovom slucaju se prvo ucitaju elementi stranice, pa tek onda funkcionalnot pa korisnik bar moze nesto da cita-->
 
