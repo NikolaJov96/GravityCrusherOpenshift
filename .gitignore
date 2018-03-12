@@ -1,6 +1,8 @@
+# Disregard LaTeX auxiliary files in documentation folder.
 doc/**/*.aux
 doc/**/*.gz
 doc/**/*.log
 doc/**/*.out
 doc/**/*.toc
+
 node_modules/
