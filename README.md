@@ -2,6 +2,26 @@
 Online multiplayer space game, also a University project.
 
 ## Requirements
-* Node.js with *express* and *socket.<span></span>io* libraries on a server machine
+* **Node.js** runtime environment with **express** and **socket.<span></span>io** JavaScript packages on a server machine
 * MySQL Server on a server machine
-* HTML5 support on a client
+* HTML5 support on a client software
+
+## Installation and running
+1. To install **Node.js**, visit the [download](https://nodejs.org/en/download/) page of the **Node.js** project and choose the appropriate download option for your operating system.
+
+2. Make sure you have an instance of MySQL Server running on the server machine.
+
+3. Clone the repository in the desired directory:
+```
+git clone https://github.com/NikolaJov96/GravityCrusher
+```
+
+4. In the root directory of the **GravityCrusher** project install the required packages using **npm** package manager:
+```
+npm install express socket.io
+```
+
+5. Finally, run the server using the following command:
+```
+node app.js
+```
