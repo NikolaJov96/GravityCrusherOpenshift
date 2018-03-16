@@ -45,6 +45,10 @@ requests = [
 	{
 		URL:'/my-profile',
 		file:'/client/my-profile.html'
+	},
+	{
+		URL:'/change-password',
+		file:'/client/change-password.html'
 	}
 ]
 

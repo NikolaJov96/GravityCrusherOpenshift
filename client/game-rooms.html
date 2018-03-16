@@ -49,7 +49,7 @@
             </li>
           </ul>
 
-          <div class="d-none">
+          <!--<div class="d-none">-->
               <a href="sign-up">
                 <button type="button" class="btn btn-secondary mr-sm-2" type="button">Sign Up</button>
               </a>
@@ -57,7 +57,7 @@
               <a href="log-in">
                 <button type="button" class="btn btn-warning" type="button">Log In</button>
               </a>
-          </div>
+          <!--</div>-->
 
           <!-- <div class="d-none"> -->
               <a href="/">
@@ -65,7 +65,7 @@
               </a>
               
               <a class="navbar-brand" href="my-profile">
-                <img src="img/mali-grifon.jpg">
+                <img class="rounded" src="img/mali-grifon.jpg">
               </a>
           <!--</div>-->
         </div>
@@ -82,6 +82,7 @@
               <th scope="col">Map</th>
               <th scope="col">Watch</th>
               <th scope="col">Play</th>
+              <th scope="col">Chat</th>
             </tr>
           </thead>
           <tbody>
@@ -91,6 +92,7 @@
               <td>Map3</td>
               <td><a href="game"><button type="button" class="btn btn-secondary">Watch</button></a></td>
               <td><a href="game"><button type="button" class="btn btn-primary">Play</button></a></td>
+              <td>Enabled</td>
             </tr>
             <tr>
               <th scope="row">Kavim Rashka</th>
@@ -98,6 +100,7 @@
               <td>Map2</td>
               <td><a href="game"><button type="button" class="btn btn-secondary">Watch</button></a></td>
               <td><a href="game"><button type="button" class="btn btn-primary">Play</button></a></td>
+              <td>Enabled</td>
             </tr>
             <tr>
               <th scope="row">Odbrana Mosta</th>
@@ -105,12 +108,19 @@
               <td>Map4</td>
               <td><a href="game"><button type="button" class="btn btn-secondary">Watch</button></a></td>
               <td><a href="game"><button type="button" class="btn btn-primary">Play</button></a></td>
+              <td>Disabled</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
+    <footer class="fixed-bottom" style="background: linear-gradient(to right, black , #2e528c);">
+      <p class="text-right" style="color: white">
+        Created by
+        <cite title="Source Title"><b style="color: #FFC107">A'Tuin</b> &nbsp;&nbsp;&nbsp;&nbsp;</cite>
+      </p>
+    </footer>
     <!-- Na dnu body dela se inkluduju skriptni delovi da bi se manje cekalo otvaranje same stranice, jer u ovom slucaju se prvo ucitaju elementi stranice, pa tek onda funkcionalnot pa korisnik bar moze nesto da cita-->
 
     <!-- Optional JavaScript -->
