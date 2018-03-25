@@ -19,28 +19,30 @@ submitBtn.onclick = function(){
     if (account.value.length === 0) logMsg('Account field empti.');
     else if (pass.value.length === 0) logMsg('Password field empti.');
     else {
-        var updateAccountPkg = {
+        var logInPkg = {
             'account':userId,
             'password':pass.value
         };
-        if (false) updateAccountPkg.activationKey = '';
-        socket.emit('signIn', updateAccountPkg);
+        var url = new URL(window.location.href);
+        var key = url.searchParams.get('activationKey');
+        if (key) logInPkg.activationKey = key;
+        socket.emit('signIn', logInPkg);
         logMsg('SignIn requested.');
     }
 }
 
 
 socket.on('signInResponse', function(data){
-    if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
+    if (!('status' in data)) attrMissing('status', 'signInResponse', data);
     
     if (data.status === 0){
-        if (!('token' in data)) attrMissing('token', 'updateAccountResponse', data);
+        if (!('token' in data)) attrMissing('token', 'signInResponse', data);
         setCookie('token', data.token, 10);
-        logMsg("On updateAccountResponse - success");
+        logMsg("On signInResponse - success");
     } else if (data.status === 1){
-        logMsg("On updateAccountResponse - wrong password");
+        logMsg("On signInResponse - wrong password");
     } else {
-        logMsg("On updateAccountResponse - unknown error");
+        logMsg("On signInResponse - unknown error");
     }
 });
 
