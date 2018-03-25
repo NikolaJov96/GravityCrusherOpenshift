@@ -1,4 +1,4 @@
-// author: Nikola Jovanovic
+// author: Nikola Jovanovic (NikolaJov96)
 
 // list of expected get request URLs and response files
 requests = [
@@ -49,6 +49,14 @@ requests = [
 	{
 		URL:'/change-password',
 		file:'/client/change-password.html'
+	},
+	{
+		URL:'/forgot-password',
+		file:'/client/forgot-password.html'
+	},
+	{
+		URL:'/reset-password',
+		file:'/client/reset-password.html'
 	}
 ]
 

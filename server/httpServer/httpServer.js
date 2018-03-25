@@ -1,4 +1,4 @@
-// author: Nikola Jovanovic
+// author: Nikola Jovanovic (NikolaJov96)
 
 var express = require('express');
 var app = express();

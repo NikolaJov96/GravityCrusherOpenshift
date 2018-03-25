@@ -1,4 +1,4 @@
-// author: Nikola Jovanovic
+// author: Nikola Jovanovic (NikolaJov96)
 
 // init http server
 var serv = require('http').createServer(function(req, res){});
