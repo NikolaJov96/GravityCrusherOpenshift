@@ -1,6 +1,9 @@
 // Nikola Jovanovic (NikolaJov96)
 
-// page status
+// Universal script placed in header of all client files.
+// Initializes socket connection and fetches session data.
+
+// session data
 var loggedIn = false;
 var userId = -1;
 var username = '';
@@ -9,24 +12,19 @@ var debugMode = true;
 // request socket connection
 var socket = io('localhost:8001');
 
-
 // getter for specific cookie
 var getCookie = function(name){
-    var name = name + "=";
+    var name = name + '=';
     var decodedCookie = decodeURIComponent(document.cookie);
     var cookies = decodedCookie.split(';');
     for(var i = 0; i < cookies.length; i++) {
         var cookie = cookies[i];
-        while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1);
-        }
-        if (cookie.indexOf(name) === 0) {
+        while (cookie.charAt(0) === ' ') cookie = cookie.substring(1);
+        if (cookie.indexOf(name) === 0) 
             return cookie.substring(name.length, cookie.length);
-        }
     }
-    return "";
+    return '';
 }
-
 
 // console log wrapper
 var logMsg = function(msg){
@@ -36,11 +34,11 @@ var logMsg = function(msg){
 // missing attribute log message
 var attrMissing = function(attr, pack, data){
     if (debugMode){
-        console.log('Attribute "' + attr + '" missing from package "' + pack + '", data contents:');
+        console.log('Attribute "' + attr + '" missing from package "' +
+                    pack + '", data contents:');
         console.log(data);
     }
 }
-
 
 // when connection is established send init package
 socket.on('connect', function(){
@@ -51,7 +49,6 @@ socket.on('connect', function(){
     socket.emit('pageInit', pageInitPkg);
     logMsg('Socket connected.');
 });
-
 
 // accept page init respose 
 socket.on('pageInitResponse', function(data){
@@ -65,4 +62,3 @@ socket.on('pageInitResponse', function(data){
     else attrMissing('debugMode', 'pageInitResponse', data);
     logMsg('Page init response received.');
 });
-

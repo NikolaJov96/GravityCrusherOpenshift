@@ -1,11 +1,12 @@
 // Nikola Jovanovic (NikolaJov96)
 
+// Callbacks initialization for 'sign-up' page
+
 var newUsername = document.getElementById('username');
 var email = document.getElementById('email');
 var pass1 = document.getElementById('pass1');
 var pass2 = document.getElementById('pass2');
 var submitBtn = document.getElementById('submitBtn');
-
 
 // send signup request
 submitBtn.onclick = function(){
@@ -27,18 +28,11 @@ submitBtn.onclick = function(){
     }
 }
 
-
 socket.on('signUpResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signUpResponse', data);
     
-    if (data.status === 0){
-        logMsg("On signUpResponse - success, check your e-mail");
-    } else if (data.status === 1){
-        logMsg("On signUpResponse - username taken");
-    } else if (data.status === 2){
-        logMsg("On signUpResponse - e-mail taken");
-    } else {
-        logMsg("On signUpResponse - unknown error");
-    }
+    if (data.status === 0) logMsg("On signUpResponse - success, check your e-mail");
+    else if (data.status === 1) logMsg("On signUpResponse - username taken");
+    else if (data.status === 2) logMsg("On signUpResponse - e-mail taken");
+    else logMsg("On signUpResponse - unknown error");
 });
-

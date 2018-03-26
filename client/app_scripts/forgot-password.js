@@ -1,8 +1,9 @@
 // Nikola Jovanovic (NikolaJov96)
 
+// Callbacks initialization for 'forgot-password' page
+
 var email = document.getElementById('email');
 var submitBtn = document.getElementById('submitBtn');
-
 
 // password reset request
 submitBtn.onclick = function(){
@@ -18,16 +19,13 @@ submitBtn.onclick = function(){
     }
 }
 
-
 socket.on('passwordRecoveryResponse', function(data){
-    if (!('status' in data)) attrMissing('status', 'passwordRecoveryResponse', data);
+    if (!('status' in data)) 
+        attrMissing('status', 'passwordRecoveryResponse', data);
     
-    if (data.status === 0){
+    if (data.status === 0)
         logMsg("On passwordRecoveryResponse - success, check your e-mail");
-    } else if (data.status === 1){
+    else if (data.status === 1)
         logMsg("On passwordRecoveryResponse - e-mail invalid");
-    } else {
-        logMsg("On passwordRecoveryResponse - unknown error");
-    }
+    else logMsg("On passwordRecoveryResponse - unknown error");
 });
-
