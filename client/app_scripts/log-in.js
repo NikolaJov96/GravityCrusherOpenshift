@@ -16,11 +16,13 @@ var setCookie = function(name, value, days){
 
 // send login request
 submitBtn.onclick = function(){
+    if (!socket.connected){ logMsg('Server not yet connected.'); return; }
+    
     if (account.value.length === 0) logMsg('Account field empti.');
     else if (pass.value.length === 0) logMsg('Password field empti.');
     else {
         var logInPkg = {
-            'account':userId,
+            'account':account.value,
             'password':pass.value
         };
         var url = new URL(window.location.href);

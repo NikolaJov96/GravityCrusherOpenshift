@@ -9,6 +9,8 @@ var submitBtn = document.getElementById('submitBtn');
 
 // send signup request
 submitBtn.onclick = function(){
+    if (!socket.connected){ logMsg('Server not yet connected.'); return; }
+    
     if (newUsername.value.length === 0) logMsg('Username field empti.');
     else if (email.value.length === 0) logMsg('Email field empti.');
     else if (pass1.value.length === 0) logMsg('Password field 1 empti.');
@@ -20,7 +22,6 @@ submitBtn.onclick = function(){
             'email':email.value,
             'password':pass1.value
         };
-        if (false) signUpPkg.activationKey = '';
         socket.emit('signUp', signUpPkg);
         logMsg('SignUp requested.');
     }
@@ -37,7 +38,7 @@ socket.on('signUpResponse', function(data){
     } else if (data.status === 2){
         logMsg("On signUpResponse - e-mail taken");
     } else {
-        logMsg("On signInResponse - unknown error");
+        logMsg("On signUpResponse - unknown error");
     }
 });
 
