@@ -22,3 +22,5 @@ var objectShapes = {}
 
 // 
 var matTransformationUniformLocation = null;
+var vertexBufferObject = null;
+var indexBufferObject = null;
