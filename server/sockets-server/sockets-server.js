@@ -10,7 +10,7 @@ serv.listen(8001);
 // on new connection
 io.on('connection', function(socket){
 	console.log('New connection.');
-	
+
 	// demo listener
 	socket.on('message', function(data){
 		socket.emit('message', 'hi');
