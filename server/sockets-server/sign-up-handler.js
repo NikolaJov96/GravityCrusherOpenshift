@@ -43,7 +43,7 @@ var registrationMailTextFormat =
 
     You are just one step away from successful registration. Please
     click on the link below to complete the registration process:
-    http://localhost:8000/sign-up/?cc=%s
+    http://localhost:8000/sign-ip/?cc=%s
 
     Please, do not reply to this e-mail. This is an automated message.
     Have a nice day.
