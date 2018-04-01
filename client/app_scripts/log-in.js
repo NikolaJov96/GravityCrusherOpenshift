@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'log-in' page
+// Summary: Callbacks initialization for 'log-in' page
 
 var account = document.getElementById('account');
 var pass = document.getElementById('pass');

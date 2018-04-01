@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'create-room' page
+// Summary: Callbacks initialization for 'create-room' page
 
 var roomName = document.getElementById('roomName');
 var submitBtn = document.getElementById('submitBtn');

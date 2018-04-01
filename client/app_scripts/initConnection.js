@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Universal script placed in header of all client files.
+// Summary: Universal script placed in header of all client files.
 // Initializes socket connection and fetches session data.
 
 // session data

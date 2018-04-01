@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Definitions of object shapes
+// Summary: Definitions of object shapes
 
 objectShapes.ship = {
     vert:[

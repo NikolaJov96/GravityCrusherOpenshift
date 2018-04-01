@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'game-rooms' page
+// Summary: Callbacks initialization for 'game-rooms' page
 
 // send create room request
 var choseRoom = function(){

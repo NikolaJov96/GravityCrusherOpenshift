@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'sign-up' page
+// Summary: Callbacks initialization for 'sign-up' page
 
 var newUsername = document.getElementById('username');
 var email = document.getElementById('email');

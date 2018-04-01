@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'chage-password' page
+// Summary: Callbacks initialization for 'chage-password' page
 
 var oldPass = document.getElementById('oldPass');
 var newPass1 = document.getElementById('pass1');

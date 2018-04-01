@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Definitions needed for loading roomState
+// Summary: Definitions needed for loading roomState
 // Include before scripts for runing the game and game end
 
 drawFunctions[0] = function(){

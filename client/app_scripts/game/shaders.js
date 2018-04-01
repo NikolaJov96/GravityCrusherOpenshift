@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Source code of vertex and buffer shaders
+// Summary: Source code of vertex and buffer shaders
 
 var shaders = {
     vertexShader:[

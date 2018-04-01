@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'forgot-password' page
+// Summary: Callbacks initialization for 'forgot-password' page
 
 var email = document.getElementById('email');
 var submitBtn = document.getElementById('submitBtn');

@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Initialization of webgl
+// Summary: Initialization of webgl
 
 var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');

@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Callbacks initialization for 'reset-password' page
+// Summary: Callbacks initialization for 'reset-password' page
 
 var newPass1 = document.getElementById('pass1');
 var newPass2 = document.getElementById('pass2');

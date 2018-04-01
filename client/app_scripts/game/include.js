@@ -1,6 +1,6 @@
-// Nikola Jovanovic (NikolaJov96)
+// Owner: Nikola Jovanovic (NikolaJov96)
 
-// Definitions of global game variables
+// Summary: Definitions of global game variables
 
 // 0 - loading | 1 - running | 2 - game ended
 var roomState = 0
