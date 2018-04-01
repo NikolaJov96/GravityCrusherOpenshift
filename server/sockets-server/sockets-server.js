@@ -15,7 +15,7 @@ io.on('connection', function(socket){
 	console.log('New connection.');
 
 	for (var i in requestPackages){
-		// socket.on(requestPackages[i].id, require(requestPackages[i].file));
+		socket.on(requestPackages[i].id, require(requestPackages[i].file));
 	}
 });
 
