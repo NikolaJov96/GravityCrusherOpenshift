@@ -2,5 +2,7 @@
 
 // Summary: Handler definition for sign-up page.
 
-module.exports = function(data){
+module.exports = function(socket) {
+    return function(data) {
+    };
 };

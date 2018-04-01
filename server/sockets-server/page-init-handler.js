@@ -2,5 +2,7 @@
 
 // Summary: Page initialization handler function.
 
-module.exports = function(data){
+module.exports = function(socket) {
+    return function(data) {
+    };
 };
