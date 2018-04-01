@@ -1,6 +1,8 @@
 // Owner: Andrija Cicovic (cicovic-andrija)
 
-// Summary: Handler definition for change-password page.
+// Summary: Handler definition for account update packages.
 
-module.exports = function(data){
+module.exports = function(socket) {
+    return function(data) {
+    };
 };
