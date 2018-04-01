@@ -5,6 +5,6 @@ doc/**/*.log
 doc/**/*.out
 doc/**/*.toc
 
-server/sockets-server/transporter.js
+server/sockets-server/email-service-conf.js
 
 node_modules/

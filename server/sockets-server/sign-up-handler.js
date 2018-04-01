@@ -4,7 +4,7 @@
 
 var crypto = require('crypto');
 var util = require('util');
-var transporter = require('./transporter.js');
+var nodemailer = require('nodemailer');
 
 function sha512(password, salt){
     var hash = crypto.createHmac('sha512', salt);
@@ -26,6 +26,9 @@ function saltAndHashPassword(password){
 function generateConfirmationCode() {
     return crypto.randomBytes(16).toString('hex');
 };
+
+var emailServiceConfiguration = require('./email-service-conf.js');
+var transporter = nodemailer.createTransport(emailServiceConfiguration);
 
 var registrationMailOptions = {
     from: 'gravitycrusher.psi@gmail.com',
