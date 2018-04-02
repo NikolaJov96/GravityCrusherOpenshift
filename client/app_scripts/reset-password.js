@@ -35,6 +35,6 @@ socket.on('passwordResetResponse', function(data){
     if (!('status' in data)) 
         attrMissing('status', 'passwordResetResponse', data);
     
-    if (data.status === 0) logMsg("On passwordResetResponse - success");
-    else logMsg("On passwordResetResponse - invalid token");
+    if (data.status === 0) logMsg('On passwordResetResponse - success');
+    else logMsg('On passwordResetResponse - invalid token');
 });

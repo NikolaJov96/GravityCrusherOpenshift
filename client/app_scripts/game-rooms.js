@@ -40,11 +40,11 @@ socket.on('openRoomsSelectResponse', function(data){
         attrMissing('status', 'openRoomsSelectResponse', data);
     
     if (data.status === 0){
-        logMsg("On openRoomsSelectResponse - success");
+        logMsg('On openRoomsSelectResponse - success');
         window.location = 'game';
     } else if (data.status === 1)
-        logMsg("On openRoomsSelectResponse - player slot taken");
+        logMsg('On openRoomsSelectResponse - player slot taken');
     else if (data.status === 2)
-        logMsg("On openRoomsSelectResponse - invalid room");
-    else logMsg("On openRoomsSelectResponse - unknown error");
+        logMsg('On openRoomsSelectResponse - invalid room');
+    else logMsg('On openRoomsSelectResponse - unknown error');
 });

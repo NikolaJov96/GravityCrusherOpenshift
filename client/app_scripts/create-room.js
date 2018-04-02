@@ -28,9 +28,9 @@ socket.on('createGameRoomResponse', function(data){
         attrMissing('status', 'createGameRoomResponse', data);
     
     if (data.status === 0){
-        logMsg("On createGameRoomResponse - success");
+        logMsg('On createGameRoomResponse - success');
         window.location = 'game';
     } else if (data.status === 1)
-        logMsg("On createGameRoomResponse - invalid opponent");
-    else logMsg("On createGameRoomResponse - unknown error");
+        logMsg('On createGameRoomResponse - invalid opponent');
+    else logMsg('On createGameRoomResponse - unknown error');
 });
