@@ -32,8 +32,8 @@ socket.on('signUpResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signUpResponse', data);
     
     if (data.status === 'Success')
-        logMsg("On signUpResponse - success, check your e-mail");
-    else if (data.status === 'UsernameTaken') logMsg("On signUpResponse - username taken");
-    else if (data.status === 'EmailTaken') logMsg("On signUpResponse - e-mail taken");
-    else logMsg("On signUpResponse - unknown error");
+        logMsg('On signUpResponse - success, check your e-mail');
+    else if (data.status === 'UsernameTaken') logMsg('On signUpResponse - username taken');
+    else if (data.status === 'EmailTaken') logMsg('On signUpResponse - e-mail taken');
+    else logMsg('On signUpResponse - unknown error');
 });
