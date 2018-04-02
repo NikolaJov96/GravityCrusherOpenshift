@@ -6,12 +6,13 @@ var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');
 
 gl.clearColor(0.7, 0.7, 0.7, 1.0);
-gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
+// gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
 
-gl.clearColor(0.7, 0.7, 0.7, 1.0);
-gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
+// gl.clearColor(0.7, 0.7, 0.7, 1.0);
+// gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
 gl.enable(gl.DEPTH_TEST);
 
+// shader initialization
 var vertexShader = gl.createShader(gl.VERTEX_SHADER);
 var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 
@@ -69,7 +70,10 @@ gl.enableVertexAttribArray(colorAttribLocation);
 matTransformationUniformLocation = gl.getUniformLocation(program, 'transMatrix');
 
 // main loop
+roomState = StateLoading();
+
 setTimeout(function(){
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-    drawFunctions[roomState]();
+    // drawFunctions[roomState]();
+    roomState.draw();
 }, 40);
