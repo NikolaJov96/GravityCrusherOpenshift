@@ -18,7 +18,7 @@ submitBtn.onclick = function(){
         logMsg('Passwords not matching.');
     else {
         var updateAccountPkg = {
-            'userId':userId,
+            'username':username,
             'oldPassword':oldPass.value,
             'newPassword':newPass1.value
         };
@@ -31,12 +31,12 @@ socket.on('updateAccountResponse', function(data){
     if (!('status' in data)) 
         attrMissing('status', 'updateAccountResponse', data);
     
-    if (data.status === 0){
+    if (data.status === 'Success'){
         if (!('username' in data)) 
             attrMissing('username', 'updateAccountResponse', data);
         username = data.username;
         logMsg("On updateAccountResponse - success");
-    } else if (data.status === 1)
+    } else if (data.status === 'PasswordNoMatch')
         logMsg("On updateAccountResponse - wrong password");
     else logMsg("On updateAccountResponse - unknown error");
 });

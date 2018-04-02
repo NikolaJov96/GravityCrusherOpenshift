@@ -31,9 +31,9 @@ submitBtn.onclick = function(){
 socket.on('signUpResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signUpResponse', data);
     
-    if (data.status === 0)
+    if (data.status === 'Success')
         logMsg("On signUpResponse - success, check your e-mail");
-    else if (data.status === 1) logMsg("On signUpResponse - username taken");
-    else if (data.status === 2) logMsg("On signUpResponse - e-mail taken");
+    else if (data.status === 'UsernameTaken') logMsg("On signUpResponse - username taken");
+    else if (data.status === 'EmailTaken') logMsg("On signUpResponse - e-mail taken");
     else logMsg("On signUpResponse - unknown error");
 });
