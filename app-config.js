@@ -7,6 +7,8 @@ var appConfig = {
     domainName: 'localhost:8000',
     httpServerPort: 8000,
     socketsServerPort: 8001,
+    passwordHashAlgorithm: 'sha512',
+    passwordSaltLengthInBytes: 128
 };
 
 module.exports = appConfig;
