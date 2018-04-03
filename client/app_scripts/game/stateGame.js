@@ -7,15 +7,11 @@ StateGame = function(){
     self = {
         ship: {
             VBO: gl.createBuffer(),
-            IBO: gl.createBuffer(),
-            positionAttribLocation: null,
-            colorAttribLocation: null
+            IBO: gl.createBuffer()
         },
         exhaust: {
             VBO: gl.createBuffer(),
-            IBO: gl.createBuffer(),
-            positionAttribLocation: null,
-            colorAttribLocation: null
+            IBO: gl.createBuffer()
         },
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
@@ -25,32 +21,74 @@ StateGame = function(){
     };
     
     // init ship shape
-    {
-        // bind and load ship buffers
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
-
+    { 
         // define how vertex buffer contents are interpreted by shader programs
         self.ship.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        gl.enableVertexAttribArray(self.ship.positionAttribLocation);
         self.ship.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        
+        // function binding ship buffers for configuration or drawing
+        self.ship.bind = function(){
+            gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
+            gl.vertexAttribPointer(
+                self.ship.positionAttribLocation,
+                3,
+                gl.FLOAT,
+                gl.FALSE,
+                7 * Float32Array.BYTES_PER_ELEMENT,
+                0
+            );
+            gl.vertexAttribPointer(
+                self.ship.colorAttribLocation,
+                4,
+                gl.FLOAT,
+                gl.FALSE,
+                7 * Float32Array.BYTES_PER_ELEMENT,
+                3 * Float32Array.BYTES_PER_ELEMENT
+            );
+        };
+        self.ship.bind();
+
+        // load data into buffers
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(self.ship.positionAttribLocation);
         gl.enableVertexAttribArray(self.ship.colorAttribLocation);
     }
     
     // init exhaust shape
     {
-        // bind and load exhaust buffers
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.exhaust.vert), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.exhaust.ind), gl.STATIC_DRAW);
-
         // define how vertex buffer contents are interpreted by shader programs
         self.exhaust.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        gl.enableVertexAttribArray(self.exhaust.positionAttribLocation);
         self.exhaust.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        
+        // function binding exhaust buffers for configuration or drawing
+        self.exhaust.bind = function(){
+            gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
+            gl.vertexAttribPointer(
+                self.exhaust.positionAttribLocation,
+                3,
+                gl.FLOAT,
+                gl.FALSE,
+                7 * Float32Array.BYTES_PER_ELEMENT,
+                0
+            );
+            gl.vertexAttribPointer(
+                self.exhaust.colorAttribLocation,
+                4,
+                gl.FLOAT,
+                gl.FALSE,
+                7 * Float32Array.BYTES_PER_ELEMENT,
+                3 * Float32Array.BYTES_PER_ELEMENT
+            );
+        };
+        self.exhaust.bind();
+        
+        // load data into buffers
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.exhaust.vert), gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.exhaust.ind), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(self.exhaust.positionAttribLocation);
         gl.enableVertexAttribArray(self.exhaust.colorAttribLocation);
     }
     
@@ -64,24 +102,7 @@ StateGame = function(){
     
     self.draw = function(){
         // draw ship
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
-        gl.vertexAttribPointer(
-            self.ship.positionAttribLocation,
-            3,
-            gl.FLOAT,
-            gl.FALSE,
-            7 * Float32Array.BYTES_PER_ELEMENT,
-            0
-        );
-        gl.vertexAttribPointer(
-            self.ship.colorAttribLocation,
-            4,
-            gl.FLOAT,
-            gl.FALSE,
-            7 * Float32Array.BYTES_PER_ELEMENT,
-            3 * Float32Array.BYTES_PER_ELEMENT
-        );
+        self.ship.bind();
         
         mat4.fromTranslation(self.tranMatrix, [self.translation, 0.0, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
@@ -94,24 +115,7 @@ StateGame = function(){
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
         // draw exhaust
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
-        gl.vertexAttribPointer(
-            self.exhaust.positionAttribLocation,
-            3,
-            gl.FLOAT,
-            gl.FALSE,
-            7 * Float32Array.BYTES_PER_ELEMENT,
-            0
-        );
-        gl.vertexAttribPointer(
-            self.exhaust.colorAttribLocation,
-            4,
-            gl.FLOAT,
-            gl.FALSE,
-            7 * Float32Array.BYTES_PER_ELEMENT,
-            3 * Float32Array.BYTES_PER_ELEMENT
-        );
+        self.exhaust.bind();
         
         mat4.fromTranslation(self.tranMatrix, [0.0, 0.0, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
