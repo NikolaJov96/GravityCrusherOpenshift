@@ -24,13 +24,11 @@ submitBtn.onclick = function(){
 }
 
 socket.on('createGameRoomResponse', function(data){
-    if (!('status' in data)) 
-        attrMissing('status', 'createGameRoomResponse', data);
+    if (!('status' in data)) attrMissing('status', 'createGameRoomResponse', data);
     
     if (data.status === 'Success'){
         logMsg('On createGameRoomResponse - success');
         window.location = 'game';
-    } else if (data.status === 1)
-        logMsg('On createGameRoomResponse - invalid opponent');
+    } else if (data.status === 1) logMsg('On createGameRoomResponse - invalid opponent');
     else logMsg('On createGameRoomResponse - unknown error: ' + data.status);
 });
