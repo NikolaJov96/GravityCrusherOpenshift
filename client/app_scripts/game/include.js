@@ -19,4 +19,3 @@ var matViewUniformLocation = null;
 var matTranslationUniformLocation = null;
 var matRotationUniformLocation = null;
 var matScalingUniformLocation = null;
- 

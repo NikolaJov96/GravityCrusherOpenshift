@@ -5,7 +5,7 @@
 var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');
 
-gl.clearColor(0.7, 0.7, 0.7, 1.0);
+gl.clearColor(0.1, 0.1, 0.1, 1.0);
 gl.enable(gl.DEPTH_TEST);
 
 // shader initialization
@@ -19,21 +19,17 @@ gl.shaderSource(fragmentShader, shaders.fragmentShader);
 // on the computer because it optimizes graphical performance for 
 // the graphics hardware available
 gl.compileShader(vertexShader);
-if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS))
-    console.log(gl.getShaderInfoLog(vertexShader));
+if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) console.log(gl.getShaderInfoLog(vertexShader));
 gl.compileShader(fragmentShader);
-if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS))
-    console.log(gl.getShaderInfoLog(fragmentShader));
+if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) console.log(gl.getShaderInfoLog(fragmentShader));
 
 var program = gl.createProgram();
 gl.attachShader(program, vertexShader);
 gl.attachShader(program, fragmentShader);
 gl.linkProgram(program);
-if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-    console.log(gl.getProgramInfoLog(program));
+if (!gl.getProgramParameter(program, gl.LINK_STATUS)) console.log(gl.getProgramInfoLog(program));
 gl.validateProgram(program);
-if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS))
-    console.log(gl.getProgramInfoLog(program));
+if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS)) console.log(gl.getProgramInfoLog(program));
 
 gl.useProgram(program);
 
@@ -49,6 +45,5 @@ roomState = StateLoading();
 
 setInterval(function(){
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-    // drawFunctions[roomState]();
     roomState.draw();
 }, 40);

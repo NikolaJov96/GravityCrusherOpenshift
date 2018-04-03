@@ -2,7 +2,7 @@
 
 // Summary: State class representing loading roomState
 
-StateLoading = function(){
+StateGameEnd = function(){
     // state initialization 
     self = {
         // buffer that contains three coordinates and four color values for each shape vertex
@@ -60,7 +60,7 @@ StateLoading = function(){
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.indexBufferObject);
         
         // draw larger triangle
-        mat4.fromTranslation(self.tranMatrix, [self.translation, -0.5, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [self.translation, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0])
 
@@ -71,7 +71,7 @@ StateLoading = function(){
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
         // draw smaller triangle
-        mat4.fromTranslation(self.tranMatrix, [0.0, -0.5, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [0.0, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
         mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2])
 
@@ -89,7 +89,7 @@ StateLoading = function(){
     
     // on key up callback, returns next state constructor, or null
     self.onKeyUp = function(event){
-        if (event.keyCode === ' '.charCodeAt()) return StateGame;
+        if (event.keyCode === ' '.charCodeAt()) return StateLoading;
         return null;
     };
 
