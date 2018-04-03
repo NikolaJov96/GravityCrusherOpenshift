@@ -62,7 +62,7 @@ StateGameEnd = function(){
         // draw larger triangle
         mat4.fromTranslation(self.tranMatrix, [self.translation, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
-        mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0])
+        mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
 
         gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
         gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
@@ -73,7 +73,7 @@ StateGameEnd = function(){
         // draw smaller triangle
         mat4.fromTranslation(self.tranMatrix, [0.0, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
-        mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2])
+        mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2]);
 
         gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
         gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
