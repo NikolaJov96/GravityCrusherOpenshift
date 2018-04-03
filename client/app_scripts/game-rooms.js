@@ -12,7 +12,7 @@ var choseRoom = function(){
     };
     socket.emit('openRoomsSelect', openRoomsSelectPkg);
     logMsg('Game room sellection requested.');
-}
+};
 
 socket.on('openRoomsStateUpdate', function(data){
     if ('added' in data){

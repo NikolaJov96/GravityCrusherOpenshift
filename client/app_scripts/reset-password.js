@@ -28,7 +28,7 @@ submitBtn.onclick = function(){
         socket.emit('passwordReset', passwordResetPkg);
         logMsg('Password reset requested with token: ' + token);
     }
-}
+};
 
 socket.on('passwordResetResponse', function(data){
     if (!('status' in data)) 

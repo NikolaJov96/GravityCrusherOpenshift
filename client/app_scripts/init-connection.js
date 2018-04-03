@@ -22,12 +22,12 @@ var getCookie = function(name){
         if (cookie.indexOf(name) === 0) return cookie.substring(name.length, cookie.length);
     }
     return '';
-}
+};
 
 // console log wrapper
 var logMsg = function(msg){
     if (debugMode) console.log(msg);
-}
+};
 
 // missing attribute log message
 var attrMissing = function(attr, pack, data){
@@ -36,7 +36,7 @@ var attrMissing = function(attr, pack, data){
                     pack + '", data contents:');
         console.log(data);
     }
-}
+};
 
 // when connection is established send init package
 socket.on('connect', function(){

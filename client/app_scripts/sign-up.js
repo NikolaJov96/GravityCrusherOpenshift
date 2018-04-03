@@ -26,7 +26,7 @@ submitBtn.onclick = function(){
         socket.emit('signUp', signUpPkg);
         logMsg('SignUp requested.');
     }
-}
+};
 
 socket.on('signUpResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signUpResponse', data);

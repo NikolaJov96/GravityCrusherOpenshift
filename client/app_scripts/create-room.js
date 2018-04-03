@@ -21,7 +21,7 @@ submitBtn.onclick = function(){
         socket.emit('createGameRoom', createGameRoomPkg);
         logMsg('Game room creation requested.');
     }
-}
+};
 
 socket.on('createGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'createGameRoomResponse', data);

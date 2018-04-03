@@ -24,7 +24,7 @@ submitBtn.onclick = function(){
         socket.emit('updateAccount', updateAccountPkg);
         logMsg('Password update requested.');
     }
-}
+};
 
 socket.on('updateAccountResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);

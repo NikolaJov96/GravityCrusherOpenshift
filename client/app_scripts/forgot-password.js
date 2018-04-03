@@ -17,7 +17,7 @@ submitBtn.onclick = function(){
         socket.emit('passwordRecovery', passwordRecoveryPkg);
         logMsg('Password recovery requested.');
     }
-}
+};
 
 socket.on('passwordRecoveryResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'passwordRecoveryResponse', data);

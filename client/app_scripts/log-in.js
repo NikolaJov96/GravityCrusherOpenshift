@@ -12,7 +12,7 @@ var setCookie = function(name, value, days){
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     var expires = 'expires=' + date.toUTCString();
     document.cookie = name + '=' + value + ';' + expires + ';path=/';
-}
+};
 
 // send login request
 submitBtn.onclick = function(){
@@ -31,7 +31,7 @@ submitBtn.onclick = function(){
         socket.emit('signIn', logInPkg);
         logMsg('SignIn requested.');
     }
-}
+};
 
 socket.on('signInResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signInResponse', data);
