@@ -40,33 +40,6 @@ if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS))
 
 gl.useProgram(program);
 
-vertexBufferObject = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, vertexBufferObject);
-indexBufferObject = gl.createBuffer();
-gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBufferObject);
-
-var positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-var colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
-gl.vertexAttribPointer(
-    positionAttribLocation,
-    3,
-    gl.FLOAT,
-    gl.FALSE,
-    7 * Float32Array.BYTES_PER_ELEMENT,
-    0
-);
-gl.vertexAttribPointer(
-    colorAttribLocation,
-    4,
-    gl.FLOAT,
-    gl.FALSE,
-    7 * Float32Array.BYTES_PER_ELEMENT,
-    3 * Float32Array.BYTES_PER_ELEMENT
-);
-
-gl.enableVertexAttribArray(positionAttribLocation);
-gl.enableVertexAttribArray(colorAttribLocation);
-
 matTransformationUniformLocation = gl.getUniformLocation(program, 'transMatrix');
 
 // main loop
