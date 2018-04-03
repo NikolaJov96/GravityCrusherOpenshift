@@ -1,15 +1,11 @@
 // Owner: Nikola Jovanovic (NikolaJov96)
 
-// Summary: Initialization of webgl
+// Summary: Initialization of webgl and main game loop
 
 var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');
 
 gl.clearColor(0.7, 0.7, 0.7, 1.0);
-// gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
-
-// gl.clearColor(0.7, 0.7, 0.7, 1.0);
-// gl.clear(gl.COLOR_BUFFER_BIT, gl.DEPTH_BUFFER_BIT);
 gl.enable(gl.DEPTH_TEST);
 
 // shader initialization
@@ -45,7 +41,7 @@ matTransformationUniformLocation = gl.getUniformLocation(program, 'transMatrix')
 // main loop
 roomState = StateLoading();
 
-setTimeout(function(){
+setInterval(function(){
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
     // drawFunctions[roomState]();
     roomState.draw();

@@ -6,7 +6,8 @@ StateLoading = function(){
     // state initialization 
     self = {
         vertexBufferObject: gl.createBuffer(),
-        indexBufferObject: gl.createBuffer()
+        indexBufferObject: gl.createBuffer(),
+        translation: Math.random()
     };
     
     gl.bindBuffer(gl.ARRAY_BUFFER, self.vertexBufferObject);
@@ -48,7 +49,7 @@ StateLoading = function(){
         var viewMatrix = new Float32Array(16);
         var transMatrix = new Float32Array(16);
         mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0);
-        mat4.fromTranslation(transMatrix, [0, 0, 0.0]);
+        mat4.fromTranslation(transMatrix, [self.translation, 0.0, 0.0]);
         mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
 
         transMatrix = mat4.mul(transMatrix, viewMatrix, transMatrix);
@@ -58,7 +59,17 @@ StateLoading = function(){
 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
     };
-
+    
+    // on key down callback, returns next state constructor, or null
+    self.onKeyDown = function(event){
+        return null;
+    };
+    
+    // on key up callback, returns next state constructor, or null
+    self.onKeyUp = function(event){
+        if (event.keyCode === ' '.charCodeAt()) return StateLoading;
+        return null;
+    };
 
     self.finish = function(){
        // free buffers 
