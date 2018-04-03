@@ -9,23 +9,25 @@ gl.clearColor(0.1, 0.1, 0.1, 1.0);
 gl.enable(gl.DEPTH_TEST);
 
 // shader initialization
-var vertexShader = gl.createShader(gl.VERTEX_SHADER);
-var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+shaders.vertexShader = gl.createShader(gl.VERTEX_SHADER);
+shaders.fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 
-gl.shaderSource(vertexShader, shaders.vertexShader);
-gl.shaderSource(fragmentShader, shaders.fragmentShader);
+gl.shaderSource(shaders.vertexShader, shaders.vertexShaderText);
+gl.shaderSource(shaders.fragmentShader, shaders.fragmentShaderText);
 
 // shader programs are compiled each time the application is loaded
 // on the computer because it optimizes graphical performance for 
 // the graphics hardware available
-gl.compileShader(vertexShader);
-if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) console.log(gl.getShaderInfoLog(vertexShader));
-gl.compileShader(fragmentShader);
-if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) console.log(gl.getShaderInfoLog(fragmentShader));
+gl.compileShader(shaders.vertexShader);
+if (!gl.getShaderParameter(shaders.vertexShader, gl.COMPILE_STATUS)) 
+    console.log(gl.getShaderInfoLog(shaders.vertexShader));
+gl.compileShader(shaders.fragmentShader);
+if (!gl.getShaderParameter(shaders.fragmentShader, gl.COMPILE_STATUS)) 
+    console.log(gl.getShaderInfoLog(shaders.fragmentShader));
 
 var program = gl.createProgram();
-gl.attachShader(program, vertexShader);
-gl.attachShader(program, fragmentShader);
+gl.attachShader(program, shaders.vertexShader);
+gl.attachShader(program, shaders.fragmentShader);
 gl.linkProgram(program);
 if (!gl.getProgramParameter(program, gl.LINK_STATUS)) console.log(gl.getProgramInfoLog(program));
 gl.validateProgram(program);

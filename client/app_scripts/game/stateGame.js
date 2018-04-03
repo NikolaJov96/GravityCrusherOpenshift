@@ -5,14 +5,18 @@
 StateGame = function(){
     // state initialization 
     self = {
-        shipVBO: gl.createBuffer(),
-        shipIBO: gl.createBuffer(),
-        shipPositionAttribLocation: null,
-        shipColorAttribLocation: null,
-        exhaustVBO: gl.createBuffer(),
-        exhaustIBO: gl.createBuffer(),
-        exhaustPositionAttribLocation: null,
-        exhaustColorAttribLocation: null,
+        ship: {
+            VBO: gl.createBuffer(),
+            IBO: gl.createBuffer(),
+            positionAttribLocation: null,
+            colorAttribLocation: null
+        },
+        exhaust: {
+            VBO: gl.createBuffer(),
+            IBO: gl.createBuffer(),
+            positionAttribLocation: null,
+            colorAttribLocation: null
+        },
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
         scalMatrix: new Float32Array(16),
@@ -23,31 +27,31 @@ StateGame = function(){
     // init ship shape
     {
         // bind and load ship buffers
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.shipVBO);
+        gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.shipIBO);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
 
         // define how vertex buffer contents are interpreted by shader programs
-        self.shipPositionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        gl.enableVertexAttribArray(self.shipPositionAttribLocation);
-        self.shipColorAttribLocation = gl.getAttribLocation(program, 'vertColor');
-        gl.enableVertexAttribArray(self.shipColorAttribLocation);
+        self.ship.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
+        gl.enableVertexAttribArray(self.ship.positionAttribLocation);
+        self.ship.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        gl.enableVertexAttribArray(self.ship.colorAttribLocation);
     }
     
     // init exhaust shape
     {
         // bind and load exhaust buffers
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaustVBO);
+        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.exhaust.vert), gl.STATIC_DRAW);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaustIBO);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.exhaust.ind), gl.STATIC_DRAW);
 
         // define how vertex buffer contents are interpreted by shader programs
-        self.exhaustPositionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        gl.enableVertexAttribArray(self.exhaustPositionAttribLocation);
-        self.exhaustColorAttribLocation = gl.getAttribLocation(program, 'vertColor');
-        gl.enableVertexAttribArray(self.exhaustColorAttribLocation);
+        self.exhaust.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
+        gl.enableVertexAttribArray(self.exhaust.positionAttribLocation);
+        self.exhaust.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        gl.enableVertexAttribArray(self.exhaust.colorAttribLocation);
     }
     
     // init projection and view matrices used throughout this roomState
@@ -60,10 +64,10 @@ StateGame = function(){
     
     self.draw = function(){
         // draw ship
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.shipVBO);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.shipIBO);
+        gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
         gl.vertexAttribPointer(
-            self.shipPositionAttribLocation,
+            self.ship.positionAttribLocation,
             3,
             gl.FLOAT,
             gl.FALSE,
@@ -71,7 +75,7 @@ StateGame = function(){
             0
         );
         gl.vertexAttribPointer(
-            self.shipColorAttribLocation,
+            self.ship.colorAttribLocation,
             4,
             gl.FLOAT,
             gl.FALSE,
@@ -90,10 +94,10 @@ StateGame = function(){
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
         // draw exhaust
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaustVBO);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaustIBO);
+        gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
         gl.vertexAttribPointer(
-            self.exhaustPositionAttribLocation,
+            self.exhaust.positionAttribLocation,
             3,
             gl.FLOAT,
             gl.FALSE,
@@ -101,7 +105,7 @@ StateGame = function(){
             0
         );
         gl.vertexAttribPointer(
-            self.exhaustColorAttribLocation,
+            self.exhaust.colorAttribLocation,
             4,
             gl.FLOAT,
             gl.FALSE,
