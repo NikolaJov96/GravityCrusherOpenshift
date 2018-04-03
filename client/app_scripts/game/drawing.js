@@ -15,10 +15,12 @@ var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 gl.shaderSource(vertexShader, shaders.vertexShader);
 gl.shaderSource(fragmentShader, shaders.fragmentShader);
 
+// shader programs are compiled each time the application is loaded
+// on the computer because it optimizes graphical performance for 
+// the graphics hardware available
 gl.compileShader(vertexShader);
 if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS))
     console.log(gl.getShaderInfoLog(vertexShader));
-
 gl.compileShader(fragmentShader);
 if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS))
     console.log(gl.getShaderInfoLog(fragmentShader));
@@ -29,16 +31,20 @@ gl.attachShader(program, fragmentShader);
 gl.linkProgram(program);
 if (!gl.getProgramParameter(program, gl.LINK_STATUS))
     console.log(gl.getProgramInfoLog(program));
-
 gl.validateProgram(program);
 if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS))
     console.log(gl.getProgramInfoLog(program));
 
 gl.useProgram(program);
 
-matTransformationUniformLocation = gl.getUniformLocation(program, 'transMatrix');
+// linking uniform matrix locations to the program in use
+matProjectionUniformLocation = gl.getUniformLocation(program, 'projMatrix');
+matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
+matTranslationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
+matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
+matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
 
-// main loop
+// room state init and the main loop
 roomState = StateLoading();
 
 setInterval(function(){
