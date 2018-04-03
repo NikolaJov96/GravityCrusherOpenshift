@@ -5,7 +5,6 @@
 
 // session data
 var loggedIn = false;
-var userId = -1;
 var username = '';
 var debugMode = true;
 
@@ -54,8 +53,6 @@ socket.on('connect', function(){
 socket.on('pageInitResponse', function(data){
     if ('loggedIn' in data) loggedIn = data.loggedIn;
     else attrMissing('loggedIn', 'pageInitResponse', data);
-    if ('userId' in data) userId = data.userId;
-    else attrMissing('userId', 'pageInitResponse', data);
     if ('username' in data) username = data.username;
     else attrMissing('username', 'pageInitResponse', data);
     if ('debugMode' in data) debugMode = data.debugMode;
