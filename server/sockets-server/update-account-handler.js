@@ -28,16 +28,18 @@ function handlePasswordChangeRequest(data, socket){
     console.log('New password change request: ' + data.oldUsername + '#' + data.oldPassword + '#' + data.newPassword);
 
     getSaltByUsername(data.oldUsername,
-        function(status, salt){ // callback function
+        // callback function
+        function(status, salt){
             if (status !== 'Success'){
-                // emit error
+                socket.emit('updateAccountResponse', {status: status});
             }
             else {
                 var oldHash = hashing.calculateHash(data.oldPassword, salt, appConfig.passwordHashAlgorithm);
                 var newSaltedHash = hashing.saltAndCalculateHash(data.newPassword, appConfig.passwordHashAlgorithm);
                 changePassword(data.oldUsername, oldHash, newSaltedHash.hash, newSaltedHash.salt,
-                    function(status){ // callback function
-                        // emit status
+                    // callback function
+                    function(status){
+                        socket.emit('updateAccountResponse', {status: status});
                     }
                 );
             }
@@ -49,15 +51,17 @@ function handleUsernameChangeRequest(data, socket){
     console.log('New username change request: ' + data.oldUsername + '#' + data.newUsername + '#' + data.oldPassword);
 
     getSaltByUsername(data.oldUsername,
-        function(status, salt){ // callback function
+        // callback function
+        function(status, salt){
             if (status !== 'Success'){
-                // emit error
+                socket.emit('updateAccountResponse', {status: status});
             }
             else {
                 var hash = hashing.calculateHash(data.oldPassword, salt, appConfig.passwordHashAlgorithm);
                 changeUsername(data.oldUsername, data.newUsername, hash,
-                    function(status){//callback function
-                        // emit status
+                    // callback function
+                    function(status){
+                        socket.emit('updateAccountResponse', {status: status});
                     }
                 );
             }

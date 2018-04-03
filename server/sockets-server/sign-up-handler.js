@@ -52,7 +52,8 @@ module.exports = function(socket){ return function(data){
         saltedHash.hash,
         saltedHash.salt,
         confirmationCode,
-        function(status, email, username, confirmationCode){ // callback function
+        // callback function
+        function(status, email, username, confirmationCode){
             if (status === 'Success') {
                 registrationMailOptions.to = email;
                 registrationMailOptions.text =
@@ -64,7 +65,6 @@ module.exports = function(socket){ return function(data){
 
                 transporter.sendMail(registrationMailOptions, function(error, info){
                     if (error) {
-                        // TODO: emit error
                         console.log(error);
                     } else {
                         console.log('Email sent to: ' + email);
@@ -73,7 +73,7 @@ module.exports = function(socket){ return function(data){
             }
 
             if (socket != null){
-                socket.emit('signUpResponse', {status: 0});
+                socket.emit('signUpResponse', {status: status});
             }
         }
     );
