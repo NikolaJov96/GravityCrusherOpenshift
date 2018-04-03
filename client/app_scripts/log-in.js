@@ -36,10 +36,10 @@ submitBtn.onclick = function(){
 socket.on('signInResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signInResponse', data);
     
-    if (data.status === 0){
+    if (data.status === 'Success'){
         if (!('token' in data)) attrMissing('token', 'signInResponse', data);
         setCookie('token', data.token, 10);
         logMsg('On signInResponse - success');
     } else if (data.status === 1) logMsg('On signInResponse - wrong password');
-    else logMsg('On signInResponse - unknown error');
+    else logMsg('On signInResponse - unknown error: ' + data.status);
 });
