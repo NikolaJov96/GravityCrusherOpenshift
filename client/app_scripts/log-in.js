@@ -10,8 +10,8 @@ var submitBtn = document.getElementById('submitBtn');
 var setCookie = function(name, value, days){
     var date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    var expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
 }
 
 // send login request
@@ -36,10 +36,10 @@ submitBtn.onclick = function(){
 socket.on('signInResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'signInResponse', data);
     
-    if (data.status === 0){
+    if (data.status === 'Success'){
         if (!('token' in data)) attrMissing('token', 'signInResponse', data);
         setCookie('token', data.token, 10);
-        logMsg("On signInResponse - success");
-    } else if (data.status === 1) logMsg("On signInResponse - wrong password");
-    else logMsg("On signInResponse - unknown error");
+        logMsg('On signInResponse - success');
+    } else if (data.status === 1) logMsg('On signInResponse - wrong password');
+    else logMsg('On signInResponse - unknown error: ' + data.status);
 });

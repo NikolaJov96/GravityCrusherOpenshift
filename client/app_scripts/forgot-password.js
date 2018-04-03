@@ -23,9 +23,9 @@ socket.on('passwordRecoveryResponse', function(data){
     if (!('status' in data)) 
         attrMissing('status', 'passwordRecoveryResponse', data);
     
-    if (data.status === 0)
-        logMsg("On passwordRecoveryResponse - success, check your e-mail");
+    if (data.status === 'Success')
+        logMsg('On passwordRecoveryResponse - success, check your e-mail');
     else if (data.status === 1)
-        logMsg("On passwordRecoveryResponse - e-mail invalid");
-    else logMsg("On passwordRecoveryResponse - unknown error");
+        logMsg('On passwordRecoveryResponse - e-mail invalid');
+    else logMsg('On passwordRecoveryResponse - unknown error: ' + data.status);
 });

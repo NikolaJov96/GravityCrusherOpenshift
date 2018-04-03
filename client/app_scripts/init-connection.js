@@ -44,7 +44,7 @@ var attrMissing = function(attr, pack, data){
 socket.on('connect', function(){
     var pageInitPkg = {
         'page':document.title,
-        'token':getCookie("token")
+        'token':getCookie('token')
     };
     socket.emit('pageInit', pageInitPkg);
     logMsg('Socket connected.');
