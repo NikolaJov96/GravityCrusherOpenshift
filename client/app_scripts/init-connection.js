@@ -61,4 +61,6 @@ socket.on('pageInitResponse', function(data){
     if ('debugMode' in data) debugMode = data.debugMode;
     else attrMissing('debugMode', 'pageInitResponse', data);
     logMsg('Page init response received.');
+    logMsg('login status: ' + data.loggedIn);
+    logMsg('Username: ' + data.username);
 });

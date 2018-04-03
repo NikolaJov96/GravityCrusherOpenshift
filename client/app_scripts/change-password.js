@@ -32,10 +32,8 @@ socket.on('updateAccountResponse', function(data){
         attrMissing('status', 'updateAccountResponse', data);
     
     if (data.status === 'Success'){
-        if (!('username' in data)) 
-            attrMissing('username', 'updateAccountResponse', data);
-        username = data.username;
         logMsg('On updateAccountResponse - success');
+        window.location = '/';
     } else if (data.status === 'PasswordNoMatch')
         logMsg('On updateAccountResponse - wrong password');
     else logMsg('On updateAccountResponse - unknown error: ' + data.status);
