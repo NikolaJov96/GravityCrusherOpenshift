@@ -6,6 +6,7 @@ var database = function() {
 
     var insertUserQuery = require('./db-interface-impl/insert-new-user');
     var confirmUserQuery = require('./db-interface-impl/confirm-user');
+	var selectingSalt = require('./dbInterfaceImpl/selectingSalt');
 	var mysql = require('mysql');
 
 	methods = {
@@ -32,6 +33,10 @@ var database = function() {
         confirmUserQuery(methods.connection, username, confirmationCode, callback);
     };
 
+	methods.getSaltByUsername(username, callback(status, salt)) {
+
+		selectingSalt.getSaltByUsernameQuery(username, callback(status, salt));
+    }
 
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
@@ -47,3 +52,5 @@ var database = function() {
 
    	return methods;
 }
+
+module.exports = database;
