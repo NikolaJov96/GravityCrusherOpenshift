@@ -5,7 +5,7 @@
 var crypto = require('crypto');
 var util = require('util');
 var nodemailer = require('nodemailer');
-var hashing = require('./hashing.js')
+var hashing = require('./hashing.js');
 var emailServiceConfiguration = require('./email-service-conf.js');
 var appConfig = require('../../app-config.js');
 
@@ -64,7 +64,7 @@ module.exports = function(socket){ return function(data){
                                 confirmationCode);
 
                 transporter.sendMail(registrationMailOptions, function(error, info){
-                    if (error) {
+                    if (error){
                         console.log(error);
                     } else {
                         console.log('Email sent to: ' + email);
