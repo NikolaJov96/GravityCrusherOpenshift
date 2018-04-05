@@ -7,13 +7,15 @@ var queries = require('./queries');
 var insertNotConfirmedUserCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         info.connection.rollback(function() {
+            console.log("error: query that inserts into user_not_confirmed failed!\n");
             throw error;
         });
     }
     else {
         info.connection.commit(function(error) {
-            if (error) {
+            if (!!error) {
                 info.connection.rollback(function() {
+                    console.log("error: transaction could not be commited, transaction rollback!\n");
                     throw error;
                 });
             }
@@ -25,6 +27,7 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
 var insertIntoUser = function(info) { return function(error, rows, fields) {
     if (!!error){
         info.connection.rollback(function() {
+            console.log("error: query that insert into user failed, transaction rollback!\n");
             throw error;
         });
     }
@@ -35,11 +38,17 @@ var insertIntoUser = function(info) { return function(error, rows, fields) {
 }}
 
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which checks if username is used failed!\n");
+        throw error;
+    }
     else {
         if (!rows.length) {
             info.connection.beginTransaction(function(error) {
-                if (!!error) { throw error; }
+                if (!!error) {
+                    console.log("error: transaction failed to be started!\n");
+                    throw error;
+                }
                 info.connection.query(queries.insertUser,
                     [info.username, info.email, info.passwordHash, info.passwordSalt], insertIntoUser(info));
             });
@@ -49,7 +58,10 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
 }}
 
 var emailCheckcallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which checks if email is used failed!\n");
+        throw error;
+    }
     else {
         if (!rows.length) info.connection.query(queries.checkIfUsernameExists, [info.username], usernameCheckCallback(info));
         else if (info.callCreateNewUser) info.callCreateNewUser("EmailTaken", info.email, info.username, info.confirmationCode);
@@ -62,7 +74,7 @@ var createNewUser = function(connection, username, email,
     info = {
         connection: connection,
         username: username,
-        email:email,
+        email: email,
         passwordHash:passwordHash,
         passwordSalt: passwordSalt,
         confirmationCode: confirmationCode,

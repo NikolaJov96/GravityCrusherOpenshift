@@ -5,12 +5,18 @@
 var queries = require('./queries');
 
 var deleteFromUserNotConfirmedCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which deletes user from not confirmed table failed!\n");
+        throw error;
+    }
     else if (info.callback) info.callback("Success", info.username);
 }}
 
 var getConfirmCodeCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which gets confirm code failed!\n");
+        throw error;
+    }
     else {
         if (rows[0].confirm_code === info.confirmationCode) {
             info.connection.query(queries.deleteFromUserNotConfirmed, [info.id],
@@ -21,17 +27,23 @@ var getConfirmCodeCallback = function(info) { return function(error, rows, field
 }}
 
 var userIsNotConfirmedCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which check if user is not confirmed failed!\n");
+        throw error;
+    }
     else {
         if (!!rows.length) {
-            info.connection.query(queries.getConfirmCode, [info.id], getConfirmCodeCallback(info)); 
+            info.connection.query(queries.getConfirmCode, [info.id], getConfirmCodeCallback(info));
         }
         else if (info.callback) info.callback("UserAlreadyConfirmed", info.username);
     }
 }}
 
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) throw error;
+    if (!!error) {
+        console.log("error: query which search for username failed!\n");
+        throw error;
+    }
     else {
         if (!!rows.length) {
             info.id = rows[0].id;
