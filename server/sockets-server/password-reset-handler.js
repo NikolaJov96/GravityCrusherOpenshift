@@ -2,7 +2,6 @@
 
 // Summary: Handler definition for reset-password page.
 
-module.exports = function(socket) {
-    return function(data) {
-    };
-};
+module.exports = function(socket){ return function(data) {
+
+};};

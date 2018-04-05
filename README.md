@@ -2,11 +2,12 @@
 Online multiplayer space game, also a University project.
 
 ## Requirements
-* **Node.js** runtime environment with the following JavaScript packages
+* **Node.js** runtime environment with the following Node.js JavaScript packages
   installed on a server machine:
     * `express`
     * `socket.io`
     * `nodemailer`
+    * `mysql`
 
 * MySQL Server on a server machine
 * HTML5 support on a client web browsing software
@@ -26,7 +27,7 @@ git clone https://github.com/NikolaJov96/GravityCrusher
 4. In the root directory of the **GravityCrusher** project install the required
 packages using **npm** package manager:
 ```
-npm install express socket.io nodemailer
+npm install express socket.io nodemailer mysql
 ```
 
 5. Finally, run the server using the following command:

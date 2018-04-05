@@ -5,7 +5,6 @@
 
 // session data
 var loggedIn = false;
-var userId = -1;
 var username = '';
 var debugMode = true;
 
@@ -20,16 +19,15 @@ var getCookie = function(name){
     for(var i = 0; i < cookies.length; i++) {
         var cookie = cookies[i];
         while (cookie.charAt(0) === ' ') cookie = cookie.substring(1);
-        if (cookie.indexOf(name) === 0) 
-            return cookie.substring(name.length, cookie.length);
+        if (cookie.indexOf(name) === 0) return cookie.substring(name.length, cookie.length);
     }
     return '';
-}
+};
 
 // console log wrapper
 var logMsg = function(msg){
     if (debugMode) console.log(msg);
-}
+};
 
 // missing attribute log message
 var attrMissing = function(attr, pack, data){
@@ -38,7 +36,7 @@ var attrMissing = function(attr, pack, data){
                     pack + '", data contents:');
         console.log(data);
     }
-}
+};
 
 // when connection is established send init package
 socket.on('connect', function(){
@@ -54,8 +52,6 @@ socket.on('connect', function(){
 socket.on('pageInitResponse', function(data){
     if ('loggedIn' in data) loggedIn = data.loggedIn;
     else attrMissing('loggedIn', 'pageInitResponse', data);
-    if ('userId' in data) userId = data.userId;
-    else attrMissing('userId', 'pageInitResponse', data);
     if ('username' in data) username = data.username;
     else attrMissing('username', 'pageInitResponse', data);
     if ('debugMode' in data) debugMode = data.debugMode;

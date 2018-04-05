@@ -17,15 +17,12 @@ submitBtn.onclick = function(){
         socket.emit('passwordRecovery', passwordRecoveryPkg);
         logMsg('Password recovery requested.');
     }
-}
+};
 
 socket.on('passwordRecoveryResponse', function(data){
-    if (!('status' in data)) 
-        attrMissing('status', 'passwordRecoveryResponse', data);
+    if (!('status' in data)) attrMissing('status', 'passwordRecoveryResponse', data);
     
-    if (data.status === 'Success')
-        logMsg('On passwordRecoveryResponse - success, check your e-mail');
-    else if (data.status === 1)
-        logMsg('On passwordRecoveryResponse - e-mail invalid');
+    if (data.status === 'Success') logMsg('On passwordRecoveryResponse - success, check your e-mail');
+    else if (data.status === 1) logMsg('On passwordRecoveryResponse - e-mail invalid');
     else logMsg('On passwordRecoveryResponse - unknown error: ' + data.status);
 });
