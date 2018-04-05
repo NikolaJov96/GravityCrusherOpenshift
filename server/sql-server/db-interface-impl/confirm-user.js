@@ -6,7 +6,7 @@ var queries = require('./queries');
 
 var deleteFromUserNotConfirmedCallback = function(info) { return function(error, rows, fields) {
     if (!!error) throw error;
-    else if (info.callback) info.callback("Success");
+    else if (info.callback) info.callback("Success", info.username);
 }}
 
 var getConfirmCodeCallback = function(info) { return function(error, rows, fields) {
@@ -16,7 +16,7 @@ var getConfirmCodeCallback = function(info) { return function(error, rows, field
             info.connection.query(queries.deleteFromUserNotConfirmed, [info.id],
                 deleteFromUserNotConfirmedCallback(info));
         }
-        else if (info.callback) info.callback("InvalidConfirmationCode");
+        else if (info.callback) info.callback("InvalidConfirmationCode", info.username);
     }
 }}
 
@@ -26,7 +26,7 @@ var userIsNotConfirmedCallback = function(info) { return function(error, rows, f
         if (!!rows.length) {
             info.connection.query(queries.getConfirmCode, [info.id], getConfirmCodeCallback(info)); 
         }
-        else if (info.callback) info.callback("UserAlreadyConfirmed");
+        else if (info.callback) info.callback("UserAlreadyConfirmed", info.username);
     }
 }}
 
@@ -37,7 +37,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
             info.id = rows[0].id;
             info.connection.query(queries.checkIsNotConfirm, [info.id], userIsNotConfirmedCallback(info));
         }
-        else if (info.callback) info.callback("UserNotRegistered");
+        else if (info.callback) info.callback("UserNotRegistered", info.username);
     }
 }}
 
