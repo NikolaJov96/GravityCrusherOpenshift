@@ -1,3 +1,6 @@
+// Owner: Filip Mandic (mandula8)
+
+// Summary: Functions and callbacks for inserting new user
 
 var queries = require('./queries');
 
@@ -14,7 +17,7 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
                     throw error;
                 });
             }
-            else info.callCreateNewUser("SUCCESS");
+            else if (info.callCreateNewUser) info.callCreateNewUser("SUCCESS");
         });
     }
 }}
@@ -41,7 +44,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
                     [info.username, info.email, info.passwordHash, info.passwordSalt], insertIntoUser(info));
             });
         }
-        else info.callCreateNewUser("UsernameTaken");
+        else if (info.callCreateNewUser) info.callCreateNewUser("UsernameTaken");
     }
 }}
 
@@ -49,7 +52,7 @@ var emailCheckcallback = function(info) { return function(error, rows, fields) {
     if (!!error) throw error;
     else {
         if (!rows.length) info.connection.query(queries.checkIfUsernameExists, [info.username], usernameCheckCallback(info));
-        else info.callCreateNewUser("EmailTaken");
+        else if (info.callCreateNewUser) info.callCreateNewUser("EmailTaken");
     }
 }}
 

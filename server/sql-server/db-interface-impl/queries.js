@@ -28,6 +28,9 @@ module.exports = {
     //input username
     getUserSalt: "SELECT * FROM user WHERE username = ?",
 
+    //input password_hash, password_salt
+    setNewPasswordAndSalt: "UPDATE user SET password_hash = ?, password_salt = ? WHERE id = ?",
+
     //input username, bann date
     bannUser : "INSERT INTO user_banned(id_bann, bann_date) VALUES ((select id FROM user WHERE username = ?), ?)",
 

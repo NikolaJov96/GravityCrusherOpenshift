@@ -6,7 +6,8 @@ var database = function() {
 
     var insertUserQuery = require('./db-interface-impl/insert-new-user');
     var confirmUserQuery = require('./db-interface-impl/confirm-user');
-	var selectingSalt = require('./dbInterfaceImpl/selectingSalt');
+	var selectingSalt = require('./db-interface-impl/selecting-salt');
+    var changePasswordQuery = require('./db-interface-impl/change-password');
 	var mysql = require('mysql');
 
 	methods = {
@@ -33,10 +34,15 @@ var database = function() {
         confirmUserQuery(methods.connection, username, confirmationCode, callback);
     };
 
-	methods.getSaltByUsername(username, callback(status, salt)) {
+	methods.getSaltByUsername = function(username, callback) {
 
-		selectingSalt.getSaltByUsernameQuery(username, callback(status, salt));
-    }
+		selectingSalt(methods.connection, username, callback);
+    };
+
+    methods.changePassword = function(username, oldHash, newHash, newSalt, callback) {
+
+        changePasswordQuery(methods.connection, username, oldHash, newHash, newSalt, callback);
+    };
 
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
