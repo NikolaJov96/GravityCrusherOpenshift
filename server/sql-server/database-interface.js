@@ -49,10 +49,10 @@ var database = function() {
 
     methods.connection.connect(function(error) {
         if (!!error) {
-            console.log('Error');
+            console.log('Error: connection to the database failed!\n');
         }
         else {
-            console.log('Connected');
+            console.log('Connected to database\n');
         }
     });
 
