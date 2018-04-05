@@ -7,7 +7,6 @@ var newPass1 = document.getElementById('pass1');
 var newPass2 = document.getElementById('pass2');
 var submitBtn = document.getElementById('submitBtn');
 
-// TODO trandfer to HTML code
 oldPass.onkeypress = function(){ colorPassword(oldPass); };
 newPass1.onkeypress = function(){ colorPassword(newPass1); };
 newPass2.onkeypress = function(){ colorPassword(newPass2); };

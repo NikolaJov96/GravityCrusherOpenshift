@@ -6,6 +6,9 @@ var newPass1 = document.getElementById('pass1');
 var newPass2 = document.getElementById('pass2');
 var submitBtn = document.getElementById('submitBtn');
 
+newPass1.onkeypress = function(){ colorPassword(newPass1); };
+newPass2.onkeypress = function(){ colorPassword(newPass2); };
+
 // send change password request
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
