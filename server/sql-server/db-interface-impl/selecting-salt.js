@@ -7,7 +7,10 @@ var queries = require('./queries');
 const RESULT = 0;
 
 var callbackQuery = function(info) { return function(error, rows, fields) {
-        if (!!error) throw error;
+        if (!!error) {
+            console.log("error: query which gets password salt failed!\n");
+            throw error;
+        }
         else {
             if (!!rows.length)
                 if (info.callback) info.callback("Success", rows[RESULT].password_salt);

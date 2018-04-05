@@ -7,6 +7,7 @@ var database = function() {
     var insertUserQuery = require('./db-interface-impl/insert-new-user');
     var confirmUserQuery = require('./db-interface-impl/confirm-user');
 	var selectingSalt = require('./db-interface-impl/selecting-salt');
+    var changePasswordQuery = require('./db-interface-impl/change-password');
     var mysql = require('mysql');
 
 	methods = {
@@ -21,7 +22,7 @@ var database = function() {
     //-------------------------------------------------------------------------
     //---------------methods---------------------------------------------------
 
-    methods.createNewUser = function(username, email, passwordHash,
+    methods.createNewUser = function(email, username, passwordHash,
         passwordSalt, confirmationCode, callback) {
 
         insertUserQuery(methods.connection, username, email,
@@ -38,15 +39,20 @@ var database = function() {
 		selectingSalt(methods.connection, username, callback);
     };
 
+    methods.changePassword = function(username, oldHash, newHash, newSalt, callback) {
+
+        changePasswordQuery(methods.connection, username, oldHash, newHash, newSalt, callback);
+    };
+
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
 
     methods.connection.connect(function(error) {
         if (!!error) {
-            console.log('Error');
+            console.log('Error: connection to the database failed!\n');
         }
         else {
-            console.log('Connected');
+            console.log('Connected to database\n');
         }
     });
 
