@@ -6,7 +6,7 @@ var queries = require('./queries');
 
 var deleteFromUserNotConfirmedCallback = function(info) { return function(error, rows, fields) {
     if (!!error) throw error;
-    else if (info.callback) info.callback("SUCCESS");
+    else if (info.callback) info.callback("Success");
 }}
 
 var getConfirmCodeCallback = function(info) { return function(error, rows, fields) {

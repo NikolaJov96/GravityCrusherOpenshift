@@ -10,7 +10,7 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
         if (!!error) throw error;
         else {
             if (!!rows.length)
-                if (info.callback) info.callback("SUCCESS", rows[RESULT].password_salt);
+                if (info.callback) info.callback("Success", rows[RESULT].password_salt);
             else if (info.callback) info.callback("UserNotRegistered", null);
         }
 }}

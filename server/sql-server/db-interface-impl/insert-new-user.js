@@ -17,7 +17,7 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
                     throw error;
                 });
             }
-            else if (info.callCreateNewUser) info.callCreateNewUser("SUCCESS");
+            else if (info.callCreateNewUser) info.callCreateNewUser("Success");
         });
     }
 }}
