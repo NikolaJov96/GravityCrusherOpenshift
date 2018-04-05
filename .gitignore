@@ -1,10 +1,12 @@
-# Disregard LaTeX auxiliary files in documentation folder.
+# Ignore LaTeX auxiliary files in documentation folder.
 doc/**/*.aux
 doc/**/*.gz
 doc/**/*.log
 doc/**/*.out
 doc/**/*.toc
 
+# Ignore configuration files containing private information.
 server/sockets-server/email-service-conf.js
 
+# Ignore npm's module dump folder.
 node_modules/
