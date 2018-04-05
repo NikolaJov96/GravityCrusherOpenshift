@@ -9,7 +9,9 @@ var submitBtn = document.getElementById('submitBtn');
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
-    if (email.value.length === 0) logMsg('Email field empti.');
+    var emailVal = validityCheck.email(email.value);
+    if (emailVal === 1){ logMsg('Email field empti.'); email.focus(); }
+    else if (emailVal === 2){ logMsg('Email format incorrect.'); email.focus(); }
     else {
         var passwordRecoveryPkg = {
             'email':email.value

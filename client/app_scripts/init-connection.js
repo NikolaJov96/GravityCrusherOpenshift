@@ -3,6 +3,56 @@
 // Summary: Universal script placed in header of all client files.
 // Initializes socket connection and fetches session data.
 
+// functions that chech validity of input fields
+var validityCheck  = {
+    username: function(entry){
+        // too short
+        if (entry.length < 3) return 1;
+        // too long
+        if (entry.length > 25) return 2;
+        // ok
+        return 0;
+    },
+    password: function(entry){
+        if (entry.length === 0) return 0.0;
+        
+        var level = entry.length;
+        // check for digit
+        if (! /[0-9]/.test(entry)) level *= 0.8;
+        // check for upper case letter
+        if (! /[A-Z]/.test(entry)) level *= 0.8;
+        // check for lower case letter
+        if (! /[a-z]/.test(entry)) level *= 0.8;
+        // check for non leter and non digit char
+        if (! /[^0-9A-Za-z]/.test(entry)) level *= 0.8;
+        // level above 7.0 is considered strong
+        return level;
+    },
+    email: function(entry){
+        // email is empty
+        if (entry.length === 0) return 1;
+        // invalid email
+        if (! /@/.test(entry)) return 2;
+        // ok
+        return 0;
+    }
+};
+
+var colorPassword = function(field){
+    var level = validityCheck.password(field.value);
+    if (level < 4.0){
+        field.style.color = 'red';
+    }else if (level < 5.0){
+        field.style.color = 'orange';
+    }else if (level < 6.0){
+        field.style.color = 'cyan';
+    }else if (level < 7.0){
+        field.style.color = 'blue';
+    }else{
+        field.style.color = 'green';
+    }
+}
+
 // session data
 var loggedIn = false;
 var username = '';

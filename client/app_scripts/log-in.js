@@ -40,6 +40,6 @@ socket.on('signInResponse', function(data){
         if (!('token' in data)) attrMissing('token', 'signInResponse', data);
         setCookie('token', data.token, 10);
         logMsg('On signInResponse - success');
-    } else if (data.status === 1) logMsg('On signInResponse - wrong password');
+    }else if (data.status === 1) logMsg('On signInResponse - wrong password');
     else logMsg('On signInResponse - unknown error: ' + data.status);
 });

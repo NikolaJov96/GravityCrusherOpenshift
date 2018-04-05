@@ -9,7 +9,7 @@ var submitBtn = document.getElementById('submitBtn');
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
-    if (roomName.value.length === 0) logMsg('Room name field empti.');
+    if (roomName.value.length === 0){ logMsg('Room name field empti.'); roomName.focus(); }
     else {
         var createGameRoomPkg = {
             name:roomName.value,
@@ -26,9 +26,7 @@ submitBtn.onclick = function(){
 socket.on('createGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'createGameRoomResponse', data);
     
-    if (data.status === 'Success'){
-        logMsg('On createGameRoomResponse - success');
-        window.location = 'game';
-    } else if (data.status === 1) logMsg('On createGameRoomResponse - invalid opponent');
+    if (data.status === 'Success'){ logMsg('On createGameRoomResponse - success'); window.location = 'game'; }
+    else if (data.status === 1) logMsg('On createGameRoomResponse - invalid opponent');
     else logMsg('On createGameRoomResponse - unknown error: ' + data.status);
 });
