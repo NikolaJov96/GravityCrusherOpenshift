@@ -8,6 +8,7 @@ var nodemailer = require('nodemailer');
 var hashing = require('./hashing.js');
 var emailServiceConfiguration = require('./email-service-conf.js');
 var appConfig = require('../../app-config.js');
+var db = require('../sql-server/database-interface.js');
 
 var transporter = nodemailer.createTransport(emailServiceConfiguration);
 
@@ -46,7 +47,7 @@ module.exports = function(socket){ return function(data){
 
     var saltedHash = hashing.saltAndCalculateHash(data.password, appConfig.passwordHashAlgorithm);
     var confirmationCode = generateConfirmationCode();
-    createNewUser(
+    db.createNewUser(
         data.email,
         data.username,
         saltedHash.hash,
@@ -55,6 +56,8 @@ module.exports = function(socket){ return function(data){
         // callback function
         function(status, email, username, confirmationCode){
             if (status === 'Success') {
+                console.log('Attempting to send an e-mail to ' + email + '...');
+
                 registrationMailOptions.to = email;
                 registrationMailOptions.text =
                     util.format(registrationMailTextFormat,
