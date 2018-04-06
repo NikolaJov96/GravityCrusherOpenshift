@@ -10,53 +10,61 @@ var database = function() {
     var changePasswordQuery = require('./db-interface-impl/change-password');
     var changeUsernameQuery = require('./db-interface-impl/change-username');
     var passwordRecoveryRequest = require('./db-interface-impl/create-password-recovery');
+    var mysql = require('mysql');
 
     /*
     methods = {
         connection : connectToDB
     }
     */
-	connection = require('./db-connection/db-connection-file');
-    methods = {}
+	connectionInfo = require('./db-connection/db-connection-file');
+    methods = {
+        connection : mysql.createConnection({
+            host: connectionInfo.host,
+            user: connectionInfo.user,
+            password: connectionInfo.password,
+            database: connectionInfo.database
+        })
+    }
     //-------------------------------------------------------------------------
     //---------------methods---------------------------------------------------
 
     methods.createNewUser = function(email, username, passwordHash,
         passwordSalt, confirmationCode, callback) {
 
-        insertUserQuery(connection, username, email,
+        insertUserQuery(methods.connection, username, email,
             passwordHash, passwordSalt, confirmationCode, callback);
 	};
 
     methods.confirmUser = function(username, confirmationCode, callback) {
 
-        confirmUserQuery(connection, username, confirmationCode, callback);
+        confirmUserQuery(methods.connection, username, confirmationCode, callback);
     };
 
 	methods.getSaltByUsername = function(username, callback) {
 
-		selectingSalt(connection, username, callback);
+		selectingSalt(methods.connection, username, callback);
     };
 
     methods.changePassword = function(username, oldHash, newHash, newSalt, callback) {
 
-        changePasswordQuery(connection, username, oldHash, newHash, newSalt, callback);
+        changePasswordQuery(methods.connection, username, oldHash, newHash, newSalt, callback);
     };
 
     methods.changeUsername = function(oldUsername, newUsername, hash, callback) {
 
-        changeUsernameQuery(connection, oldUsername, newUsername, hash, callback);
+        changeUsernameQuery(methods.connection, oldUsername, newUsername, hash, callback);
     };
 
     methods.createPasswordRecoveryRequest = function(email, requestCode, callback) {
 
-        passwordRecoveryRequest(connection, email, requestCode, callback);
+        passwordRecoveryRequest(methods.connection, email, requestCode, callback);
     };
 
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
 
-    connection.connect(function(error) {
+    methods.connection.connect(function(error) {
         if (!!error) {
             console.log('Error: connection to the database failed!\n');
         }
