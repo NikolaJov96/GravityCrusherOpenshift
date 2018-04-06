@@ -8,8 +8,15 @@ var database = function() {
     var confirmUserQuery = require('./db-interface-impl/confirm-user');
 	var selectingSalt = require('./db-interface-impl/selecting-salt');
     var changePasswordQuery = require('./db-interface-impl/change-password');
+    var changeUsernameQuery = require('./db-interface-impl/change-username');
+    var passwordRecoveryRequest = require('./db-interface-impl/create-password-recovery');
     var mysql = require('mysql');
 
+    /*
+    methods = {
+        connection : connectToDB
+    }
+    */
 	methods = {
         connection : mysql.createConnection({
             host: 'localhost',
@@ -42,6 +49,16 @@ var database = function() {
     methods.changePassword = function(username, oldHash, newHash, newSalt, callback) {
 
         changePasswordQuery(methods.connection, username, oldHash, newHash, newSalt, callback);
+    };
+
+    methods.changeUsername = function(oldUsername, newUsername, hash, callback) {
+
+        changeUsernameQuery(methods.connection, oldUsername, newUsername, hash, callback);
+    };
+
+    methods.createPasswordRecoveryRequest = function(email, requestCode, callback) {
+
+        passwordRecoveryRequest(methods.connection, email, requestCode, callback);
     };
 
     //-------------------------------------------------------------------------

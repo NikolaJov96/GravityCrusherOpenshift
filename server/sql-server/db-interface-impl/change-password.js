@@ -4,6 +4,7 @@
 
 var queries = require('./queries');
 
+const RESULT = 0;
 
 var changePasswordCall = function(info) { return function(error, rows, fields) {
     console.log("poceo poslednji callback\n");
@@ -38,7 +39,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     }
     else {
         if (!!rows.length) {
-            if (rows[0].password_hash === info.oldHash) {
+            if (rows[RESULT].password_hash === info.oldHash) {
                 console.log("Prosao1\n");
                 info.connection.beginTransaction(function(error) {
                     if (!!error) {
@@ -46,7 +47,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
                         throw error;
                     }
                     info.connection.query(queries.setNewPasswordAndSalt,
-                        [info.newHash, info.newSalt, rows[0].id], changePasswordCall(info));
+                        [info.newHash, info.newSalt, rows[RESULT].id], changePasswordCall(info));
                 });
             }
             else if (info.callback) info.callback("PasswordNoMatch");

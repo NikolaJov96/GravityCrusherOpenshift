@@ -31,6 +31,18 @@ module.exports = {
     //input password_hash, password_salt
     setNewPasswordAndSalt: "UPDATE user SET password_hash = ?, password_salt = ? WHERE id = ?",
 
+    //input newUsername, id
+    setNewUsername: "UPDATE user SET username = ? WHERE id = ?",
+
+    //input id, confirm_code
+    insertIntoPasswordReset: "INSERT INTO user_password_reset(id_user_password, confirm_code) VALUES (?, ?)",
+
+    //input id
+    searchInPasswordRecovery: "SELECT * FROM user_password_reset WHERE id_user_password = ?",
+
+    //input id
+    deleteFromPasswordRecovery: "DELETE FROM user_password_reset WHERE id_user_password = ?",
+
     //input username, bann date
     bannUser : "INSERT INTO user_banned(id_bann, bann_date) VALUES ((select id FROM user WHERE username = ?), ?)",
 
