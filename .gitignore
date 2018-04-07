@@ -7,11 +7,9 @@ doc/**/*.toc
 
 # Ignore configuration files containing private information.
 server/sockets-server/email-service-conf.js
-
-# Ignore file containing password for database connection.
 server/sql-server/db-connection/db-connection-file.js
 
-#Ignore database tests 
+# Ignore database test files.
 server/sql-server/tests/tests.js
 
 # Ignore npm's module dump folder.
