@@ -25,7 +25,7 @@ StateGame = function(){
     { 
         // define how vertex buffer contents are interpreted by shader programs
         self.ship.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        self.ship.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        self.ship.colorAttribLocation = gl.getAttribLocation(program, 'aTextureCoord');
         
         // function binding ship buffers for configuration or drawing
         self.ship.bind = function(){
@@ -36,15 +36,15 @@ StateGame = function(){
                 3,
                 gl.FLOAT,
                 gl.FALSE,
-                7 * Float32Array.BYTES_PER_ELEMENT,
+                5 * Float32Array.BYTES_PER_ELEMENT,
                 0
             );
             gl.vertexAttribPointer(
                 self.ship.colorAttribLocation,
-                4,
+                2,
                 gl.FLOAT,
                 gl.FALSE,
-                7 * Float32Array.BYTES_PER_ELEMENT,
+                5 * Float32Array.BYTES_PER_ELEMENT,
                 3 * Float32Array.BYTES_PER_ELEMENT
             );
         };
@@ -55,13 +55,39 @@ StateGame = function(){
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.ship.positionAttribLocation);
         gl.enableVertexAttribArray(self.ship.colorAttribLocation);
+        
+        // texture
+        self.ship.texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+
+        const level = 0;
+        const internalFormat = gl.RGBA;
+        const width = 1;
+        const height = 1;
+        const border = 0;
+        const srcFormat = gl.RGBA;
+        const srcType = gl.UNSIGNED_BYTE;
+        const pixel = new Uint8Array([0, 0, 255, 255]);  // opaque blue
+        gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+                    width, height, border, srcFormat, srcType,
+                    pixel);
+
+        const image = new Image();
+        image.onload = function() {
+            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+            gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+                          srcFormat, srcType, image);
+            gl.generateMipmap(gl.TEXTURE_2D);
+            console.log(image);
+        };
+        image.src = 'app_scripts/game/res/ship.png';
     }
     
     // init exhaust shape
     {
         // define how vertex buffer contents are interpreted by shader programs
         self.exhaust.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        self.exhaust.colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
+        self.exhaust.colorAttribLocation = gl.getAttribLocation(program, 'aTextureCoord');
         
         // function binding exhaust buffers for configuration or drawing
         self.exhaust.bind = function(){
@@ -72,15 +98,15 @@ StateGame = function(){
                 3,
                 gl.FLOAT,
                 gl.FALSE,
-                7 * Float32Array.BYTES_PER_ELEMENT,
+                5 * Float32Array.BYTES_PER_ELEMENT,
                 0
             );
             gl.vertexAttribPointer(
                 self.exhaust.colorAttribLocation,
-                4,
+                2,
                 gl.FLOAT,
                 gl.FALSE,
-                7 * Float32Array.BYTES_PER_ELEMENT,
+                5 * Float32Array.BYTES_PER_ELEMENT,
                 3 * Float32Array.BYTES_PER_ELEMENT
             );
         };
@@ -91,6 +117,32 @@ StateGame = function(){
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.exhaust.ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.exhaust.positionAttribLocation);
         gl.enableVertexAttribArray(self.exhaust.colorAttribLocation);
+        
+        // texture
+        self.exhaust.texture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, self.exhaust.texture);
+
+        const level = 0;
+        const internalFormat = gl.RGBA;
+        const width = 1;
+        const height = 1;
+        const border = 0;
+        const srcFormat = gl.RGBA;
+        const srcType = gl.UNSIGNED_BYTE;
+        const pixel = new Uint8Array([0, 0, 255, 255]);  // opaque blue
+        gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+                    width, height, border, srcFormat, srcType,
+                    pixel);
+
+        const image = new Image();
+        image.onload = function() {
+            gl.bindTexture(gl.TEXTURE_2D, self.exhaust.texture);
+            gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+                          srcFormat, srcType, image);
+            gl.generateMipmap(gl.TEXTURE_2D);
+            console.log(image);
+        };
+        image.src = 'app_scripts/game/res/exhaust.png';
     }
     
     // init projection and view matrices used throughout this roomState
@@ -113,6 +165,9 @@ StateGame = function(){
         
         // draw ship
         self.ship.bind();
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+        gl.uniform1i(samplerUniformLocation, 0);
         
         mat4.fromTranslation(self.tranMatrix, self.translation);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
@@ -127,6 +182,9 @@ StateGame = function(){
         // draw exhaust
         if (self.pressed[1] || self.pressed[3]){
             self.exhaust.bind();
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, self.exhaust.texture);
+            gl.uniform1i(samplerUniformLocation, 0);
 
             mat4.fromTranslation(self.tranMatrix, self.translation);
             mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);

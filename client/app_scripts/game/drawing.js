@@ -5,8 +5,10 @@
 var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');
 
-gl.clearColor(0.1, 0.1, 0.1, 1.0);
+gl.clearColor(0.3, 0.3, 0.3, 1.0);
 gl.enable(gl.DEPTH_TEST);
+gl.enable(gl.BLEND);
+gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
 // shader initialization
 shaders.vertexShader = gl.createShader(gl.VERTEX_SHADER);
@@ -35,15 +37,17 @@ if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS)) console.log(gl.getProg
 
 gl.useProgram(program);
 
-// linking uniform matrix locations to the program in use
+// linking uniform matrix and texture sampler locations to the program in use
 matProjectionUniformLocation = gl.getUniformLocation(program, 'projMatrix');
 matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
 matTranslationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
 matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
 matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
+samplerUniformLocation = gl.getUniformLocation(program, 'uSmpler');
+
 
 // room state init and the main loop
-roomState = StateLoading();
+roomState = StateGame();
 
 setInterval(function(){
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);

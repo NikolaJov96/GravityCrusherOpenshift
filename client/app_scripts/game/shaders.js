@@ -10,9 +10,7 @@ var shaders = {
         'precision mediump float;',
         '',
         'attribute vec3 vertPosition;',
-        'attribute vec4 vertColor;',
-        '',
-        'varying vec4 fragColor;',
+        'attribute vec2 aTextureCoord;',
         '',
         'uniform mat4 projMatrix;',
         'uniform mat4 viewMatrix;',
@@ -20,20 +18,24 @@ var shaders = {
         'uniform mat4 rotaMatrix;',
         'uniform mat4 scalMatrix;',
         '',
+        'varying highp vec2 vTextureCoord;',
+        '',
         'void main()',
         '{',
-        '    fragColor = vertColor;',
         '    gl_Position = projMatrix * viewMatrix * tranMatrix * rotaMatrix * scalMatrix * vec4(vertPosition, 1.0);',
+        '    vTextureCoord = aTextureCoord;',
         '}'
     ].join('\n'),
     fragmentShaderText:[
         'precision mediump float;',
         '',
-        'varying vec4 fragColor;',
+        'varying highp vec2 vTextureCoord;',
+        '',
+        'uniform sampler2D uSampler;',
         '',
         'void main()',
         '{',
-        '    gl_FragColor = fragColor;',
+        '    gl_FragColor = texture2D(uSampler, vTextureCoord);',
         '}'
     ].join('\n')
 }

@@ -13,6 +13,9 @@ var StateGameEnd = null;
 // JSON of all existing object shapes
 var objectShapes = {};
 
+// JSON of all game textures
+var shapeTextures = {};
+
 // locations of shader uniform matrix arguments
 var matProjectionUniformLocation = null;
 var matViewUniformLocation = null;
