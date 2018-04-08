@@ -40,17 +40,18 @@ var abstractState = function(){
         });
     };
     
+    // configure new object and add it to the objs
     self.createObject = function(name, shape, texture){ 
         self.objs[name] = {
             VBO: gl.createBuffer(),
             IBO: gl.createBuffer(),
-            texture: texture
+            texture: texture,
+            // define how vertex buffer contents are interpreted by shader programs
+            positionAttribLocation: gl.getAttribLocation(program, 'vertPosition'),
+            coordAttribLocation: gl.getAttribLocation(program, 'textCoord')
         };
-        // define how vertex buffer contents are interpreted by shader programs
-        self.objs.ship.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-        self.objs.ship.colorAttribLocation = gl.getAttribLocation(program, 'textCoord');
         
-        // function binding ship buffers for configuration or drawing
+        // function binding shape buffers for configuration or drawing
         self.objs[name].bind = function(){
             gl.bindBuffer(gl.ARRAY_BUFFER, self.objs[name].VBO);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.objs[name].IBO);
@@ -62,7 +63,7 @@ var abstractState = function(){
                 5 * Float32Array.BYTES_PER_ELEMENT, 0
             );
             gl.vertexAttribPointer(
-                self.objs[name].colorAttribLocation, 2, gl.FLOAT, gl.FALSE, 
+                self.objs[name].coordAttribLocation, 2, gl.FLOAT, gl.FALSE, 
                 5 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT
             );
         };
@@ -72,7 +73,7 @@ var abstractState = function(){
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes[shape].vert), gl.STATIC_DRAW);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes[shape].ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.objs[name].positionAttribLocation);
-        gl.enableVertexAttribArray(self.objs[name].colorAttribLocation);
+        gl.enableVertexAttribArray(self.objs[name].coordAttribLocation);
     };
     
     // screen rendering

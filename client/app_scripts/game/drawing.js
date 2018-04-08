@@ -30,8 +30,8 @@ gl.shaderSource(shaders.vertexShader, shaders.vertexShaderText);
 gl.shaderSource(shaders.fragmentShader, shaders.fragmentShaderText);
 
 // shader programs are compiled each time the application is loaded
-// on the computer because it optimizes graphical performance for 
-// the graphics hardware available
+//   on the computer because it optimizes graphical performance for 
+//   the graphics hardware available
 gl.compileShader(shaders.vertexShader);
 if (!gl.getShaderParameter(shaders.vertexShader, gl.COMPILE_STATUS)) 
     console.log(gl.getShaderInfoLog(shaders.vertexShader));
@@ -47,6 +47,7 @@ if (!gl.getProgramParameter(program, gl.LINK_STATUS)) console.log(gl.getProgramI
 gl.validateProgram(program);
 if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS)) console.log(gl.getProgramInfoLog(program));
 
+// use compiled glsl (gl shader language) program for graphics rendering
 gl.useProgram(program);
 
 // linking uniform matrix and texture sampler locations to the program in use

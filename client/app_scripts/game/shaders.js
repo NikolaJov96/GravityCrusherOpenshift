@@ -2,7 +2,7 @@
 
 // Summary: Source code of vertex and buffer shaders
 // Vertex shader: program that calculates exact location of each vertex that is 
-//                requested to be drawn, depending on other arguments
+//                requested to be drawn, depending on transformation matrices
 // Fragment shader: program that calculates exact color of each pixel on the screen 
 
 var shaders = {

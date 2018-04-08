@@ -2,9 +2,6 @@
 
 // Summary: Callbacks initialization for 'game' page
 
-// canvas was already accessed in previous script
-// var elem = document.getElementById('elem');
-
 document.onkeydown = function(event){
     var newState = roomState.onKeyDown(event);
     if (newState){
