@@ -76,6 +76,9 @@ var abstractState = function(){
         gl.enableVertexAttribArray(self.objs[name].coordAttribLocation);
     };
     
+    // function for stepping client state (only game mechanics unrelated tasks)
+    self.step = function(){};
+    
     // screen rendering
     self.draw = function(){};
     

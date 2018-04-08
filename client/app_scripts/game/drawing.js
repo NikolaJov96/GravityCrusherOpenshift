@@ -63,6 +63,7 @@ preloadTextures();
 roomState = StateLoading();
 
 setInterval(function(){
+    roomState.step();
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
     roomState.draw();
 }, 40);

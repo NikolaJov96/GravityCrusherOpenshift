@@ -24,8 +24,7 @@ StateGame = function(){
     gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
     
-    self.draw = function(){
-        // TODO: move to step method
+    self.step = function(){
         if (self.pressed[0]) self.rotation = (self.rotation + 0.1) % (2 * Math.PI);
         if (self.pressed[1]) {
             self.translation[0] += 0.08 * Math.cos(self.rotation);
@@ -33,7 +32,9 @@ StateGame = function(){
         }
         if (self.pressed[2]) self.rotation = (self.rotation - 0.1) % (2 * Math.PI);
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
-        
+    };
+    
+    self.draw = function(){
         // draw ship
         self.objs.ship.bind();
         
