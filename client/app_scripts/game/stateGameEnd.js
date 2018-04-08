@@ -3,48 +3,71 @@
 // Summary: State class representing loading roomState
 
 StateGameEnd = function(){
-    // state initialization 
+    // state initialization
+    console.log('current state: game end');
     self = {
-        // buffer that contains three coordinates and four color values for each shape vertex
-        vertexBufferObject: gl.createBuffer(),
-        // buffer that contains blocks of three vertex indices, representing triangle to draw
-        indexBufferObject: gl.createBuffer(),
+        ship: {
+            VBO: gl.createBuffer(),
+            IBO: gl.createBuffer(),
+            texture: gl.createTexture()
+        },
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
         scalMatrix: new Float32Array(16),
-        translation: Math.random() + 1.0,
+        pressed: [false, false, false, false],
+        translation: Math.random() + 1,
         rotation: Math.random() * 2 * Math.PI
     };
     
-    // bind buffers for the only shape used
-    gl.bindBuffer(gl.ARRAY_BUFFER, self.vertexBufferObject);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.indexBufferObject);
-
-    // define how vertex buffer contents are interpreted by shader programs
-    var positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
-    var colorAttribLocation = gl.getAttribLocation(program, 'vertColor');
-    gl.vertexAttribPointer(
-        positionAttribLocation,
-        3,
-        gl.FLOAT,
-        gl.FALSE,
-        7 * Float32Array.BYTES_PER_ELEMENT,
-        0
-    );
-    gl.vertexAttribPointer(
-        colorAttribLocation,
-        4,
-        gl.FLOAT,
-        gl.FALSE,
-        7 * Float32Array.BYTES_PER_ELEMENT,
-        3 * Float32Array.BYTES_PER_ELEMENT
-    );
-    gl.enableVertexAttribArray(positionAttribLocation);
-    gl.enableVertexAttribArray(colorAttribLocation);
+    self.deleteObject = function(object){
+        gl.deleteBuffer(object.VBO);
+        gl.deleteBuffer(object.IBO);
+        gl.deleteTexture(object.texture);
+    }
     
-    // load shape data into buffers
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
+    // init ship shape
+    { 
+        // define how vertex buffer contents are interpreted by shader programs
+        self.ship.positionAttribLocation = gl.getAttribLocation(program, 'vertPosition');
+        self.ship.colorAttribLocation = gl.getAttribLocation(program, 'textCoord');
+        
+        // function binding ship buffers for configuration or drawing
+        self.ship.bind = function(){
+            gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
+            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+            gl.activeTexture(gl.TEXTURE0);
+            gl.uniform1i(samplerUniformLocation, 0);
+            gl.vertexAttribPointer(
+                self.ship.positionAttribLocation, 3, gl.FLOAT, gl.FALSE, 
+                5 * Float32Array.BYTES_PER_ELEMENT, 0
+            );
+            gl.vertexAttribPointer(
+                self.ship.colorAttribLocation, 2, gl.FLOAT, gl.FALSE, 
+                5 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT
+            );
+        };
+        self.ship.bind();
+
+        // load data into buffers
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(self.ship.positionAttribLocation);
+        gl.enableVertexAttribArray(self.ship.colorAttribLocation);
+        
+        // set default texture and init texture download
+        gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat,
+                      texParams.width, texParams.height, texParams.border, 
+                      texParams.srcFormat, texParams.srcType, texParams.pixel);
+        const image = new Image();
+        image.onload = function(){
+            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+            gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat, 
+                          texParams.srcFormat, texParams.srcType, image);
+            gl.generateMipmap(gl.TEXTURE_2D);
+        };
+        image.src = 'app_scripts/game/res/ship.png';
+    }
     
     // init projection and view matrices used throughout this roomState
     var projMatrix = new Float32Array(16);
@@ -55,11 +78,9 @@ StateGameEnd = function(){
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
     
     self.draw = function(){
-        // only one shape used, so just bind it once
-        gl.bindBuffer(gl.ARRAY_BUFFER, self.vertexBufferObject);
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.indexBufferObject);
+        // draw 1st ship
+        self.ship.bind();
         
-        // draw larger triangle
         mat4.fromTranslation(self.tranMatrix, [self.translation, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
@@ -70,7 +91,9 @@ StateGameEnd = function(){
 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
-        // draw smaller triangle
+        // draw 2nd ship
+        self.ship.bind();
+        
         mat4.fromTranslation(self.tranMatrix, [0.0, 0.5, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
         mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2]);

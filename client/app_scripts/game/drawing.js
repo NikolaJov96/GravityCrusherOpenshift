@@ -5,6 +5,18 @@
 var canvas = document.getElementById('myCanvas');
 var gl = canvas.getContext('webgl');
 
+// default values used as parameters when loading an image as a texture
+var texParams = {
+    level: 0,
+    internalFormat: gl.RGBA,
+    width: 1,
+    height: 1,
+    border: 0,
+    srcFormat: gl.RGBA,
+    srcType: gl.UNSIGNED_BYTE,
+    pixel: new Uint8Array([0, 0, 255, 255])  // opaque blue
+};
+
 gl.clearColor(0.3, 0.3, 0.3, 1.0);
 gl.enable(gl.DEPTH_TEST);
 gl.enable(gl.BLEND);
@@ -43,11 +55,11 @@ matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
 matTranslationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
 matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
 matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
-samplerUniformLocation = gl.getUniformLocation(program, 'uSmpler');
+samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
 
 
 // room state init and the main loop
-roomState = StateGame();
+roomState = StateLoading();
 
 setInterval(function(){
     gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
