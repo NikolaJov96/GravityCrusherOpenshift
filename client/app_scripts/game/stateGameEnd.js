@@ -9,7 +9,7 @@ StateGameEnd = function(){
         ship: {
             VBO: gl.createBuffer(),
             IBO: gl.createBuffer(),
-            texture: gl.createTexture()
+            texture: 'ship'
         },
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
@@ -35,7 +35,7 @@ StateGameEnd = function(){
         self.ship.bind = function(){
             gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
-            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+            gl.bindTexture(gl.TEXTURE_2D, shapeTextures[self.ship.texture]);
             gl.activeTexture(gl.TEXTURE0);
             gl.uniform1i(samplerUniformLocation, 0);
             gl.vertexAttribPointer(
@@ -54,19 +54,6 @@ StateGameEnd = function(){
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.ship.positionAttribLocation);
         gl.enableVertexAttribArray(self.ship.colorAttribLocation);
-        
-        // set default texture and init texture download
-        gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat,
-                      texParams.width, texParams.height, texParams.border, 
-                      texParams.srcFormat, texParams.srcType, texParams.pixel);
-        const image = new Image();
-        image.onload = function(){
-            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
-            gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat, 
-                          texParams.srcFormat, texParams.srcType, image);
-            gl.generateMipmap(gl.TEXTURE_2D);
-        };
-        image.src = 'app_scripts/game/res/ship.png';
     }
     
     // init projection and view matrices used throughout this roomState

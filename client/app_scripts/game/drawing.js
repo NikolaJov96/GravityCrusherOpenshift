@@ -57,8 +57,8 @@ matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
 matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
 samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
 
-
-// room state init and the main loop
+// room init and the main loop
+preloadTextures();
 roomState = StateLoading();
 
 setInterval(function(){

@@ -9,12 +9,12 @@ StateGame = function(){
         ship: {
             VBO: gl.createBuffer(),
             IBO: gl.createBuffer(),
-            texture: gl.createTexture()
+            texture: 'ship'
         },
         exhaust: {
             VBO: gl.createBuffer(),
             IBO: gl.createBuffer(),
-            texture: gl.createTexture()
+            texture: 'exhaust'
         },
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
@@ -27,7 +27,6 @@ StateGame = function(){
     self.deleteObject = function(object){
         gl.deleteBuffer(object.VBO);
         gl.deleteBuffer(object.IBO);
-        gl.deleteTexture(object.texture);
     }
     
     // init ship shape
@@ -40,7 +39,7 @@ StateGame = function(){
         self.ship.bind = function(){
             gl.bindBuffer(gl.ARRAY_BUFFER, self.ship.VBO);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.ship.IBO);
-            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
+            gl.bindTexture(gl.TEXTURE_2D, shapeTextures[self.ship.texture]);
             gl.activeTexture(gl.TEXTURE0);
             gl.uniform1i(samplerUniformLocation, 0);
             gl.vertexAttribPointer(
@@ -59,19 +58,6 @@ StateGame = function(){
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.ship.positionAttribLocation);
         gl.enableVertexAttribArray(self.ship.colorAttribLocation);
-        
-        // set default texture and init texture download
-        gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat,
-                      texParams.width, texParams.height, texParams.border, 
-                      texParams.srcFormat, texParams.srcType, texParams.pixel);
-        const image = new Image();
-        image.onload = function(){
-            gl.bindTexture(gl.TEXTURE_2D, self.ship.texture);
-            gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat, 
-                          texParams.srcFormat, texParams.srcType, image);
-            gl.generateMipmap(gl.TEXTURE_2D);
-        };
-        image.src = 'app_scripts/game/res/ship.png';
     }
     
     // init exhaust shape
@@ -84,7 +70,7 @@ StateGame = function(){
         self.exhaust.bind = function(){
             gl.bindBuffer(gl.ARRAY_BUFFER, self.exhaust.VBO);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.exhaust.IBO);
-            gl.bindTexture(gl.TEXTURE_2D, self.exhaust.texture);
+            gl.bindTexture(gl.TEXTURE_2D, shapeTextures[self.exhaust.texture]);
             gl.activeTexture(gl.TEXTURE0);
             gl.uniform1i(samplerUniformLocation, 0);
             gl.vertexAttribPointer(
@@ -103,19 +89,6 @@ StateGame = function(){
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.exhaust.ind), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(self.exhaust.positionAttribLocation);
         gl.enableVertexAttribArray(self.exhaust.colorAttribLocation);
-        
-        // set default texture and init texture download
-        gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat,
-                      texParams.width, texParams.height, texParams.border, 
-                      texParams.srcFormat, texParams.srcType, texParams.pixel);
-        const image = new Image();
-        image.onload = function(){
-            gl.bindTexture(gl.TEXTURE_2D, self.exhaust.texture);
-            gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat, 
-                          texParams.srcFormat, texParams.srcType, image);
-            gl.generateMipmap(gl.TEXTURE_2D);
-        };
-        image.src = 'app_scripts/game/res/exhaust.png';
     }
     
     // init projection and view matrices used throughout this roomState
