@@ -22,7 +22,6 @@ StateGameEnd = function(){
     self.deleteObject = function(object){
         gl.deleteBuffer(object.VBO);
         gl.deleteBuffer(object.IBO);
-        gl.deleteTexture(object.texture);
     }
     
     // init ship shape

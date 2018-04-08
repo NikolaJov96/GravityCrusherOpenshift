@@ -17,7 +17,6 @@ document.onkeyup = function(event){
     var newState = roomState.onKeyUp(event);
     if (newState){
         roomState.finish();
-        roomState = null;
         roomState = newState();
     }
 }
