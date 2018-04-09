@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `psi` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `psi`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: psi
@@ -73,6 +71,32 @@ INSERT INTO `game_map` VALUES (1,'Sirius'),(2,'Severnjaca'),(3,'Galaksija'),(4,'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `statistics`
+--
+
+DROP TABLE IF EXISTS `statistics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `statistics` (
+  `id_user_stat` int(11) NOT NULL,
+  `games_played_count` int(11) NOT NULL DEFAULT '0',
+  `games_won_count` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user_stat`),
+  CONSTRAINT `id_user_stat` FOREIGN KEY (`id_user_stat`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `statistics`
+--
+
+LOCK TABLES `statistics` WRITE;
+/*!40000 ALTER TABLE `statistics` DISABLE KEYS */;
+INSERT INTO `statistics` VALUES (1,0,0),(2,0,0),(3,0,0),(4,0,0),(5,0,0),(6,0,0),(7,0,0),(8,0,0);
+/*!40000 ALTER TABLE `statistics` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `token`
 --
 
@@ -82,7 +106,7 @@ DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
   `id_token` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `token_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_token`),
   KEY `id_user_idx` (`id_user`),
   CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -95,7 +119,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,1,'2018-04-01 17:03:15'),(2,2,'2018-04-01 17:03:15'),(3,3,'2018-04-01 17:03:15'),(4,1,'2018-04-01 17:03:15'),(5,2,'2018-04-01 17:03:15'),(6,4,'2018-04-01 17:03:15'),(7,5,'2018-04-01 17:03:15'),(8,6,'2018-04-01 17:03:15'),(9,7,'2018-04-01 17:03:15'),(10,4,'2018-04-01 17:03:16'),(11,7,'2018-04-01 17:03:16'),(12,8,'2018-04-01 17:03:16'),(13,9,'2018-04-01 17:03:16');
+INSERT INTO `token` VALUES (1,1,'2018-04-09 11:26:51'),(2,2,'2018-04-09 11:26:51'),(3,3,'2018-04-09 11:26:51'),(4,1,'2018-04-09 11:26:51'),(5,2,'2018-04-09 11:26:51'),(6,4,'2018-04-09 11:26:51'),(7,5,'2018-04-09 11:26:51'),(8,6,'2018-04-09 11:26:51'),(9,7,'2018-04-09 11:26:51'),(10,4,'2018-04-09 11:26:51'),(11,7,'2018-04-09 11:26:51'),(12,8,'2018-04-09 11:26:51'),(13,9,'2018-04-09 11:26:51');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,12 +132,11 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(25) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `email` varchar(250) NOT NULL,
   `password_hash` varchar(128) NOT NULL,
   `password_salt` varchar(256) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `games_played_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -126,7 +149,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-01 17:03:15',0),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-01 17:03:15',0),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-01 17:03:15',0),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-01 17:03:15',0),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-01 17:03:15',0),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-01 17:03:15',0),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-01 17:03:15',0),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-01 17:03:15',0),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-01 17:03:15',0);
+INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-09 11:26:50'),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-09 11:26:50'),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-09 11:26:50'),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-09 11:26:50'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-09 11:26:51'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-09 11:26:51'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-09 11:26:51'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-09 11:26:51'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-09 11:26:51');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +174,7 @@ CREATE TABLE `user_banned` (
 
 LOCK TABLES `user_banned` WRITE;
 /*!40000 ALTER TABLE `user_banned` DISABLE KEYS */;
-INSERT INTO `user_banned` VALUES (5,'2018-04-01 17:03:15'),(8,'2018-04-01 17:03:15');
+INSERT INTO `user_banned` VALUES (5,'2018-04-09 11:26:51'),(8,'2018-04-09 11:26:51');
 /*!40000 ALTER TABLE `user_banned` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,6 +187,7 @@ DROP TABLE IF EXISTS `user_disabled`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_disabled` (
   `id` int(11) NOT NULL,
+  `disable_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   CONSTRAINT `id` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -175,7 +199,7 @@ CREATE TABLE `user_disabled` (
 
 LOCK TABLES `user_disabled` WRITE;
 /*!40000 ALTER TABLE `user_disabled` DISABLE KEYS */;
-INSERT INTO `user_disabled` VALUES (6),(7);
+INSERT INTO `user_disabled` VALUES (6,'2018-04-09 11:26:51'),(7,'2018-04-09 11:26:51');
 /*!40000 ALTER TABLE `user_disabled` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +237,7 @@ DROP TABLE IF EXISTS `user_password_reset`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_password_reset` (
   `id_user_password` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reset_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `confirm_code` varchar(45) NOT NULL,
   PRIMARY KEY (`id_user_password`),
   CONSTRAINT `id_user_password` FOREIGN KEY (`id_user_password`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -226,7 +250,7 @@ CREATE TABLE `user_password_reset` (
 
 LOCK TABLES `user_password_reset` WRITE;
 /*!40000 ALTER TABLE `user_password_reset` DISABLE KEYS */;
-INSERT INTO `user_password_reset` VALUES (5,'2018-04-01 17:03:15','jovanresetujesvojusifru'),(6,'2018-04-01 17:03:15','jelenaresetujesvojusifru'),(8,'2018-04-01 17:03:15','petarresetujesvojusifru');
+INSERT INTO `user_password_reset` VALUES (5,'2018-04-09 11:26:51','jovanresetujesvojusifru'),(6,'2018-04-09 11:26:51','jelenaresetujesvojusifru'),(8,'2018-04-09 11:26:51','petarresetujesvojusifru');
 /*!40000 ALTER TABLE `user_password_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,26 +471,49 @@ BEGIN
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Filip", "filipmandic80@gmail.com", "123456789aaaffffddd", "ad46a4da64d64dd");
 
+INSERT INTO statistics(id_user_stat) VALUES (1);
+
+
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Andrija", "andrija6@gmail.com", "123456789aaaffccddd", "aad2ad1ad3ad13ad13ad13");
+
+INSERT INTO statistics(id_user_stat) VALUES (2);
+
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Nikola", "nikola6@gmail.com", "aaaaaaaaafffffdddddcdccc", "fb54f646bf6bfbfbbfb");
 
+INSERT INTO statistics(id_user_stat) VALUES (3);
+
+
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Nemanja", "nemanja6@gmail.com", "aacacacacacacc54acacac", "bf87b98f44b56f4b56");
+
+INSERT INTO statistics(id_user_stat) VALUES (4);
+
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Jovan", "jovan6@gmail.com", "dcdcdcdccdc4dc45d564", "12346579898451");
 
+INSERT INTO statistics(id_user_stat) VALUES (5);
+
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Jelena", "jelena6@gmail.com", "dc48d4c9c4d4cd484bbb", "abababaababababababababbababaab");
+
+INSERT INTO statistics(id_user_stat) VALUES (6);
+
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Milica", "milica6@gmail.com", "4b84b65b651b556b151", "aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb");
 
+INSERT INTO statistics(id_user_stat) VALUES (7);
+
+
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Petar", "petar6@gmail.com", "54f54f4f645f4f4f56", "dfdfdfffddffddfdfdfdfdfdfdfdfd");
+
+INSERT INTO statistics(id_user_stat) VALUES (8);
+
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Marko", "marko6@gmail.com", "111111111111111aaaaa111111", "fffffffffffffffffffffffffffffff");
@@ -543,4 +590,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-02 15:45:01
+-- Dump completed on 2018-04-09 15:24:58

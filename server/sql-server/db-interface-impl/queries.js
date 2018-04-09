@@ -25,6 +25,9 @@ module.exports = {
     //input id
     deleteFromUserNotConfirmed: "DELETE FROM user_not_confirmed WHERE id_not_confirmed = ?",
 
+    //input id
+    insertUserInStatistics: "INSERT INTO statistics(id_user_stat) VALUES (?)",
+
     //input username
     getUserSalt: "SELECT * FROM user WHERE username = ?",
 
