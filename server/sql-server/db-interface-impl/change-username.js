@@ -61,5 +61,3 @@ var changeUsername = function(connection, oldUsername, newUsername, hash, callba
 }
 
 module.exports = changeUsername;
-
-//mozda gurnuti transakciju

@@ -32,7 +32,6 @@ var searchInPasswordRecoveryCallback = function(info) { return function(error, r
         }
         else {
             if (!!rows.length) {
-                console.log("Radim delete\n");
                 info.connection.query(queries.deleteFromPasswordRecovery, [info.id], deletingCallback(info));
             }
             else {
@@ -66,7 +65,6 @@ var createPasswordRecovery = function(connection, email, requestCode, callback) 
         requestCode : requestCode,
         callback : callback
     }
-console.log(info.email);
     info.connection.query(queries.checkIfEmailExists, [info.email], searchInUserCallback(info));
 }
 

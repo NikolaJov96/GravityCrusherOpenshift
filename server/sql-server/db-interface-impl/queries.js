@@ -59,7 +59,3 @@ module.exports = {
     checkIfUserCanSignIn : "SELECT id from user WHERE username = ?",
 
 }
-
-//osmisliti i ispisati sql za jos dosta user-a
-
-//osmisliti i ispisati sql za jos dosta user-a

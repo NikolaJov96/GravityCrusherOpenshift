@@ -83,8 +83,6 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     }
 }}
 
-//sredjeno na dole
-
 var confirmUser = function(connection, username, confirmationCode, callback) {
 
     info = {
