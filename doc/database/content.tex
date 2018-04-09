@@ -1,14 +1,193 @@
 \section{Увод}
 
+\subsection{Намена}
+Овај документ представља спецификацију базе података за пројекат \textit{Gravity
+Crusher}, на предмету Принципи софтверског инжењерства. У документу су дати IE модел
+података, шема релационе базе података и детаљан опис табела и одговарајућих атрибута у
+бази података. Овај документ представља основ за дизајн, имплементацију, интеграцију и
+тестирање базе података и модула за комуникацију са базом података.
+
+\subsection{Циљне групе}
+Овај документ намењен је члановима развојног тима, који се воде спецификацијама наведеним
+у документу приликом дизајнирања, имплементације, интеграције и тестирања овог
+подсистема.
+
+\subsection{Организација документа}
+Остатак овог документа организован је у следећа поглавља:
+    \begin{itemize}
+        \item \textbf{Модел података} -- модел података у бази и шема релационе базе
+                     података.
+        \item \textbf{Табеле} -- опис табела унутар базе података.
+    \end{itemize}
+
+\subsection{Отворена питања}
+
+\begin{table}[h!]
+\centering
+
+    \begin{tabu}{ || X[l] | X[l] | X[l] | X[l] || }
+    \hline
+    \textbf{Верзија} & \textbf{Датум} & \textbf{Кратак опис} & \textbf{Аутор} \\
+    \hline
+    \hline
+    & & &\\
+    \hline
+    & & &\\
+    \hline
+    & & &\\
+    \hline
+    & & &\\
+    \hline
+    \end{tabu}
+    \caption{Преглед отворених питања}
+    \label{table:2}
+
+\end{table}
+
 
 
 
 
 \section{Модел података}
 
+\subsection{IE нотација}
+
+\subsection{Шема релационе базе података}
+
 
 
 
 
 \section{Табеле}
+
+\subsection{user}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id & int(11) & Yes & No \\
+    \hline
+        username & varchar(25) & No & No \\
+    \hline
+        email & varchar(250) & No & No \\
+    \hline
+        password\_hash & varchar(128) & No & No \\
+    \hline
+        password\_salt & varchar(256) & No & No \\
+    \hline
+        create\_date & timestamp & No & No \\
+    \hline
+        games\_played\_count & int(11) & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+
+
+\subsection{user\_not\_confirmed}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_not\_confirmed & int(11) & Yes & Yes \\
+    \hline
+        confirm\_code & varchar(45) & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\subsection{user\_password\_reset}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_user\_password & int(11) & Yes & Yes \\
+    \hline
+        reset\_date & timestamp & No & No \\
+    \hline
+        confirm\_code & varchar(45) & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\newpage
+
+\subsection{user\_banned}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_bann & int(11) & Yes & Yes \\
+    \hline
+        bann\_date & timestamp & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\subsection{user\_disabled}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id & int(11) & Yes & Yes \\
+    \hline
+        disable\_date & timestamp & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
 
