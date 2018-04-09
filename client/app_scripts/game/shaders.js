@@ -6,7 +6,7 @@
 // Fragment shader: program that calculates exact color of each pixel on the screen 
 
 var shaders = {
-    vertexShaderText:[
+    vertexShaderText: [
         'precision mediump float;',
         '',
         'attribute vec3 vertPosition;',
@@ -17,16 +17,18 @@ var shaders = {
         'uniform mat4 tranMatrix;',
         'uniform mat4 rotaMatrix;',
         'uniform mat4 scalMatrix;',
+        'uniform mat4 origMatrix;',
         '',
         'varying highp vec2 textureCoord;',
         '',
         'void main()',
         '{',
-        '    gl_Position = projMatrix * viewMatrix * tranMatrix * rotaMatrix * scalMatrix * vec4(vertPosition, 1.0);',
+        '    gl_Position = projMatrix * viewMatrix * tranMatrix * rotaMatrix * ',
+        '                  scalMatrix * origMatrix * vec4(vertPosition, 1.0);',
         '    textureCoord = textCoord;',
         '}'
     ].join('\n'),
-    fragmentShaderText:[
+    fragmentShaderText: [
         'precision mediump float;',
         '',
         'varying highp vec2 textureCoord;',

@@ -56,6 +56,7 @@ matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
 matTranslationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
 matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
 matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
+matOriginUniformLocation = gl.getUniformLocation(program, 'origMatrix');
 samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
 
 // room init and the main loop

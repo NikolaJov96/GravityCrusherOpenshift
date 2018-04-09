@@ -41,10 +41,12 @@ StateGame = function(){
         mat4.fromTranslation(self.tranMatrix, self.translation);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
+        mat4.identity(self.origMatrix);
 
         gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
         gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
         gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
+        gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
@@ -55,13 +57,13 @@ StateGame = function(){
             mat4.fromTranslation(self.tranMatrix, self.translation);
             mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
             mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
-
             // make exhaust position relative to the ship position
-            mat4.translate(self.scalMatrix, self.scalMatrix, [-0.9, 0.0, 0.0]);
+            mat4.fromTranslation(self.origMatrix, [-0.9, 0.0, 0.0]);
 
             gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
             gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
             gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
+            gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
 
             gl.drawElements(gl.TRIANGLES, objectShapes.exhaust.ind.length, gl.UNSIGNED_SHORT, 0);
         }

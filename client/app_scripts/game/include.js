@@ -22,6 +22,7 @@ var matViewUniformLocation = null;
 var matTranslationUniformLocation = null;
 var matRotationUniformLocation = null;
 var matScalingUniformLocation = null;
+var matOriginUniformLocation = null;
 
 // abstract room state class
 var abstractState = function(){
@@ -29,7 +30,8 @@ var abstractState = function(){
         objs: {},
         tranMatrix: new Float32Array(16),
         rotaMatrix: new Float32Array(16),
-        scalMatrix: new Float32Array(16)
+        scalMatrix: new Float32Array(16),
+        origMatrix: new Float32Array(16)
     };
     
     // frees all webgl buffers of defined objects
