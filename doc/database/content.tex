@@ -191,3 +191,59 @@ Crusher}, на предмету Принципи софтверског инже
 
 \end{table}
 
+\subsection{game\_map}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_map & int(11) & Yes & Yes \\
+    \hline
+        name & varchar(45) & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\subsection{cosmic\_object}
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_object & int(11) & Yes & No \\
+    \hline
+        id\_map & int(11) & No & Yes \\
+    \hline
+        position\_x & float & No & No \\
+    \hline
+        position\_y & float & No & No \\
+    \hline
+        velocity\_x & float & No & No \\
+    \hline
+        velocity\_x & float & No & No \\
+    \hline
+        mass & float & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
