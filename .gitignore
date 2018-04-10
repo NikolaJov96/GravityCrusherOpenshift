@@ -5,8 +5,15 @@ doc/**/*.log
 doc/**/*.out
 doc/**/*.toc
 
+# Ignore vim backup files.
+*.swp
+
 # Ignore configuration files containing private information.
 server/sockets-server/email-service-conf.js
+server/sql-server/db-connection/db-connection-file.js
+
+# Ignore database test files.
+server/sql-server/tests/tests.js
 
 # Ignore npm's module dump folder.
 node_modules/
