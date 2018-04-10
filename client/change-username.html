@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>#ChangePassword</title>
+    <script src="socket.io/socket.io.js"></script>
+	<script src="app_scripts/init-connection.js"></script>
   </head>
   <body>
     <header>
@@ -77,11 +79,11 @@
 	<div class="form-group row">
       <label for="inputEmail3" class="col-sm-4 col-form-label col-lg-2">New Username</label>
       <div class="col-sm-8 col-lg-10">
-        <input type="email" class="form-control" id="inputEmail3" placeholder="Username">
+        <input type="text" class="form-control" id="username" placeholder="Username">
       </div>
     </div>
 
-    <button type="button" class="btn btn-info offset-lg-2 offset-sm-4">Submit</button>
+    <button id="submitBtn" type="button" class="btn btn-info offset-lg-2 offset-sm-4">Submit</button>
 
     </div>
 
@@ -92,6 +94,7 @@
       </p>
     </footer>
     <!-- Na dnu body dela se inkluduju skriptni delovi da bi se manje cekalo otvaranje same stranice, jer u ovom slucaju se prvo ucitaju elementi stranice, pa tek onda funkcionalnot pa korisnik bar moze nesto da cita-->
+    <script src="app_scripts/change-username.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
