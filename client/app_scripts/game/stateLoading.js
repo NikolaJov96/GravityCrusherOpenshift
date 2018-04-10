@@ -22,6 +22,10 @@ StateLoading = function(){
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
     
     self.draw = function(){
+        if (!shapeTextures.allTexturesLoaded) return;
+        
+        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+        
         // draw 1st ship
         self.objs.ship.bind();
         

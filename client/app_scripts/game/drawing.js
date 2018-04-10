@@ -63,8 +63,9 @@ samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
 preloadTextures();
 roomState = StateLoading();
 
-setInterval(function(){
+var mainLoop = function(){
     roomState.step();
-    gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
     roomState.draw();
-}, 40);
+    window.requestAnimationFrame(mainLoop);
+};
+window.requestAnimationFrame(mainLoop);

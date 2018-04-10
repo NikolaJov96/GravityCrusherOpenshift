@@ -35,6 +35,8 @@ StateGame = function(){
     };
     
     self.draw = function(){
+        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+        
         // draw ship
         self.objs.ship.bind();
         
