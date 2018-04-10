@@ -16,8 +16,10 @@ StateGameEnd = function(){
     // init projection and view matrices used throughout this roomState
     var projMatrix = new Float32Array(16);
     var viewMatrix = new Float32Array(16);
-    mat4.ortho(projMatrix, 0, canvas.width, canvas.height, 0, 0, 1000);
-    mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
+    mat4.ortho(projMatrix, -canvas.width / 2.0, canvas.width / 2.0, 
+               canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
+    mat4.lookAt(viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
+                [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
     gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
     
