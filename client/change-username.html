@@ -9,9 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>#MyProfile</title>
-	<script src="socket.io/socket.io.js"></script>
-	<script src="app_scripts/init-connection.js"></script>
+    <title>#ChangePassword</title>
   </head>
   <body>
     <header>
@@ -30,7 +28,7 @@
               <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="create-room">Create Room<span class="sr-only"></span></a>
             </li>
             
@@ -76,26 +74,16 @@
 
     <div class="jumbotron">
 
-      <div class="row">
-        <img src="img/grifon.jpg" class="img-fluid img-thumbnail mx-auto">
-
-        <div class="col-9">
-          <h1>Username: Marko</h1>
-        </div>
+	<div class="form-group row">
+      <label for="inputEmail3" class="col-sm-4 col-form-label col-lg-2">New Username</label>
+      <div class="col-sm-8 col-lg-10">
+        <input type="email" class="form-control" id="inputEmail3" placeholder="Username">
       </div>
-
-      <div class="row">
-        <a href="/"><div class="offset-1"><button type="button" class="btn btn-dark  mx-auto bottom-buffer">Deactive Profile</button></div></a>
-        <a href="change-password"><div class="offset-1"><button type="button" class="btn btn-dark  mx-auto bottom-buffer">Change Password</button></div></a>
-        <a href="change-username"><div class="offset-1"><button type="button" class="btn btn-dark  mx-auto bottom-buffer">Change Username</button></div></a>
-      </div>      
-
     </div>
 
-    <style type="text/css">
-      .slika{ background: black; }
-      .bottom-buffer { margin-bottom:10px; }
-    </style>
+    <button type="button" class="btn btn-info offset-lg-2 offset-sm-4">Submit</button>
+
+    </div>
 
     <footer class="fixed-bottom" style="background: linear-gradient(to right, black , #2e528c);">
       <p class="text-right" style="color: white">
