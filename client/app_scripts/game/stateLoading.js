@@ -7,7 +7,7 @@ StateLoading = function(){
     console.log('current state: game loading - press space');
     self = abstractState();
     self.pressed = [false, false, false, false];
-    self.translation = Math.random() + 1;
+    self.translation = canvas.width * 0.6 + Math.random() * canvas.width * 0.2;
     self.rotation = Math.random() * 2 * Math.PI;
     
     // init ship shape
@@ -16,7 +16,7 @@ StateLoading = function(){
     // init projection and view matrices used throughout this roomState
     var projMatrix = new Float32Array(16);
     var viewMatrix = new Float32Array(16);
-    mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0);
+    mat4.ortho(projMatrix, 0, canvas.width, canvas.height, 0, 0, 1000);
     mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
     gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
@@ -29,7 +29,7 @@ StateLoading = function(){
         // draw 1st ship
         self.objs.ship.bind();
         
-        mat4.fromTranslation(self.tranMatrix, [self.translation, -0.5, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [self.translation, canvas.height * 0.6, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
         mat4.identity(self.origMatrix);
@@ -44,7 +44,7 @@ StateLoading = function(){
         // draw 2nd ship
         self.objs.ship.bind();
         
-        mat4.fromTranslation(self.tranMatrix, [0.0, -0.5, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height * 0.6, 0.0]);
         mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
         mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2]);
         mat4.identity(self.origMatrix);

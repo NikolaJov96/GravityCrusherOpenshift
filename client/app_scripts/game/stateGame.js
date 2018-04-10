@@ -7,7 +7,7 @@ StateGame = function(){
     console.log('current state: game - press space or arrows');
     self = abstractState();
     self.pressed = [false, false, false, false];
-    self.translation = [Math.random(), Math.random(), 0.0];
+    self.translation = [canvas.width / 2.0, canvas.height / 2.0, 1.0, 0.0];
     self.rotation = Math.random() * 2 * Math.PI;
     
     // init ship shape
@@ -19,18 +19,18 @@ StateGame = function(){
     // init projection and view matrices used throughout this roomState
     var projMatrix = new Float32Array(16);
     var viewMatrix = new Float32Array(16);
-    mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0);
-    mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
+    mat4.ortho(projMatrix, 0, canvas.width, canvas.height, 0, 0, 1000);
+    mat4.lookAt(viewMatrix, [0, 0, 1], [0, 0, 0], [0, 1, 0]);
     gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
     
     self.step = function(){
-        if (self.pressed[0]) self.rotation = (self.rotation + 0.1) % (2 * Math.PI);
+        if (self.pressed[0]) self.rotation = (self.rotation - 0.05) % (2 * Math.PI);
         if (self.pressed[1]) {
-            self.translation[0] += 0.08 * Math.cos(self.rotation);
-            self.translation[1] += 0.08 * Math.sin(self.rotation);
+            self.translation[0] += 5 * Math.cos(self.rotation);
+            self.translation[1] += 5 * Math.sin(self.rotation);
         }
-        if (self.pressed[2]) self.rotation = (self.rotation - 0.1) % (2 * Math.PI);
+        if (self.pressed[2]) self.rotation = (self.rotation + 0.05 + 2 * Math.PI) % (2 * Math.PI);
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
     };
     
@@ -60,7 +60,7 @@ StateGame = function(){
             mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
             mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
             // make exhaust position relative to the ship position
-            mat4.fromTranslation(self.origMatrix, [-0.9, 0.0, 0.0]);
+            mat4.fromTranslation(self.origMatrix, [-180, 0.0, 0.0]);
 
             gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
             gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
