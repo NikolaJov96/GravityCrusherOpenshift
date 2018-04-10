@@ -52,15 +52,31 @@ Crusher}, на предмету Принципи софтверског инже
 
 \subsection{IE нотација}
 
+\includegraphics[width=\textwidth]{../resources/database-model.png}
+
 \subsection{Шема релационе базе података}
 
-
+\begin{enumerate}
+    \item user(\underline{id}, username, email, password\_hash, password\_salt,
+        create\_date)
+    \item user\_banned(\underline{id\_bann}, bann\_date)
+    \item user\_disabled(\underline{id}, disable\_date)
+    \item user\_not\_confirmed(\underline{id\_not\_confirmed}, confirm\_code)
+    \item user\_password\_reset(\underline{id\_user\_password}, reset\_date, confirm\_code)
+    \item token(\underline{id\_token}, id\_user, token\_create\_date)
+    \item statistics(\underline{id\_user\_stat}, games\_played\_count, games\_won\_count)
+    \item game\_map(\underline{id\_map}, name)
+    \item cosmic\_object(\underline{id\_object}, id\_map, position\_x, position\_y,
+        velocity\_x, velocity\_y, mass)
+\end{enumerate}
 
 
 
 \section{Табеле}
 
 \subsection{user}
+Садржи основне податке о регистрованим корисницима апликације као и податке потребне за
+пријављивање на кориснички налог.
 
 \begin{table}[h!]
 \centering
@@ -87,8 +103,6 @@ Crusher}, на предмету Принципи софтверског инже
     \hline
         create\_date & timestamp & No & No \\
     \hline
-        games\_played\_count & int(11) & No & No \\
-    \hline
     \end{tabular}
 
 \end{table}
@@ -96,6 +110,8 @@ Crusher}, на предмету Принципи софтверског инже
 
 
 \subsection{user\_not\_confirmed}
+Садржи податке о томе који корисници су започели процес регистрације, али још увек нису потврдили
+своје корисничке налоге путем e-mail верификације.
 
 \begin{table}[h!]
 \centering
@@ -119,6 +135,7 @@ Crusher}, на предмету Принципи софтверског инже
 \end{table}
 
 \subsection{user\_password\_reset}
+Садржи податке о томе који корсници су послали захтев за промену лозинке.
 
 \begin{table}[h!]
 \centering
@@ -143,9 +160,11 @@ Crusher}, на предмету Принципи софтверског инже
 
 \end{table}
 
+% Evil
 \newpage
 
 \subsection{user\_banned}
+Садржи податке о корисницима којима је забрањено учествовање у игри.
 
 \begin{table}[h!]
 \centering
@@ -169,6 +188,7 @@ Crusher}, на предмету Принципи софтверског инже
 \end{table}
 
 \subsection{user\_disabled}
+Садржи податке о корисницима који су деактивирали свој кориснички налог.
 
 \begin{table}[h!]
 \centering
@@ -191,7 +211,8 @@ Crusher}, на предмету Принципи софтверског инже
 
 \end{table}
 
-\subsection{game\_map}
+\subsection{token}
+Садржи податке о тренутно коришћеним токенима.
 
 \begin{table}[h!]
 \centering
@@ -206,13 +227,68 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_map & int(11) & Yes & Yes \\
+        id\_token & int(11) & Yes & No \\
+    \hline
+        token\_create\_date & timestamp & No & No \\
+    \hline
+        id\_user & int(11) & No & Yes \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\subsection{statistics}
+Садржи статистичке податке за сваког корисника.
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_user\_stat & int(11) & Yes & Yes \\
+    \hline
+        games\_won\_count & int(11) & No & No \\
+    \hline
+        games\_playedn\_count & int(11) & No & No \\
+    \hline
+    \end{tabular}
+
+\end{table}
+
+\subsection{game\_map}
+Садржи основне податке о мапама за игру.
+
+\begin{table}[h!]
+\centering
+\small
+
+    \begin{tabular}{ | m{0.45\textwidth} | m{0.22\textwidth} | m{0.1\textwidth} | m{0.1\textwidth} | }
+    \hline
+        \cellcolor{blue!25}\textbf{\textit{Name}} &
+
+        \cellcolor{blue!25}\textbf{\textit{Datatype}} &
+        \cellcolor{blue!25}\textbf{\textit{Is PK}} &
+        \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
+    \hline
+    \hline
+        id\_map & int(11) & Yes & No \\
     \hline
         name & varchar(45) & No & No \\
     \hline
     \end{tabular}
 
 \end{table}
+
+% Evil
+\newpage
 
 \subsection{cosmic\_object}
 
@@ -239,7 +315,7 @@ Crusher}, на предмету Принципи софтверског инже
     \hline
         velocity\_x & float & No & No \\
     \hline
-        velocity\_x & float & No & No \\
+        velocity\_y & float & No & No \\
     \hline
         mass & float & No & No \\
     \hline
