@@ -20,8 +20,8 @@ StateLoading = function(){
                canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
     mat4.lookAt(viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
                 [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
-    gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
-    gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
+    gl.uniformMatrix4fv(programInfo.matProjUnifLoc, gl.FALSE, projMatrix);
+    gl.uniformMatrix4fv(programInfo.matViewUnifLoc, gl.FALSE, viewMatrix);
     
     self.draw = function(){
         if (!shapeTextures.allTexturesLoaded) return;
@@ -39,8 +39,8 @@ StateLoading = function(){
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+        gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
  
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
@@ -49,14 +49,14 @@ StateLoading = function(){
         
         mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height * 0.6, 0.0]);
         mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
-        mat4.scale(self.tranMatrix, self.tranMatrix, [0.2, 0.2, 0.2]);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
         mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
         
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+        gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
  
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
     };

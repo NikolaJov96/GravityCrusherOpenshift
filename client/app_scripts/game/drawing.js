@@ -51,11 +51,14 @@ if (!gl.getProgramParameter(program, gl.VALIDATE_STATUS)) console.log(gl.getProg
 gl.useProgram(program);
 
 // linking uniform matrix and texture sampler locations to the program in use
-matProjectionUniformLocation = gl.getUniformLocation(program, 'projMatrix');
-matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
-matTransformationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
-matNormalUniformLocation = gl.getUniformLocation(program, 'normMatrix');
-samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
+programInfo.matProjUnifLoc = gl.getUniformLocation(program, 'projMatrix');
+programInfo.matViewUnifLoc = gl.getUniformLocation(program, 'viewMatrix');
+programInfo.matTranUnifLoc = gl.getUniformLocation(program, 'tranMatrix');
+programInfo.matNormUnifLoc = gl.getUniformLocation(program, 'normMatrix');
+programInfo.samplerUnifLoc = gl.getUniformLocation(program, 'smpler');
+programInfo.posAttribLoc = gl.getAttribLocation(program, 'vertPosition');
+programInfo.normalAttribLoc = gl.getAttribLocation(program, 'vertNormal');
+programInfo.coordAttribLoc = gl.getAttribLocation(program, 'textCoord');
 
 // room init and the main loop
 preloadTextures();

@@ -8,7 +8,7 @@ var preloadTextures = function(){
         shapeTextures[textureList[i]] = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, shapeTextures[textureList[i]]);
         gl.activeTexture(gl.TEXTURE0);
-        gl.uniform1i(samplerUniformLocation, 0);
+        gl.uniform1i(programInfo.samplerUnifLoc, 0);
         gl.texImage2D(gl.TEXTURE_2D, texParams.level, texParams.internalFormat,
                       texParams.width, texParams.height, texParams.border, 
                       texParams.srcFormat, texParams.srcType, texParams.pixel);

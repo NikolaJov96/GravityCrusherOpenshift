@@ -16,11 +16,8 @@ var objectShapes = {};
 // JSON of all game textures
 var shapeTextures = {};
 
-// locations of shader uniform matrix arguments
-var matProjectionUniformLocation = null;
-var matViewUniformLocation = null;
-var matTransformationUniformLocation = null;
-var matNormalUniformLocation = null;
+// locations of shader arguments
+var programInfo = {};
 
 // abstract room state class
 var abstractState = function(){
@@ -43,11 +40,7 @@ var abstractState = function(){
         self.objs[name] = {
             VBO: gl.createBuffer(),
             IBO: gl.createBuffer(),
-            texture: texture,
-            // define how vertex buffer contents are interpreted by shader programs
-            positionAttribLocation: gl.getAttribLocation(program, 'vertPosition'),
-            normalAttribLocation: gl.getAttribLocation(program, 'vertNormal'),
-            coordAttribLocation: gl.getAttribLocation(program, 'textCoord')
+            texture: texture
         };
         
         // function binding shape buffers for configuration or drawing
@@ -56,17 +49,17 @@ var abstractState = function(){
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.objs[name].IBO);
             gl.bindTexture(gl.TEXTURE_2D, shapeTextures[self.objs[name].texture]);
             gl.activeTexture(gl.TEXTURE0);
-            gl.uniform1i(samplerUniformLocation, 0);
+            gl.uniform1i(programInfo.samplerUnifLoc, 0);
             gl.vertexAttribPointer(
-                self.objs[name].positionAttribLocation, 3, gl.FLOAT, gl.FALSE, 
+                programInfo.posAttribLoc, 3, gl.FLOAT, gl.FALSE, 
                 8 * Float32Array.BYTES_PER_ELEMENT, 0
             );
             gl.vertexAttribPointer(
-                self.objs[name].normalAttribLocation, 3, gl.FLOAT, gl.FALSE, 
+                programInfo.normalAttribLoc, 3, gl.FLOAT, gl.FALSE, 
                 8 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT
             );
             gl.vertexAttribPointer(
-                self.objs[name].coordAttribLocation, 2, gl.FLOAT, gl.FALSE, 
+                programInfo.coordAttribLoc, 2, gl.FLOAT, gl.FALSE, 
                 8 * Float32Array.BYTES_PER_ELEMENT, 6 * Float32Array.BYTES_PER_ELEMENT
             );
         };
@@ -75,8 +68,9 @@ var abstractState = function(){
         // load data into buffers
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes[shape].vert), gl.STATIC_DRAW);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes[shape].ind), gl.STATIC_DRAW);
-        gl.enableVertexAttribArray(self.objs[name].positionAttribLocation);
-        gl.enableVertexAttribArray(self.objs[name].coordAttribLocation);
+        gl.enableVertexAttribArray(programInfo.posAttribLoc);
+        gl.enableVertexAttribArray(programInfo.normalAttribLoc);
+        gl.enableVertexAttribArray(programInfo.coordAttribLoc);
     };
     
     // function for stepping client state (only game mechanics unrelated tasks)

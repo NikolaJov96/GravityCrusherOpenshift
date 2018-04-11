@@ -23,20 +23,16 @@ StateGame = function(){
                canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
     mat4.lookAt(viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
                 [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
-    const normMatrix = mat4.create();
-    mat4.invert(normMatrix, viewMatrix);
-    mat4.transpose(normMatrix, normMatrix);
-    gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
-    gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
-    gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, normMatrix);
+    gl.uniformMatrix4fv(programInfo.matProjUnifLoc, gl.FALSE, projMatrix);
+    gl.uniformMatrix4fv(programInfo.matViewUnifLoc, gl.FALSE, viewMatrix);
     
     self.step = function(){
-        if (self.pressed[0]) self.rotation = (self.rotation - 0.05) % (2 * Math.PI);
+        if (self.pressed[0]) self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
         if (self.pressed[1]) {
             self.translation[0] += 5 * Math.cos(self.rotation);
             self.translation[1] += 5 * Math.sin(self.rotation);
         }
-        if (self.pressed[2]) self.rotation = (self.rotation + 0.05 + 2 * Math.PI) % (2 * Math.PI);
+        if (self.pressed[2]) self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
     };
     
@@ -54,8 +50,8 @@ StateGame = function(){
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+        gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
@@ -72,8 +68,8 @@ StateGame = function(){
             mat4.invert(self.normMatrix, self.tranMatrix);
             mat4.transpose(self.normMatrix, self.normMatrix);
 
-            gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
-            gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+            gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
+            gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
 
             gl.drawElements(gl.TRIANGLES, objectShapes.exhaust.ind.length, gl.UNSIGNED_SHORT, 0);
         }
