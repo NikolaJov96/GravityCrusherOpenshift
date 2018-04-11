@@ -38,7 +38,7 @@ function createNewUser(email, username, hash, salt, confrCode, callback){
     }
 }
 
-function generateConfirmationCode() {
+function generateConfirmationCode(){
     return crypto.randomBytes(16).toString('hex');
 };
 
@@ -81,3 +81,4 @@ module.exports = function(socket){ return function(data){
         }
     );
 };};
+

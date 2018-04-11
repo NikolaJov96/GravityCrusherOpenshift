@@ -19,14 +19,14 @@ requestPackages = [
     //     id:'openRoomsSelect',
     //     file:'./open-rooms-select-handler.js',
     // },
-    // {
-    //     id:'pageInit',
-    //     file:'./page-init-handler.js',
-    // },
-    // {
-    //     id:'signIn',
-    //     file:'./sign-in-handler.js',
-    // },
+    {
+        id:'pageInit',
+        file:'./page-init-handler.js',
+    },
+    {
+        id:'signIn',
+        file:'./sign-in-handler.js',
+    },
     {
         id:'signUp',
         file:'./sign-up-handler.js',
@@ -35,6 +35,7 @@ requestPackages = [
         id:'passwordReset',
         file:'./password-reset-handler.js',
     },
-]
+];
 
 module.exports = requestPackages;
+
