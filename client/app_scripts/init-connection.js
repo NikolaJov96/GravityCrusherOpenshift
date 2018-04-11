@@ -10,6 +10,8 @@ var validityCheck  = {
         if (entry.length < 3) return 1;
         // too long
         if (entry.length > 25) return 2;
+        // invalid char
+        if (entry.indexOf('@') > -1) return '@'.charCodeAt(0);
         // ok
         return 0;
     },

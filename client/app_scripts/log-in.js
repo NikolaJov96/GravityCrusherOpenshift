@@ -26,8 +26,8 @@ submitBtn.onclick = function(){
             'password':pass.value
         };
         var url = new URL(window.location.href);
-        var key = url.searchParams.get('activationKey');
-        if (key) logInPkg.activationKey = key;
+        var confirmCode = url.searchParams.get('cc');
+        if (confirmCode) logInPkg.confirmCode = confirmCode;
         socket.emit('signIn', logInPkg);
         logMsg('SignIn requested.');
     }
