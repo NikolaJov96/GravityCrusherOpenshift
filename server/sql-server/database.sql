@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `cosmic_object`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cosmic_object` (
-  `id_object` int(11) NOT NULL AUTO_INCREMENT,
-  `id_map` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `map_id` int(11) NOT NULL,
   `position_x` float NOT NULL,
   `position_y` float NOT NULL,
   `velocity_x` float NOT NULL,
   `velocity_y` float NOT NULL,
   `mass` float NOT NULL,
-  PRIMARY KEY (`id_object`),
-  KEY `id_map_idx` (`id_map`),
-  CONSTRAINT `id_map` FOREIGN KEY (`id_map`) REFERENCES `game_map` (`id_map`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`),
+  KEY `id_map_idx` (`map_id`),
+  CONSTRAINT `id_map` FOREIGN KEY (`map_id`) REFERENCES `game_map` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,9 +54,9 @@ DROP TABLE IF EXISTS `game_map`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game_map` (
-  `id_map` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_map`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,11 +78,11 @@ DROP TABLE IF EXISTS `statistics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `statistics` (
-  `id_user_stat` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `games_played_count` int(11) NOT NULL DEFAULT '0',
   `games_won_count` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_user_stat`),
-  CONSTRAINT `id_user_stat` FOREIGN KEY (`id_user_stat`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `id_user_stat` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -104,12 +104,14 @@ DROP TABLE IF EXISTS `token`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `token` (
-  `id_token` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `token_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_token`),
-  KEY `id_user_idx` (`id_user`),
-  CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `token_code` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`token_code`),
+  KEY `id_user_idx` (`user_id`),
+  CONSTRAINT `id_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +121,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,1,'2018-04-09 11:26:51'),(2,2,'2018-04-09 11:26:51'),(3,3,'2018-04-09 11:26:51'),(4,1,'2018-04-09 11:26:51'),(5,2,'2018-04-09 11:26:51'),(6,4,'2018-04-09 11:26:51'),(7,5,'2018-04-09 11:26:51'),(8,6,'2018-04-09 11:26:51'),(9,7,'2018-04-09 11:26:51'),(10,4,'2018-04-09 11:26:51'),(11,7,'2018-04-09 11:26:51'),(12,8,'2018-04-09 11:26:51'),(13,9,'2018-04-09 11:26:51');
+INSERT INTO `token` VALUES (1,1,'2018-04-11 13:04:16','aaabbbcccddda'),(2,2,'2018-04-11 13:04:16','aaabbbcccdddb'),(3,3,'2018-04-11 13:04:16','aaabbbcccdddc'),(4,1,'2018-04-11 13:04:16','aaabbbcccdddd'),(5,2,'2018-04-11 13:04:16','aaabbbcccddde'),(6,4,'2018-04-11 13:04:16','aaabbbcccdddf'),(7,5,'2018-04-11 13:04:16','aaabbbcccdddg'),(8,6,'2018-04-11 13:04:16','aaabbbcccdddh'),(9,7,'2018-04-11 13:04:16','aaabbbcccdddi'),(10,4,'2018-04-11 13:04:16','aaabbbcccdddj'),(11,7,'2018-04-11 13:04:16','aaabbbcccdddk'),(12,8,'2018-04-11 13:04:16','aaabbbcccdddl'),(13,9,'2018-04-11 13:04:16','aaabbbcccdddm');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +151,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-09 11:26:50'),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-09 11:26:50'),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-09 11:26:50'),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-09 11:26:50'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-09 11:26:51'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-09 11:26:51'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-09 11:26:51'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-09 11:26:51'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-09 11:26:51');
+INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-11 13:04:15'),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-11 13:04:16'),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-11 13:04:16'),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-11 13:04:16'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-11 13:04:16'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-11 13:04:16'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-11 13:04:16'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-11 13:04:16'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-11 13:04:16');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,10 +163,10 @@ DROP TABLE IF EXISTS `user_banned`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_banned` (
-  `id_bann` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `bann_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_bann`),
-  CONSTRAINT `id_bann` FOREIGN KEY (`id_bann`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `id_bann` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -174,7 +176,7 @@ CREATE TABLE `user_banned` (
 
 LOCK TABLES `user_banned` WRITE;
 /*!40000 ALTER TABLE `user_banned` DISABLE KEYS */;
-INSERT INTO `user_banned` VALUES (5,'2018-04-09 11:26:51'),(8,'2018-04-09 11:26:51');
+INSERT INTO `user_banned` VALUES (5,'2018-04-11 13:04:16'),(8,'2018-04-11 13:04:16');
 /*!40000 ALTER TABLE `user_banned` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,10 +188,10 @@ DROP TABLE IF EXISTS `user_disabled`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_disabled` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `disable_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `id` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `id_disable` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,7 +201,7 @@ CREATE TABLE `user_disabled` (
 
 LOCK TABLES `user_disabled` WRITE;
 /*!40000 ALTER TABLE `user_disabled` DISABLE KEYS */;
-INSERT INTO `user_disabled` VALUES (6,'2018-04-09 11:26:51'),(7,'2018-04-09 11:26:51');
+INSERT INTO `user_disabled` VALUES (6,'2018-04-11 13:04:16'),(7,'2018-04-11 13:04:16');
 /*!40000 ALTER TABLE `user_disabled` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,10 +213,10 @@ DROP TABLE IF EXISTS `user_not_confirmed`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_not_confirmed` (
-  `id_not_confirmed` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `confirm_code` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_not_confirmed`),
-  CONSTRAINT `id_not_cofirmed` FOREIGN KEY (`id_not_confirmed`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `id_not_cofirmed` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -236,11 +238,11 @@ DROP TABLE IF EXISTS `user_password_reset`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_password_reset` (
-  `id_user_password` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `reset_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `confirm_code` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_user_password`),
-  CONSTRAINT `id_user_password` FOREIGN KEY (`id_user_password`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `id_user_password` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,7 +252,7 @@ CREATE TABLE `user_password_reset` (
 
 LOCK TABLES `user_password_reset` WRITE;
 /*!40000 ALTER TABLE `user_password_reset` DISABLE KEYS */;
-INSERT INTO `user_password_reset` VALUES (5,'2018-04-09 11:26:51','jovanresetujesvojusifru'),(6,'2018-04-09 11:26:51','jelenaresetujesvojusifru'),(8,'2018-04-09 11:26:51','petarresetujesvojusifru');
+INSERT INTO `user_password_reset` VALUES (5,'2018-04-11 13:04:16','jovanresetujesvojusifru'),(6,'2018-04-11 13:04:16','jelenaresetujesvojusifru'),(8,'2018-04-11 13:04:16','petarresetujesvojusifru');
 /*!40000 ALTER TABLE `user_password_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,25 +276,28 @@ DELETE FROM user
 WHERE id <= 10000;
 
 DELETE FROM user_banned
-WHERE id_bann <= 10000;
+WHERE user_id <= 10000;
 
 DELETE FROM user_disabled
-WHERE id <= 10000;
+WHERE user_id <= 10000;
 
 DELETE FROM user_not_confirmed
-WHERE id_not_confirmed <= 10000;
+WHERE user_id <= 10000;
 
 DELETE FROM user_password_reset
-WHERE id_user_password <= 10000;
+WHERE user_id <= 10000;
+
+DELETE FROM statistics
+WHERE user_id < 10000;
 
 DELETE FROM game_map
-WHERE id_map <= 10000;
+WHERE id <= 10000;
 
 DELETE FROM cosmic_object
-WHERE id_object <= 10000;
+WHERE id <= 10000;
 
 DELETE FROM token
-WHERE id_token <= 10000;
+WHERE id <= 10000;
 
 END ;;
 DELIMITER ;
@@ -318,46 +323,46 @@ INSERT INTO game_map(name) VALUES ("Severnjaca");
 INSERT INTO game_map(name) VALUES ("Galaksija");
 INSERT INTO game_map(name) VALUES ("Apolo");
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(1, 30, 40, 10, 15, 300);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(1, 20, 30, 40, 5, 20);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(2, 20, 40, 10, 15, 40);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(2, 30, 40, 100, 150, 500);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(2, 80, 80, 100, 150, 4000);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(2, 350, 350, 100, 450, 500);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(3, 20, 40, 10, 15, 300);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(3, 30, 50, 100, 15, 100);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(3, 30, 40, 20, 120, 200);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(3, 30, 400, 250, 250, 350);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(4, 350, 450, 150, 10, 800);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(4, 300, 400, 100, 150, 200);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(4, 350, 450, 120, 125, 350);
 
-INSERT INTO cosmic_object(id_map, position_x, position_y, velocity_x, velocity_y, mass)
+INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(4, 300, 400, 400, 150, 3000);
 
 END ;;
@@ -379,14 +384,14 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_other_users_tables`()
 BEGIN
 
-INSERT INTO user_banned(id_bann) VALUES(5);
-INSERT INTO user_banned(id_bann) VALUES(8);
+INSERT INTO user_banned(user_id) VALUES(5);
+INSERT INTO user_banned(user_id) VALUES(8);
 
-INSERT INTO user_disabled(id) VALUES(6);
-INSERT INTO user_disabled(id) VALUES(7);
+INSERT INTO user_disabled(user_id) VALUES(6);
+INSERT INTO user_disabled(user_id) VALUES(7);
 
 
-INSERT INTO user_not_confirmed(id_not_confirmed, confirm_code) VALUES(9, "aapotvrdimarkosvojnalog686868");
+INSERT INTO user_not_confirmed(user_id, confirm_code) VALUES(9, "aapotvrdimarkosvojnalog686868");
 
 END ;;
 DELIMITER ;
@@ -407,13 +412,13 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_pass_reset`()
 BEGIN
 
-INSERT INTO user_password_reset(id_user_password, confirm_code)
+INSERT INTO user_password_reset(user_id, confirm_code)
 VALUES(5, "jovanresetujesvojusifru");
 
-INSERT INTO user_password_reset(id_user_password, confirm_code)
+INSERT INTO user_password_reset(user_id, confirm_code)
 VALUES(6, "jelenaresetujesvojusifru");
 
-INSERT INTO user_password_reset(id_user_password, confirm_code)
+INSERT INTO user_password_reset(user_id, confirm_code)
 VALUES(8, "petarresetujesvojusifru");
 
 END ;;
@@ -435,19 +440,19 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_tokens`()
 BEGIN
 
-INSERT INTO token(id_user) VALUES (1);
-INSERT INTO token(id_user) VALUES (2);
-INSERT INTO token(id_user) VALUES (3);
-INSERT INTO token(id_user) VALUES (1);
-INSERT INTO token(id_user) VALUES (2);
-INSERT INTO token(id_user) VALUES (4);
-INSERT INTO token(id_user) VALUES (5);
-INSERT INTO token(id_user) VALUES (6);
-INSERT INTO token(id_user) VALUES (7);
-INSERT INTO token(id_user) VALUES (4);
-INSERT INTO token(id_user) VALUES (7);
-INSERT INTO token(id_user) VALUES (8);
-INSERT INTO token(id_user) VALUES (9);
+INSERT INTO token(user_id, token_code) VALUES (1, "aaabbbcccddda");
+INSERT INTO token(user_id, token_code) VALUES (2, "aaabbbcccdddb");
+INSERT INTO token(user_id, token_code) VALUES (3, "aaabbbcccdddc");
+INSERT INTO token(user_id, token_code) VALUES (1, "aaabbbcccdddd");
+INSERT INTO token(user_id, token_code) VALUES (2, "aaabbbcccddde");
+INSERT INTO token(user_id, token_code) VALUES (4, "aaabbbcccdddf");
+INSERT INTO token(user_id, token_code) VALUES (5, "aaabbbcccdddg");
+INSERT INTO token(user_id, token_code) VALUES (6, "aaabbbcccdddh");
+INSERT INTO token(user_id, token_code) VALUES (7, "aaabbbcccdddi");
+INSERT INTO token(user_id, token_code) VALUES (4, "aaabbbcccdddj");
+INSERT INTO token(user_id, token_code) VALUES (7, "aaabbbcccdddk");
+INSERT INTO token(user_id, token_code) VALUES (8, "aaabbbcccdddl");
+INSERT INTO token(user_id, token_code) VALUES (9, "aaabbbcccdddm");
 
 END ;;
 DELIMITER ;
@@ -471,48 +476,48 @@ BEGIN
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Filip", "filipmandic80@gmail.com", "123456789aaaffffddd", "ad46a4da64d64dd");
 
-INSERT INTO statistics(id_user_stat) VALUES (1);
+INSERT INTO statistics(user_id) VALUES (1);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Andrija", "andrija6@gmail.com", "123456789aaaffccddd", "aad2ad1ad3ad13ad13ad13");
 
-INSERT INTO statistics(id_user_stat) VALUES (2);
+INSERT INTO statistics(user_id) VALUES (2);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Nikola", "nikola6@gmail.com", "aaaaaaaaafffffdddddcdccc", "fb54f646bf6bfbfbbfb");
 
-INSERT INTO statistics(id_user_stat) VALUES (3);
+INSERT INTO statistics(user_id) VALUES (3);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Nemanja", "nemanja6@gmail.com", "aacacacacacacc54acacac", "bf87b98f44b56f4b56");
 
-INSERT INTO statistics(id_user_stat) VALUES (4);
+INSERT INTO statistics(user_id) VALUES (4);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Jovan", "jovan6@gmail.com", "dcdcdcdccdc4dc45d564", "12346579898451");
 
-INSERT INTO statistics(id_user_stat) VALUES (5);
+INSERT INTO statistics(user_id) VALUES (5);
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Jelena", "jelena6@gmail.com", "dc48d4c9c4d4cd484bbb", "abababaababababababababbababaab");
 
-INSERT INTO statistics(id_user_stat) VALUES (6);
+INSERT INTO statistics(user_id) VALUES (6);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Milica", "milica6@gmail.com", "4b84b65b651b556b151", "aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb");
 
-INSERT INTO statistics(id_user_stat) VALUES (7);
+INSERT INTO statistics(user_id) VALUES (7);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
 VALUES("Petar", "petar6@gmail.com", "54f54f4f645f4f4f56", "dfdfdfffddffddfdfdfdfdfdfdfdfd");
 
-INSERT INTO statistics(id_user_stat) VALUES (8);
+INSERT INTO statistics(user_id) VALUES (8);
 
 
 INSERT INTO user(username, email, password_hash, password_salt) 
@@ -590,4 +595,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-09 15:24:58
+-- Dump completed on 2018-04-11 15:05:33

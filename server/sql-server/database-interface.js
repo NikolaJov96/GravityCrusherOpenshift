@@ -6,10 +6,12 @@ var database = function() {
 
     var insertUserQuery = require('./db-interface-impl/insert-new-user');
     var confirmUserQuery = require('./db-interface-impl/confirm-user');
-	var selectingSalt = require('./db-interface-impl/selecting-salt');
+	var selectingSaltByUsername = require('./db-interface-impl/selecting-salt-by-username');
+    var selectingSaltByEmail = require('./db-interface-impl/selecting-salt-by-email');
     var changePasswordQuery = require('./db-interface-impl/change-password');
     var changeUsernameQuery = require('./db-interface-impl/change-username');
     var passwordRecoveryRequest = require('./db-interface-impl/create-password-recovery');
+    var insertingTokenByUsername = require('./db-interface-impl/insert-token-by-username');
     var mysql = require('mysql');
 
     /*
@@ -43,7 +45,7 @@ var database = function() {
 
 	methods.getSaltByUsername = function(username, callback) {
 
-		selectingSalt(methods.connection, username, callback);
+		selectingSaltByUsername(methods.connection, username, callback);
     };
 
     methods.changePassword = function(username, oldHash, newHash, newSalt, callback) {
@@ -60,6 +62,16 @@ var database = function() {
 
         passwordRecoveryRequest(methods.connection, email, requestCode, callback);
     };
+
+    methods.getSaltByEmail = function(email, callback) {
+
+        selectingSaltByEmail(methods.connection, email, callback);
+    }
+
+    methods.assignTokenByUsername = function(username, token, callback) {
+
+        insertingTokenByUsername(methods.connection, username, token, callback);
+    }
 
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------

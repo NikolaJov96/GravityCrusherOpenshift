@@ -32,7 +32,7 @@ var searchInPasswordRecoveryCallback = function(info) { return function(error, r
         }
         else {
             if (!!rows.length) {
-                info.connection.query(queries.deleteFromPasswordRecovery, [info.id], deletingCallback(info));
+                info.connection.query(queries.deleteFromPasswordReset, [info.id], deletingCallback(info));
             }
             else {
                 info.connection.query(queries.insertIntoPasswordReset,
@@ -50,7 +50,7 @@ var searchInUserCallback = function(info) { return function(error, rows, fields)
             if (!!rows.length) {
                     info.id = rows[RESULT].id;
                     info.username = rows[RESULT].username;
-                    info.connection.query(queries.searchInPasswordRecovery,
+                    info.connection.query(queries.searchInPasswordReset,
                         [info.id], searchInPasswordRecoveryCallback(info));
             }
             else if (info.callback) info.callback("UserNotRegistered", null);

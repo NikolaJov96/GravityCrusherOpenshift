@@ -12,8 +12,9 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
             throw error;
         }
         else {
-            if (!!rows.length)
+            if (!!rows.length) {
                 if (info.callback) info.callback("Success", rows[RESULT].password_salt);
+            }
             else if (info.callback) info.callback("UserNotRegistered", null);
         }
 }}
@@ -25,8 +26,7 @@ var getSaltByUsernameQuery = function(connection, username, callback) {
         username : username,
         callback : callback
     }
-
-    info.connection.query(queries.getUserSalt, [info.username], callbackQuery(info));
+    info.connection.query(queries.searchInUserByUsername, [info.username], callbackQuery(info));
 }
 
 module.exports = getSaltByUsernameQuery;
