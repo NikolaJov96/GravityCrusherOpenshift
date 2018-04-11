@@ -30,4 +30,4 @@ var preloadTextures = function(){
 
 // list of existing textures, resource files are expected to have the same name and png extension
 shapeTextures.allTexturesLoaded = false;
-var textureList = [ 'ship', 'exhaust' ];
+var textureList = [ 'ship', 'exhaust', 'star' ];
