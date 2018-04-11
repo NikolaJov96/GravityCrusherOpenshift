@@ -53,10 +53,8 @@ gl.useProgram(program);
 // linking uniform matrix and texture sampler locations to the program in use
 matProjectionUniformLocation = gl.getUniformLocation(program, 'projMatrix');
 matViewUniformLocation = gl.getUniformLocation(program, 'viewMatrix');
-matTranslationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
-matRotationUniformLocation = gl.getUniformLocation(program, 'rotaMatrix');
-matScalingUniformLocation = gl.getUniformLocation(program, 'scalMatrix');
-matOriginUniformLocation = gl.getUniformLocation(program, 'origMatrix');
+matTransformationUniformLocation = gl.getUniformLocation(program, 'tranMatrix');
+matNormalUniformLocation = gl.getUniformLocation(program, 'normMatrix');
 samplerUniformLocation = gl.getUniformLocation(program, 'smpler');
 
 // room init and the main loop

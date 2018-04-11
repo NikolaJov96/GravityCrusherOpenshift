@@ -32,30 +32,32 @@ StateLoading = function(){
         self.objs.ship.bind();
         
         mat4.fromTranslation(self.tranMatrix, [self.translation, canvas.height * 0.6, 0.0]);
-        mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
-        mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
-        mat4.identity(self.origMatrix);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
+        mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
+        
+        mat4.invert(self.normMatrix, self.tranMatrix);
+        mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
-        gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
-        gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
-
+        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+ 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
         // draw 2nd ship
         self.objs.ship.bind();
         
         mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height * 0.6, 0.0]);
-        mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 0.0]);
-        mat4.fromScaling(self.scalMatrix, [0.2, 0.2, 0.2]);
-        mat4.identity(self.origMatrix);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.2, 0.2, 0.2]);
+        mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
+        
+        mat4.invert(self.normMatrix, self.tranMatrix);
+        mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
-        gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
-        gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
-
+        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
+ 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
     };
     

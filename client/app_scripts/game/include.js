@@ -19,19 +19,15 @@ var shapeTextures = {};
 // locations of shader uniform matrix arguments
 var matProjectionUniformLocation = null;
 var matViewUniformLocation = null;
-var matTranslationUniformLocation = null;
-var matRotationUniformLocation = null;
-var matScalingUniformLocation = null;
-var matOriginUniformLocation = null;
+var matTransformationUniformLocation = null;
+var matNormalUniformLocation = null;
 
 // abstract room state class
 var abstractState = function(){
     self = {
         objs: {},
         tranMatrix: new Float32Array(16),
-        rotaMatrix: new Float32Array(16),
-        scalMatrix: new Float32Array(16),
-        origMatrix: new Float32Array(16)
+        normMatrix: new Float32Array(16)
     };
     
     // frees all webgl buffers of defined objects
@@ -50,6 +46,7 @@ var abstractState = function(){
             texture: texture,
             // define how vertex buffer contents are interpreted by shader programs
             positionAttribLocation: gl.getAttribLocation(program, 'vertPosition'),
+            normalAttribLocation: gl.getAttribLocation(program, 'vertNormal'),
             coordAttribLocation: gl.getAttribLocation(program, 'textCoord')
         };
         
@@ -62,11 +59,15 @@ var abstractState = function(){
             gl.uniform1i(samplerUniformLocation, 0);
             gl.vertexAttribPointer(
                 self.objs[name].positionAttribLocation, 3, gl.FLOAT, gl.FALSE, 
-                5 * Float32Array.BYTES_PER_ELEMENT, 0
+                8 * Float32Array.BYTES_PER_ELEMENT, 0
+            );
+            gl.vertexAttribPointer(
+                self.objs[name].normalAttribLocation, 3, gl.FLOAT, gl.FALSE, 
+                8 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT
             );
             gl.vertexAttribPointer(
                 self.objs[name].coordAttribLocation, 2, gl.FLOAT, gl.FALSE, 
-                5 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT
+                8 * Float32Array.BYTES_PER_ELEMENT, 6 * Float32Array.BYTES_PER_ELEMENT
             );
         };
         self.objs[name].bind();

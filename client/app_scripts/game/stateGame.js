@@ -23,8 +23,12 @@ StateGame = function(){
                canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
     mat4.lookAt(viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
                 [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
+    const normMatrix = mat4.create();
+    mat4.invert(normMatrix, viewMatrix);
+    mat4.transpose(normMatrix, normMatrix);
     gl.uniformMatrix4fv(matProjectionUniformLocation, gl.FALSE, projMatrix);
     gl.uniformMatrix4fv(matViewUniformLocation, gl.FALSE, viewMatrix);
+    gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, normMatrix);
     
     self.step = function(){
         if (self.pressed[0]) self.rotation = (self.rotation - 0.05) % (2 * Math.PI);
@@ -43,14 +47,15 @@ StateGame = function(){
         self.objs.ship.bind();
         
         mat4.fromTranslation(self.tranMatrix, self.translation);
-        mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
-        mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
-        mat4.identity(self.origMatrix);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
+        mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
+        
+        mat4.invert(self.normMatrix, self.tranMatrix);
+        mat4.transpose(self.normMatrix, self.normMatrix);
 
-        gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
-        gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
-        gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
+        gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
+        gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
 
         gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
         
@@ -59,15 +64,16 @@ StateGame = function(){
             self.objs.exhaust.bind();
 
             mat4.fromTranslation(self.tranMatrix, self.translation);
-            mat4.fromRotation(self.rotaMatrix, self.rotation, [0.0, 0.0, 1.0]);
-            mat4.fromScaling(self.scalMatrix, [1.0, 1.0, 1.0]);
+            mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
             // make exhaust position relative to the ship position
-            mat4.fromTranslation(self.origMatrix, [-180, 0.0, 0.0]);
+            mat4.translate(self.tranMatrix, self.tranMatrix, [-180, 0.0, 0.0]);
+        
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
 
-            gl.uniformMatrix4fv(matRotationUniformLocation, gl.FALSE, self.rotaMatrix);
-            gl.uniformMatrix4fv(matTranslationUniformLocation, gl.FALSE, self.tranMatrix);
-            gl.uniformMatrix4fv(matScalingUniformLocation, gl.FALSE, self.scalMatrix);
-            gl.uniformMatrix4fv(matOriginUniformLocation, gl.FALSE, self.origMatrix);
+            gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, self.tranMatrix);
+            gl.uniformMatrix4fv(matNormalUniformLocation, gl.FALSE, self.normMatrix);
 
             gl.drawElements(gl.TRIANGLES, objectShapes.exhaust.ind.length, gl.UNSIGNED_SHORT, 0);
         }
