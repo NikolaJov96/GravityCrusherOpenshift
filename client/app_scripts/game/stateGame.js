@@ -39,7 +39,7 @@ StateGame = function(){
         
         // draw star
         mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height / 2.0, -1.0]);
-        mat4.rotate(self.tranMatrix, self.tranMatrix, 0.0, [0.0, 0.0, 1.0]);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
         mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
