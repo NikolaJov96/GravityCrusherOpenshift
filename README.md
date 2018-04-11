@@ -8,6 +8,7 @@ Online multiplayer space game, also a University project.
     * `socket.io`
     * `nodemailer`
     * `mysql`
+    * `uuid`
 
 * MySQL Server on a server machine
 * HTML5 support on a client web browsing software
@@ -27,7 +28,7 @@ git clone https://github.com/NikolaJov96/GravityCrusher
 4. In the root directory of the **GravityCrusher** project install the required
 packages using **npm** package manager:
 ```
-npm install express socket.io nodemailer mysql
+npm install express socket.io nodemailer mysql uuid
 ```
 
 5. Finally, run the server using the following command:

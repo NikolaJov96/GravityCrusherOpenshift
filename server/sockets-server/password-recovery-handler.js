@@ -7,6 +7,7 @@ var util = require('util');
 var nodemailer = require('nodemailer');
 var emailServiceConfiguration = require('./email-service-conf.js');
 var appConfig = require('../../app-config.js');
+var db = require('../sql-server/database-interface.js');
 
 var transporter = nodemailer.createTransport(emailServiceConfiguration);
 
@@ -29,18 +30,11 @@ function generateRequestCode(){
     return crypto.randomBytes(16).toString('hex');
 };
 
-// dummy implementation - TO BE REMOVED
-function createPasswordRecoveryRequest(email, requestCode, callback){
-    if (callback != null){
-        callback('Success', 'cicovic');
-    }
-}
-
 module.exports = function(socket){ return function(data){
     console.log("New password recovery request: "+data.email);
 
     var requestCode = generateRequestCode();
-    createPasswordRecoveryRequest(data.email, requestCode,
+    db.createPasswordRecoveryRequest(data.email, requestCode,
         function(status, username){
             if (status === 'Success'){
                 passwordRecoveryMailOptions.to = data.email;
