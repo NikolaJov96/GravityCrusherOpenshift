@@ -18,16 +18,11 @@ StateGame = function(){
     self.createObject('star', 'spaceBody', 'star');
     
     // init projection and view matrices used throughout this roomState
-    var projMatrix = new Float32Array(16);
-    var viewMatrix = new Float32Array(16);
-    var lightSource = new Float32Array([canvas.width / 2.0, canvas.height / 2.0, 200.0]);
-    mat4.ortho(projMatrix, -canvas.width / 2.0, canvas.width / 2.0, 
+    mat4.ortho(self.projMatrix, -canvas.width / 2.0, canvas.width / 2.0, 
                canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
-    mat4.lookAt(viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
+    mat4.lookAt(self.viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
                 [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
-    gl.uniformMatrix4fv(programInfo.matProjUnifLoc, gl.FALSE, projMatrix);
-    gl.uniformMatrix4fv(programInfo.matViewUnifLoc, gl.FALSE, viewMatrix);
-    gl.uniform3fv(programInfo.lightSourceUnifLoc, lightSource);
+    self.lightSource = new Float32Array([canvas.width / 2.0, canvas.height / 2.0, 200.0]);
     
     self.step = function(){
         if (self.pressed[0]) self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
@@ -43,39 +38,26 @@ StateGame = function(){
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
         
         // draw star
-        self.objs.star.bind();
-        
         mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height / 2.0, -1.0]);
         mat4.rotate(self.tranMatrix, self.tranMatrix, 0.0, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
         mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
         mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
+        self.objs.star.draw();
 
-        gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
-
-        gl.drawElements(gl.TRIANGLES, objectShapes.spaceBody.ind.length, gl.UNSIGNED_SHORT, 0);
         
         // draw ship
-        self.objs.ship.bind();
-        
         mat4.fromTranslation(self.tranMatrix, self.translation);
         mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
         mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
         mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
-
-        gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
-        gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
-
-        gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
+        self.objs.ship.draw();
         
         // draw exhaust
         if (self.pressed[1]){
-            self.objs.exhaust.bind();
-
             mat4.fromTranslation(self.tranMatrix, self.translation);
             mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
             mat4.invert(self.normMatrix, self.tranMatrix);
@@ -83,11 +65,7 @@ StateGame = function(){
             mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
             // make exhaust position relative to the ship position
             mat4.translate(self.tranMatrix, self.tranMatrix, [-180, 0.0, 0.0]);
-
-            gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
-            gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
-
-            gl.drawElements(gl.TRIANGLES, objectShapes.exhaust.ind.length, gl.UNSIGNED_SHORT, 0);
+            self.objs.exhaust.draw();
         }
     };
     

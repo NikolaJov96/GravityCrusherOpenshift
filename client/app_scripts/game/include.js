@@ -23,6 +23,9 @@ var programInfo = {};
 var abstractState = function(){
     self = {
         objs: {},
+        projMatrix: new Float32Array(16),
+        viewMatrix: new Float32Array(16),
+        lightSource: new Float32Array(3),
         tranMatrix: new Float32Array(16),
         normMatrix: new Float32Array(16)
     };
@@ -63,6 +66,20 @@ var abstractState = function(){
                 8 * Float32Array.BYTES_PER_ELEMENT, 6 * Float32Array.BYTES_PER_ELEMENT
             );
         };
+        // function drawing shape to the screen, assuming previously correctly 
+        //   calculated all existing shader uniform attributes
+        self.objs[name].draw = function(){
+            self.objs[name].bind();
+            
+            gl.uniformMatrix4fv(programInfo.matProjUnifLoc, gl.FALSE, self.projMatrix);
+            gl.uniformMatrix4fv(programInfo.matViewUnifLoc, gl.FALSE, self.viewMatrix);
+            gl.uniform3fv(programInfo.lightSourceUnifLoc, self.lightSource);
+            gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
+            gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
+
+            gl.drawElements(gl.TRIANGLES, objectShapes[shape].ind.length, gl.UNSIGNED_SHORT, 0);
+        }
+        
         self.objs[name].bind();
 
         // load data into buffers
