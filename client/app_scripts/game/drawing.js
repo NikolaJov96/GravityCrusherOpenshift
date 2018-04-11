@@ -53,6 +53,7 @@ gl.useProgram(program);
 // linking uniform matrix and texture sampler locations to the program in use
 programInfo.matProjUnifLoc = gl.getUniformLocation(program, 'projMatrix');
 programInfo.matViewUnifLoc = gl.getUniformLocation(program, 'viewMatrix');
+programInfo.lightSourceUnifLoc = gl.getUniformLocation(program, 'lightSource');
 programInfo.matTranUnifLoc = gl.getUniformLocation(program, 'tranMatrix');
 programInfo.matNormUnifLoc = gl.getUniformLocation(program, 'normMatrix');
 programInfo.samplerUnifLoc = gl.getUniformLocation(program, 'smpler');
