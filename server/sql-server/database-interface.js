@@ -12,6 +12,10 @@ var database = function() {
     var changeUsernameQuery = require('./db-interface-impl/change-username');
     var passwordRecoveryRequest = require('./db-interface-impl/create-password-recovery');
     var insertingTokenByUsername = require('./db-interface-impl/insert-token-by-username');
+    var insertingTokenByEmail = require('./db-interface-impl/insert-token-by-email');
+    var verifyingUserByUsername = require('./db-interface-impl/verify-user-by-username');
+    var verifyingUserByEmail = require('./db-interface-impl/verify-user-by-email');
+
     var mysql = require('mysql');
 
     /*
@@ -71,6 +75,21 @@ var database = function() {
     methods.assignTokenByUsername = function(username, token, callback) {
 
         insertingTokenByUsername(methods.connection, username, token, callback);
+    }
+
+    methods.assignTokenByEmail = function(email, token, callback) {
+
+        insertingTokenByEmail(methods.connection, email, token, callback);
+    }
+
+    methods.verifyUserByUsername = function(username, hash, callback) {
+
+        verifyingUserByUsername(methods.connection, username, hash, callback);
+    }
+
+    methods.verifyUserByEmail = function(email, hash, callback) {
+
+        verifyingUserByEmail(methods.connection, email, hash, callback);
     }
 
     //-------------------------------------------------------------------------

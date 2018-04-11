@@ -18,7 +18,7 @@ var insertTokenCallback = function(info) { return function(error, rows, fields) 
 
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
-        console.log("error: query which checks if username exists failed!\n");
+        console.log("error: query which checks if email exists failed!\n");
         throw error;
     }
     else {
@@ -31,16 +31,16 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     }
 }}
 
-var insertTokenByUsername = function(connection, username, tokenCode, callback) {
+var insertTokenByEmail = function(connection, email, tokenCode, callback) {
 
     info = {
         connection: connection,
-        username: username,
+        email: email,
         tokenCode: tokenCode,
         callback: callback
     }
 
-    info.connection.query(queries.searchInUserByUsername, [info.username], usernameCheckCallback(info));
+    info.connection.query(queries.checkIfEmailExists, [info.email], usernameCheckCallback(info));
 }
 
-module.exports = insertTokenByUsername;
+module.exports = insertTokenByEmail;
