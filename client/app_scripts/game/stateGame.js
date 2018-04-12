@@ -29,8 +29,8 @@ StateGame = function(){
     
     self.step = function(){
         if (self.pressed[0]){
-            self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
-            self.roll += 0.03;
+            //self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
+            self.roll += 0.015;
             if (self.roll > 0.5) self.roll = 0.5;
         }
         if (self.pressed[1]) {
@@ -38,15 +38,16 @@ StateGame = function(){
             self.translation[1] += 5 * Math.sin(self.rotation);
         }
         if (self.pressed[2]){
-            self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
-            self.roll -= 0.03;
+            //self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
+            self.roll -= 0.015;
             if (self.roll < -0.5) self.roll = -0.5;
         }
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
         if (!self.pressed[0] && !self.pressed[2]){
-            if (self.roll < 0) self.roll += 0.03;
-            else if (self.roll > 0) self.roll -= 0.03;
+            if (self.roll < 0) self.roll += 0.015;
+            else if (self.roll > 0) self.roll -= 0.015;
         }
+        self.rotation = (self.rotation - self.roll / 10.0 + 2 * Math.PI) % (2 * Math.PI);
     };
     
     self.draw = function(){
