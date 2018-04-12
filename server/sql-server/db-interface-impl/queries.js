@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: All the mySQL queries used in application\
+// Summary: All the mySQL queries used in application
 
 module.exports = {
 

@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: Functions and callbacks for selecting salt
+// Summary: Functions and callbacks for selecting salt with email passed
 
 var queries = require('./queries');
 

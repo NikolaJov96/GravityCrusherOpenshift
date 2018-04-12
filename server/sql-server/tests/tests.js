@@ -212,8 +212,8 @@ tests = {
             ['Nikola', 'aaaaaaaaafffffdddddcdccc']
         ]
 
-        db.verifyUserByUsername('Dragana', 'tralalalalala', callbackTest('Success'));//UserNotRegistered
-        db.verifyUserByUsername('jelena', 'tralalalalalala', callbackTest('Success'));//PasswordNoMatch
+        db.verifyUserByUsername('Dragana', 'tralalalalala', callbackTest('UserNotRegistered'));
+        db.verifyUserByUsername('jelena', 'tralalalalalala', callbackTest('PasswordNoMatch'));
         db.verifyUserByUsername('Nikola', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
     },
     verifyWithEmail: function(){
@@ -236,8 +236,8 @@ tests = {
             ['Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc']
         ]
 
-        db.verifyUserByEmail('Dragana6@gmail.com', 'tralalalalala', callbackTest('Success'));//UserNotRegistered
-        db.verifyUserByEmail('jelena6@gmail.com', 'tralalalalalala', callbackTest('Success'));//PasswordNoMatch
+        db.verifyUserByEmail('Dragana6@gmail.com', 'tralalalalala', callbackTest('UserNotRegistered'));
+        db.verifyUserByEmail('jelena6@gmail.com', 'tralalalalalala', callbackTest('PasswordNoMatch'));
         db.verifyUserByEmail('Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
     },
     insertTokenUsername: function(){

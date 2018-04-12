@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: Functions and callbacks for changing username
+// Summary: Functions and callbacks for inserting new token by sending email
 
 var queries = require('./queries');
 
