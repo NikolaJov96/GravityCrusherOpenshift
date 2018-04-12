@@ -7,10 +7,10 @@ StateGame = function(){
     console.log('current state: game - press space or arrows');
     self = abstractState();
     self.pressed = [false, false, false, false];
-    self.translation = [canvas.width * 0.35, canvas.height * 0.35, 0.0];
+    self.translation = [screen.w * 0.35, screen.h * 0.35, 0.0];
     self.rotation = Math.random() * 2 * Math.PI;
     self.roll = 0.0;
-    self.starPos = [canvas.width * 0.4, canvas.height * 0.45, -100.0];
+    self.starPos = [screen.w * 0.4, screen.h * 0.45, -100.0];
     
     // init ship shape
     self.createObject('ship', 'ship', 'ship');
@@ -20,17 +20,17 @@ StateGame = function(){
     self.createObject('star', 'spaceBody', 'star');
     
     // init projection and view matrices used throughout this roomState
-    mat4.ortho(self.projMatrix, -canvas.width / 2.0, canvas.width / 2.0, 
-               canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
-    mat4.lookAt(self.viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
-                [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
+    mat4.ortho(self.projMatrix, -screen.w / 2.0, screen.w / 2.0, 
+               screen.h / 2.0, -screen.h / 2.0, 0, 1000);
+    mat4.lookAt(self.viewMatrix, [screen.w / 2.0, screen.h / 2.0, 200], 
+                [screen.w / 2.0, screen.h / 2.0, 0], [0, 1, 0]);
     self.lightSource = new Float32Array(self.starPos);
     self.lightSource[2] = 200.0;
     
     self.step = function(){
         if (self.pressed[0]){
             self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
-            self.roll += 0.02;
+            self.roll += 0.03;
             if (self.roll > 0.5) self.roll = 0.5;
         }
         if (self.pressed[1]) {
@@ -39,13 +39,13 @@ StateGame = function(){
         }
         if (self.pressed[2]){
             self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
-            self.roll -= 0.02;
+            self.roll -= 0.03;
             if (self.roll < -0.5) self.roll = -0.5;
         }
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
         if (!self.pressed[0] && !self.pressed[2]){
-            if (self.roll < 0) self.roll += 0.02;
-            else if (self.roll > 0) self.roll -= 0.02;
+            if (self.roll < 0) self.roll += 0.03;
+            else if (self.roll > 0) self.roll -= 0.03;
         }
     };
     

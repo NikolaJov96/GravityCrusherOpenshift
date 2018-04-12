@@ -17,6 +17,9 @@ var texParams = {
     pixel: new Uint8Array([0, 0, 255, 255])  // opaque blue
 };
 
+// width and height of the rendering suface (might differ from the canvas width and height in pixels)
+var screen = { w: canvas.width, h: canvas.height };
+
 gl.clearColor(0.3, 0.3, 0.3, 1.0);
 gl.enable(gl.DEPTH_TEST);
 gl.enable(gl.BLEND);
