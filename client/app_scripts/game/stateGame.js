@@ -9,6 +9,8 @@ StateGame = function(){
     self.pressed = [false, false, false, false];
     self.translation = [canvas.width * 0.35, canvas.height * 0.35, 0.0];
     self.rotation = Math.random() * 2 * Math.PI;
+    self.roll = 0.0;
+    self.starPos = [canvas.width * 0.4, canvas.height * 0.45, -100.0];
     
     // init ship shape
     self.createObject('ship', 'ship', 'ship');
@@ -22,23 +24,36 @@ StateGame = function(){
                canvas.height / 2.0, -canvas.height / 2.0, 0, 1000);
     mat4.lookAt(self.viewMatrix, [canvas.width / 2.0, canvas.height / 2.0, 200], 
                 [canvas.width / 2.0, canvas.height / 2.0, 0], [0, 1, 0]);
-    self.lightSource = new Float32Array([canvas.width / 2.0, canvas.height / 2.0, 200.0]);
+    self.lightSource = new Float32Array(self.starPos);
+    self.lightSource[2] = 200.0;
     
     self.step = function(){
-        if (self.pressed[0]) self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
+        if (self.pressed[0]){
+            self.rotation = (self.rotation - 0.03) % (2 * Math.PI);
+            self.roll += 0.02;
+            if (self.roll > 0.5) self.roll = 0.5;
+        }
         if (self.pressed[1]) {
             self.translation[0] += 5 * Math.cos(self.rotation);
             self.translation[1] += 5 * Math.sin(self.rotation);
         }
-        if (self.pressed[2]) self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
+        if (self.pressed[2]){
+            self.rotation = (self.rotation + 0.03 + 2 * Math.PI) % (2 * Math.PI);
+            self.roll -= 0.02;
+            if (self.roll < -0.5) self.roll = -0.5;
+        }
         // if (self.pressed[3]) mat4.translate(self.translation, self.translation, [0.1, 0.0, 0.0]);
+        if (!self.pressed[0] && !self.pressed[2]){
+            if (self.roll < 0) self.roll += 0.02;
+            else if (self.roll > 0) self.roll -= 0.02;
+        }
     };
     
     self.draw = function(){
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
         
         // draw star
-        mat4.fromTranslation(self.tranMatrix, [canvas.width / 2.0, canvas.height / 2.0, -1.0]);
+        mat4.fromTranslation(self.tranMatrix, self.starPos);
         mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
@@ -49,6 +64,8 @@ StateGame = function(){
         
         // draw ship
         mat4.fromTranslation(self.tranMatrix, self.translation);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, self.roll,
+                    [Math.cos(self.rotation), Math.sin(self.rotation), 0.0]);
         mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
@@ -59,6 +76,8 @@ StateGame = function(){
         // draw exhaust
         if (self.pressed[1]){
             mat4.fromTranslation(self.tranMatrix, self.translation);
+            mat4.rotate(self.tranMatrix, self.tranMatrix, self.roll,
+                        [Math.cos(self.rotation), Math.sin(self.rotation), 0.0]);
             mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
             mat4.invert(self.normMatrix, self.tranMatrix);
             mat4.transpose(self.normMatrix, self.normMatrix);
