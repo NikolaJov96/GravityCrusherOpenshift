@@ -61,7 +61,7 @@ var changePasswordQuery = function(connection, username, oldHash, newHash, newSa
         callback: callback
     }
 
-    info.connection.query(queries.checkIfUsernameExists, [info.username], usernameCheckCallback(info));
+    info.connection.query(queries.searchInUserByUsername, [info.username], usernameCheckCallback(info));
 }
 
 module.exports = changePasswordQuery;

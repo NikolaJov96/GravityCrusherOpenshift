@@ -19,6 +19,8 @@ submitBtn.onclick = function(){
     var emailVal = validityCheck.email(email.value);
     if (usernameVal === 1){ logMsg('Username too short.'); newUsername.focus(); }
     else if (usernameVal === 2){ logMsg('Username too long.'); newUsername.focus(); }
+    else if (usernameVal > 2)
+        { logMsg('Invalid char: ' + String.fromCharCode(usernameVal) + '.'); newUsername.focus(); }
     else if (emailVal === 1){ logMsg('Email field empti.'); email.focus(); }
     else if (emailVal === 2){ logMsg('Email format incorrect.'); email.focus(); }
     else if (pass1.value.length === 0){ logMsg('Password field 1 empti.'); pass1.focus(); } 

@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: Functions and callbacks for selecting salt
+// Summary: Functions and callbacks for selecting salt with email passed
 
 var queries = require('./queries');
 
@@ -12,21 +12,21 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
             throw error;
         }
         else {
-            if (!!rows.length)
+            if (!!rows.length) {
                 if (info.callback) info.callback("Success", rows[RESULT].password_salt);
+            }
             else if (info.callback) info.callback("UserNotRegistered", null);
         }
 }}
 
-var getSaltByUsernameQuery = function(connection, username, callback) {
+var getSaltByUsernameQuery = function(connection, email, callback) {
 
     info = {
         connection : connection,
-        username : username,
+        email : email,
         callback : callback
     }
-
-    info.connection.query(queries.getUserSalt, [info.username], callbackQuery(info));
+    info.connection.query(queries.checkIfEmailExists, [info.email], callbackQuery(info));
 }
 
 module.exports = getSaltByUsernameQuery;

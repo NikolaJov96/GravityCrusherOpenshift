@@ -70,7 +70,7 @@ var emailCheckcallback = function(info) { return function(error, rows, fields) {
     }
     else {
         if (!rows.length)
-            info.connection.query(queries.checkIfUsernameExists, [info.username], usernameCheckCallback(info));
+            info.connection.query(queries.searchInUserByUsername, [info.username], usernameCheckCallback(info));
         else {
             if (info.callCreateNewUser)
                 info.callCreateNewUser("EmailTaken", info.email, info.username, info.confirmationCode);

@@ -38,9 +38,9 @@ var oldUsernameCheckCallback = function(info) { return function(error, rows, fie
     }
     else {
         if (!!rows.length) {
-            info.extractedPassword = rows[0].password_hash;
+            info.extractedPassword = rows[RESULT].password_hash;
             info.id = rows[RESULT].id;
-            info.connection.query(queries.checkIfUsernameExists,
+            info.connection.query(queries.searchInUserByUsername,
                 [info.newUsername], newUsernameCheckCallback(info));
         }
         else if (info.callback) info.callback("UserNotRegistered");
@@ -57,7 +57,7 @@ var changeUsername = function(connection, oldUsername, newUsername, hash, callba
         callback: callback
     }
 
-    info.connection.query(queries.checkIfUsernameExists, [info.oldUsername], oldUsernameCheckCallback(info));
+    info.connection.query(queries.searchInUserByUsername, [info.oldUsername], oldUsernameCheckCallback(info));
 }
 
 module.exports = changeUsername;
