@@ -2,6 +2,8 @@
 
 // Summary: All the mySQL queries used in application
 
+//find - when more than one table
+
 module.exports = {
 
     //tables: USER ----------------------------------------------------------------------------------------------------
@@ -63,4 +65,6 @@ module.exports = {
     insertNewToken: "INSERT INTO token(user_id, token_code) VALUES (?, ?)",
 
     getTokenInfo: "SELECT * FROM token WHERE id = ?",
+
+    findUsernameByTokenCode: "SELECT * FROM user, token WHERE user.id = token.user_id AND token.token_code = ?"
 }

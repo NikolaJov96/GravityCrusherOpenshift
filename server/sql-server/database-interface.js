@@ -17,6 +17,7 @@ var database = function() {
     var verifyingUserByEmail = require('./db-interface-impl/verify-user-by-email');
     var verifyingRegByUsername = require('./db-interface-impl/verify-registration-by-username');
     var verifyingRegByEmail = require('./db-interface-impl/verify-registration-by-email');
+    var selectingUsernameWithTokenCode = require('./db-interface-impl/finding-username-with-token-code');
 
     var mysql = require('mysql');
 
@@ -102,6 +103,11 @@ var database = function() {
     methods.verifyRegistrationByEmail = function(email, confirmCode, callback) {
 
         verifyingRegByEmail(methods.connection, email, confirmCode, callback);
+    }
+
+    methods.getUsernameByToken = function(token, callback) {
+
+        selectingUsernameWithTokenCode(methods.connection, token, callback);
     }
 
     //-------------------------------------------------------------------------
