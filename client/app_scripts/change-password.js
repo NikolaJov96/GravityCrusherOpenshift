@@ -25,7 +25,7 @@ submitBtn.onclick = function(){
         newPass1.focus();
     }else{
         var updateAccountPkg = {
-            'username':username,
+            'oldUsername':username,
             'oldPassword':oldPass.value,
             'newPassword':newPass1.value
         };
@@ -37,6 +37,7 @@ submitBtn.onclick = function(){
 socket.on('updateAccountResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
     
+    // TODO: display success message, wait some time and then redirect
     if (data.status === 'Success'){ logMsg('On updateAccountResponse - success'); window.location = '/'; } 
     else if (data.status === 'PasswordNoMatch') logMsg('On updateAccountResponse - wrong password');
     else logMsg('On updateAccountResponse - unknown error: ' + data.status);
