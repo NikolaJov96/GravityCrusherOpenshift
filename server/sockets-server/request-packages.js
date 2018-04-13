@@ -20,6 +20,10 @@ requestPackages = [
         file:'./sign-in-handler.js',
     },
     {
+        id:'signOut',
+        file:'./sign-out-handler.js',
+    },
+    {
         id:'signUp',
         file:'./sign-up-handler.js',
     },

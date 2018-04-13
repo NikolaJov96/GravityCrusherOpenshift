@@ -9,7 +9,7 @@ module.exports = function(sockets){ return function(data){
     console.log('Sign out req: TOKEN:' + data.token);
 
     db.removeToken(data.token, function(status){
-        if (status === 'Success' && cache.containsKey(data.token){
+        if (status === 'Success' && cache.containsKey(data.token)){
             cache.invalidateToken(data.token);
         }
 
