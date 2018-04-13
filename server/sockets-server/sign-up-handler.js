@@ -34,7 +34,7 @@ var registrationMailTextFormat =
 // dummy implementation of createNewUser - TO BE REMOVED
 function createNewUser(email, username, hash, salt, confrCode, callback){
     if (callback != null){
-        callback("Success", email, username, confrCode);
+        callback('Success', email, username, confrCode);
     }
 }
 
@@ -43,7 +43,7 @@ function generateConfirmationCode(){
 };
 
 module.exports = function(socket){ return function(data){
-    console.log("New registration request: "+data.username+"#"+data.email);
+    console.log('New registration request: '+data.username+'#'+data.email);
 
     var saltedHash = hashing.saltAndCalculateHash(data.password, appConfig.passwordHashAlgorithm);
     var confirmationCode = generateConfirmationCode();
@@ -78,6 +78,7 @@ module.exports = function(socket){ return function(data){
             if (socket != null){
                 socket.emit('signUpResponse', {status: status});
             }
+
         }
     );
 };};

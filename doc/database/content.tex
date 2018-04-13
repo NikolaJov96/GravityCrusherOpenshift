@@ -59,14 +59,14 @@ Crusher}, на предмету Принципи софтверског инже
 \begin{enumerate}
     \item user(\underline{id}, username, email, password\_hash, password\_salt,
         create\_date)
-    \item user\_banned(\underline{id\_bann}, bann\_date)
-    \item user\_disabled(\underline{id}, disable\_date)
-    \item user\_not\_confirmed(\underline{id\_not\_confirmed}, confirm\_code)
-    \item user\_password\_reset(\underline{id\_user\_password}, reset\_date, confirm\_code)
-    \item token(\underline{id\_token}, id\_user, token\_create\_date)
-    \item statistics(\underline{id\_user\_stat}, games\_played\_count, games\_won\_count)
-    \item game\_map(\underline{id\_map}, name)
-    \item cosmic\_object(\underline{id\_object}, id\_map, position\_x, position\_y,
+    \item user\_banned(\underline{user\_id}, bann\_date)
+    \item user\_disabled(\underline{user\_id}, disable\_date)
+    \item user\_not\_confirmed(\underline{user\_id}, confirm\_code)
+    \item user\_password\_reset(\underline{user\_id}, reset\_date, confirm\_code)
+    \item token(\underline{id}, user\_id, token\_create\_date)
+    \item statistics(\underline{user\_id}, games\_played\_count, games\_won\_count)
+    \item game\_map(\underline{id}, name)
+    \item cosmic\_object(\underline{id}, map\_id, position\_x, position\_y,
         velocity\_x, velocity\_y, mass)
 \end{enumerate}
 
@@ -126,7 +126,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_not\_confirmed & int(11) & Yes & Yes \\
+        user\_id & int(11) & Yes & Yes \\
     \hline
         confirm\_code & varchar(45) & No & No \\
     \hline
@@ -150,7 +150,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_user\_password & int(11) & Yes & Yes \\
+        user\_id & int(11) & Yes & Yes \\
     \hline
         reset\_date & timestamp & No & No \\
     \hline
@@ -179,7 +179,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_bann & int(11) & Yes & Yes \\
+        user\_id & int(11) & Yes & Yes \\
     \hline
         bann\_date & timestamp & No & No \\
     \hline
@@ -203,7 +203,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id & int(11) & Yes & Yes \\
+        user\_id & int(11) & Yes & Yes \\
     \hline
         disable\_date & timestamp & No & No \\
     \hline
@@ -231,7 +231,7 @@ Crusher}, на предмету Принципи софтверског инже
     \hline
         token\_create\_date & timestamp & No & No \\
     \hline
-        id\_user & int(11) & No & Yes \\
+        user\_id & int(11) & No & Yes \\
     \hline
     \end{tabular}
 
@@ -253,7 +253,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_user\_stat & int(11) & Yes & Yes \\
+        user\_id & int(11) & Yes & Yes \\
     \hline
         games\_won\_count & int(11) & No & No \\
     \hline
@@ -282,7 +282,7 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_map & int(11) & Yes & No \\
+        id & int(11) & Yes & No \\
     \hline
         name & varchar(45) & No & No \\
     \hline
@@ -306,9 +306,9 @@ Crusher}, на предмету Принципи софтверског инже
         \cellcolor{blue!25}\textbf{\textit{Is FK}} \\
     \hline
     \hline
-        id\_object & int(11) & Yes & No \\
+        id & int(11) & Yes & No \\
     \hline
-        id\_map & int(11) & No & Yes \\
+        map\_id & int(11) & No & Yes \\
     \hline
         position\_x & float & No & No \\
     \hline
