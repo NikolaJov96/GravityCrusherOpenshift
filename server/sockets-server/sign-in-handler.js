@@ -9,7 +9,7 @@ var db = require('../sql-server/database-interface.js');
 
 // data = {account, password, activationKey?}
 module.exports = function(socket){ return function(data){
-    console.log('New sign in request: ' + data.account);
+    console.log('Sign in req: ACCOUNT:' + data.account);
 
     var method = {};
     // if user tried to sign in using email
@@ -27,17 +27,26 @@ module.exports = function(socket){ return function(data){
 
     method.getSalt(data.account,
         function(status, salt){
-            if (status !== 'Success') socket.emit('signInResponse', {'status':status});
+            if (status !== 'Success'){
+                console.log('    STATUS:' + status);
+                socket.emit('signInResponse', {'status':status});
+            }
             else {
                 var hash = hashing.calculateHash(data.password, salt, appConfig.passwordHashAlgorithm);
                 method.verifyUser(data.account, hash,
                     function(status){
-                        if (status !== 'Success') socket.emit('signInResponse', {'status':status});
+                        if (status !== 'Success'){
+                            console.log('    STATUS:' + status);
+                            socket.emit('signInResponse', {'status':status});
+                        }
                         else {
                             var token = uuidv1(); // generates an unique string
                             method.assignToken(data.account, token,
                                 function(status){
-                                    if (status !== 'Success') socket.emit('signInResponse', {'status':status});
+                                    if (status !== 'Success'){
+                                        console.log('    STATUS:' + status);
+                                        socket.emit('signInResponse', {'status':status});
+                                    }
                                     else {
                                         var confirmCode = '';
                                         if ('confirmCode' in data){
@@ -45,10 +54,14 @@ module.exports = function(socket){ return function(data){
                                         }
                                         method.verifyRegistration(data.account, confirmCode,
                                             function(status){
-                                                if (status !== 'Success')
-                                                    socket.emit('signInResponse', {'status'}:status);
-                                                else
+                                                if (status !== 'Success'){
+                                                    console.log('    STATUS:' + status);
+                                                    socket.emit('signInResponse', {'status':status});
+                                                }
+                                                else {
+                                                    console.log('    STATUS:' + status + ' TOKEN:' + token);
                                                     socket.emit('signInResponse', {'status':status, 'token':token});
+                                                }
                                             }
                                         );
                                     }

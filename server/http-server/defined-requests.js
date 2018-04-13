@@ -57,6 +57,10 @@ requests = [
 	{
 		URL:'/reset-password',
 		file:'/client/reset-password.html'
+	},
+	{
+		URL:'/change-username',
+		file:'/client/change-username.html'
 	}
 ]
 

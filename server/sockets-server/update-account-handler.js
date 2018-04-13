@@ -7,13 +7,15 @@ var appConfig = require('../../app-config.js');
 var db = require('../sql-server/database-interface.js');
 
 function handlePasswordChangeRequest(data, socket){
-    console.log('New password change request: ' + data.oldUsername + '#' + data.oldPassword + '#' + data.newPassword);
+    console.log('Password change req: USERNAME:' + data.oldUsername +
+            ' PASSWORD' + data.oldPassword + ' NEW PASSWORD:' + data.newPassword);
 
     db.getSaltByUsername(data.oldUsername,
         // callback function
         function(status, salt){
             if (status !== 'Success'){
-                socket.emit('updateAccountResponse', {status: status});
+                console.log('    STATUS:' + status);
+                socket.emit('updateAccountResponse', {'status': status});
             }
             else {
                 var oldHash = hashing.calculateHash(data.oldPassword, salt, appConfig.passwordHashAlgorithm);
@@ -21,7 +23,8 @@ function handlePasswordChangeRequest(data, socket){
                 db.changePassword(data.oldUsername, oldHash, newSaltedHash.hash, newSaltedHash.salt,
                     // callback function
                     function(status){
-                        socket.emit('updateAccountResponse', {status: status});
+                        console.log('    STATUS:' + status);
+                        socket.emit('updateAccountResponse', {'status': status});
                     }
                 );
             }
@@ -30,23 +33,12 @@ function handlePasswordChangeRequest(data, socket){
 };
 
 function handleUsernameChangeRequest(data, socket){
-    console.log('New username change request: ' + data.oldUsername + '#' + data.newUsername + '#' + data.oldPassword);
+    console.log('Username change req: USERNAME:' + data.oldUsername + ' NEW USERNAME:' + data.newUsername);
 
-    db.getSaltByUsername(data.oldUsername,
-        // callback function
-        function(status, salt){
-            if (status !== 'Success'){
-                socket.emit('updateAccountResponse', {status: status});
-            }
-            else {
-                var hash = hashing.calculateHash(data.oldPassword, salt, appConfig.passwordHashAlgorithm);
-                db.changeUsername(data.oldUsername, data.newUsername, hash,
-                    // callback function
-                    function(status){
-                        socket.emit('updateAccountResponse', {status: status});
-                    }
-                );
-            }
+    db.changeUsername(data.oldUsername, data.newUsername,
+        function(status){
+            console.log('    STATUS:' + status);
+            socket.emit('updateAccountResponse', {'status': status});
         }
     );
 };
