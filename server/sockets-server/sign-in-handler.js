@@ -17,10 +17,12 @@ module.exports = function(socket){ return function(data){
         method.getSalt = db.getSaltByEmail;
         method.verifyUser = db.verifyUserByEmail;
         method.assignToken = db.assignTokenByEmail;
+        method.verifyRegistration = db.verifyRegistrationByEmail;
     } else { // username
         method.getSalt = db.getSaltByUsername;
         method.verifyUser = db.verifyUserByUsername;
         method.assignToken = db.assignTokenByUsername;
+        method.verifyRegistration = db.verifyRegistrationByUsername;
     }
 
     method.getSalt(data.account,
@@ -32,11 +34,24 @@ module.exports = function(socket){ return function(data){
                     function(status){
                         if (status !== 'Success') socket.emit('signInResponse', {'status':status});
                         else {
-                            var token = uuidv1(); // generates unique string
+                            var token = uuidv1(); // generates an unique string
                             method.assignToken(data.account, token,
                                 function(status){
                                     if (status !== 'Success') socket.emit('signInResponse', {'status':status});
-                                    socket.emit('signInResponse', {'status':status, 'token':token});
+                                    else {
+                                        var confirmCode = '';
+                                        if ('confirmCode' in data){
+                                            confirmCode = data.confirmCode;
+                                        }
+                                        method.verifyRegistration(data.account, confirmCode,
+                                            function(status){
+                                                if (status !== 'Success')
+                                                    socket.emit('signInResponse', {'status'}:status);
+                                                else
+                                                    socket.emit('signInResponse', {'status':status, 'token':token});
+                                            }
+                                        );
+                                    }
                                 }
                             );
                         }
