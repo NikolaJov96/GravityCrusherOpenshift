@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: Functions and callbacks for selecting salt with username passed
+// Summary: Functions and callbacks for finding username who has passed token
 
 var queries = require('./queries');
 

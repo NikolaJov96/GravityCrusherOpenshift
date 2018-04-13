@@ -64,7 +64,14 @@ module.exports = {
     //input id_user
     insertNewToken: "INSERT INTO token(user_id, token_code) VALUES (?, ?)",
 
+    //input token id
     getTokenInfo: "SELECT * FROM token WHERE id = ?",
 
-    findUsernameByTokenCode: "SELECT * FROM user, token WHERE user.id = token.user_id AND token.token_code = ?"
+    //input token code
+    findUsernameByTokenCode: "SELECT * FROM user, token WHERE user.id = token.user_id AND token.token_code = ?",
+
+    //input token code
+    deleteToken: "DELETE FROM token where token_code = ?",
+
+    searchTokenWithTokenCode: "SELECT * FROM token WHERE token_code = ?"
 }

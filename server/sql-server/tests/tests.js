@@ -263,7 +263,7 @@ tests = {
         db.assignTokenByEmail('Jovan6@gmail.com', 'aaabbbaaacccd', callbackTest('Success'));
     },
     verifyRegWithUsername: function(){
-        var fun = 'verifying registration with username tests';
+        var fun = 'verifying registration with username';
         var callbackTest = function(exprectedStatus){
             return function(status) {
                 if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
@@ -289,7 +289,7 @@ tests = {
         db.verifyRegistrationByUsername('Jelena', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
     },
     verifyRegWithEmail: function(){
-        var fun = 'verifying registration with email tests';
+        var fun = 'verifying registration with email';
         var callbackTest = function(exprectedStatus){
             return function(status) {
                 if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
@@ -315,7 +315,7 @@ tests = {
         db.verifyRegistrationByEmail('jelena6@gmail.com', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
     },
     gettingUsernameByToken: function(){
-        var fun = 'getting token by username tests';
+        var fun = 'getting token by username';
         var callbackTest = function(exprectedStatus){
             return function(status, username) {
                 if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
@@ -338,7 +338,30 @@ tests = {
         db.getUsernameByToken('5656116151161', callbackTest('TokenNoMatch'));
         db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
         db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
+    },
+    removingToken: function(){
+        var fun = 'removing token';
+        var callbackTest = function(exprectedStatus){
+            return function(status, username) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
 
+        var test_ulazi = [
+            ['5656116151161'],
+            ['aaabbbcccdddb'],
+            ['aaabbbcccdddb']
+        ]
+
+        db.getUsernameByToken('5656116151161', callbackTest('TokenNoMatch'));
+        db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
+        db.getUsernameByToken('aaabbbcccddde', callbackTest('Success'));
     }
 };
 
@@ -348,4 +371,4 @@ tests = {
 // }
 
 // test specific
-tests.changeUsername();
+tests.removingToken();
