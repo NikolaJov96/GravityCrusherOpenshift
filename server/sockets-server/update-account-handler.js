@@ -14,7 +14,7 @@ function handlePasswordChangeRequest(data, socket){
         // callback function
         function(status, salt){
             if (status !== 'Success'){
-                console.log('STATUS: ' + status);
+                console.log('STATUS:' + status);
                 socket.emit('updateAccountResponse', {'status': status});
             }
             else {
@@ -23,7 +23,7 @@ function handlePasswordChangeRequest(data, socket){
                 db.changePassword(data.oldUsername, oldHash, newSaltedHash.hash, newSaltedHash.salt,
                     // callback function
                     function(status){
-                        console.log('STATUS: ' + status);
+                        console.log('STATUS:' + status);
                         socket.emit('updateAccountResponse', {'status': status});
                     }
                 );
@@ -39,7 +39,7 @@ function handleUsernameChangeRequest(data, socket){
         // callback function
         function(status, salt){
             if (status !== 'Success'){
-                console.log('STATUS: ' + status);
+                console.log('STATUS:' + status);
                 socket.emit('updateAccountResponse', {'status': status});
             }
             else {
@@ -47,7 +47,7 @@ function handleUsernameChangeRequest(data, socket){
                 db.changeUsername(data.oldUsername, data.newUsername, hash,
                     // callback function
                     function(status){
-                        console.log('STATUS: ' + status);
+                        console.log('STATUS:' + status);
                         socket.emit('updateAccountResponse', {'status': status});
                     }
                 );

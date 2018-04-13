@@ -75,7 +75,7 @@ module.exports = function(socket){ return function(data){
                 });
             }
 
-            console.log('STATUS: ' + status);
+            console.log('STATUS:' + status);
             socket.emit('signUpResponse', {'status': status});
         }
     );
