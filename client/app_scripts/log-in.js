@@ -6,14 +6,6 @@ var account = document.getElementById('account');
 var pass = document.getElementById('pass');
 var submitBtn = document.getElementById('submitBtn');
 
-// setter for specific cookie
-var setCookie = function(name, value, days){
-    var date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    var expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
-};
-
 // send login request
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
