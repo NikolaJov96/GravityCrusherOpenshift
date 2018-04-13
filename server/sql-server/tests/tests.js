@@ -288,6 +288,84 @@ tests = {
         db.assignTokenByEmail('Milica6@gmail.com', 'aaabbbaaacccc', callbackTest('Success'));
         db.assignTokenByEmail('Jovan6@gmail.com', 'aaabbbaaacccd', callbackTest('Success'));
     },
+    verifyRegWithUsername: function(){
+        var fun = 'verifying registration with username tests';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Dragana', '5656116151161'],
+            ['Marko', '5181111818181818'],
+            ['Marko', 'aapotvrdimarkosvojnalog686868'],
+            ['Marko', 'aapotvrdimarkosvojnalog686868']
+        ]
+
+        db.verifyRegistrationByUsername('Dragana', '5656116151161', callbackTest('UserNotRegistered'));
+        db.verifyRegistrationByUsername('Marko', '5181111818181818', callbackTest('UserNotConfirmed'));
+        db.verifyRegistrationByUsername('Marko', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
+        db.verifyRegistrationByUsername('Jelena', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
+    },
+    verifyRegWithEmail: function(){
+        var fun = 'verifying registration with email tests';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['dragana6@gmailcom', '5656116151161'],
+            ['marko6@gmailcom', '5181111818181818'],
+            ['marko6@gmailcom', 'aapotvrdimarkosvojnalog686868'],
+            ['jelena6@gmailcom', 'aapotvrdimarkosvojnalog686868']
+        ]
+
+        db.verifyRegistrationByEmail('dragana6@gmail.com', '5656116151161', callbackTest('UserNotRegistered'));
+        db.verifyRegistrationByEmail('marko6@gmail.com', '5181111818181818', callbackTest('UserNotConfirmed'));
+        db.verifyRegistrationByEmail('marko6@gmail.com', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
+        db.verifyRegistrationByEmail('jelena6@gmail.com', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
+    },
+    gettingUsernameByToken: function(){
+        var fun = 'getting token by username tests';
+        var callbackTest = function(exprectedStatus){
+            return function(status, username) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log('username: ' + username);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['5656116151161'],
+            ['aaabbbcccdddb'],
+            ['aaabbbcccdddb']
+        ]
+
+        db.getUsernameByToken('5656116151161', callbackTest('TokenNoMatch'));
+        db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
+        db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
+
+    }
 };
 
 // test all
@@ -296,5 +374,4 @@ tests = {
 // }
 
 // test specific
-tests.verifyWithUsername();
-tests.verifyWithEmail();
+tests.gettingUsernameByToken();
