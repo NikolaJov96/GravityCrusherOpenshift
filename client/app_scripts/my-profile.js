@@ -9,7 +9,7 @@ initCallback = function(){
     usernameLabel.innerHTML = 'Username: ' + username;
 }
 
-// logout button handler
+// sign out button handler
 deactivateBtn.onclick = function(){
     var signOutPkg = {
         'token':getCookie('token'),

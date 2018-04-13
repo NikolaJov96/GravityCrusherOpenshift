@@ -1,26 +1,26 @@
 // Owner: Nikola Jovanovic (NikolaJov96)
 
-// Summary: Callbacks initialization for 'log-in' page
+// Summary: Callbacks initialization for 'sign-in' page
 
 var account = document.getElementById('account');
 var pass = document.getElementById('pass');
 var submitBtn = document.getElementById('submitBtn');
 
-// send login request
+// send sign in request
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
     if (account.value.length === 0) logMsg('Account field empti.');
     else if (pass.value.length === 0) logMsg('Password field empti.');
     else {
-        var logInPkg = {
+        var signInPkg = {
             'account':account.value,
             'password':pass.value
         };
         var url = new URL(window.location.href);
         var confirmCode = url.searchParams.get('cc');
-        if (confirmCode) logInPkg.confirmCode = confirmCode;
-        socket.emit('signIn', logInPkg);
+        if (confirmCode) signInPkg.confirmCode = confirmCode;
+        socket.emit('signIn', signInPkg);
         logMsg('SignIn requested.');
     }
 };

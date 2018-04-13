@@ -56,7 +56,7 @@ var colorPassword = function(field){
 }
 
 // session data
-var loggedIn = false;
+var signedIn = false;
 var username = '';
 var debugMode = true;
 var initCallback = null;
@@ -111,14 +111,14 @@ socket.on('connect', function(){
 
 // accept page init respose 
 socket.on('pageInitResponse', function(data){
-    if ('loggedIn' in data) loggedIn = data.loggedIn;
-    else attrMissing('loggedIn', 'pageInitResponse', data);
+    if ('signedIn' in data) signedIn = data.signedIn;
+    else attrMissing('signedIn', 'pageInitResponse', data);
     if ('username' in data) username = data.username;
     else attrMissing('username', 'pageInitResponse', data);
     if ('debugMode' in data) debugMode = data.debugMode;
     else attrMissing('debugMode', 'pageInitResponse', data);
     logMsg('Page init response received.');
-    logMsg('login status: ' + data.loggedIn);
+    logMsg('Sign in status: ' + data.signedIn);
     logMsg('Username: ' + data.username);
     if (initCallback) initCallback();
 });
