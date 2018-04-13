@@ -36,31 +36,6 @@ tests = {
         db.createNewUser('filipmandic26@gmail.com', 'Janko', '156164231515510', '54561661616161', '5656116151161',
                          callbackTest('Success'));
     },
-    confirmUser: function(){
-        var fun = 'confirming user tests';
-        var callbackTest = function(exprectedStatus){
-            return function(status, username) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
-                else{
-                    console.log('ERROR ' + fun);
-                    console.log('expected status: ' + exprectedStatus);
-                    console.log('status: ' + status);
-                    console.log('username: ' + username);
-                    console.log();
-                }
-            };
-        };
-
-        var test_ulazi = [
-            ['Marko', 'aapotvrdimarkosvojnalog686868'],
-            ['Marko', '5181111818181818'],
-            ['Dragana', '5656116151161']
-        ]
-
-        db.confirmUser('Dragana', '5656116151161', callbackTest('UserNotRegistered'));
-        db.confirmUser('Marko', '5181111818181818', callbackTest('InvalidConfirmationCode'));
-        db.confirmUser('Marko', 'aapotvrdimarkosvojnalog686868', callbackTest('Success'));
-    },
     getSaltUsername: function(){
         var fun = 'getting salt from user';
         var callbackTest = function(exprectedStatus){
@@ -134,10 +109,9 @@ tests = {
             ['Andrija', 'Dajana','123456789123456789aaaffccddd']
         ]
 
-        db.changeUsername('Dragana', 'Dragan', '545455454554', callbackTest('UserNotRegistered'));
-        db.changeUsername('Andrija', 'Filip', '454544545455', callbackTest('UsernameTaken'));
-        db.changeUsername('Andrija', 'Dajana', '4654564654644646', callbackTest('PasswordNoMatch'));
-        db.changeUsername('Andrija', 'Dajana','123456789aaaffccddd', callbackTest('Success'));
+        db.changeUsername('Dragana', 'Dragan', callbackTest('UserNotRegistered'));
+        db.changeUsername('Andrija', 'Filip', callbackTest('UsernameTaken'));
+        db.changeUsername('Andrija', 'Dajana', callbackTest('Success'));
     },
     passwordRecovery: function(){
         var fun = 'password recovery request';
@@ -374,4 +348,4 @@ tests = {
 // }
 
 // test specific
-tests.gettingUsernameByToken();
+tests.changeUsername();

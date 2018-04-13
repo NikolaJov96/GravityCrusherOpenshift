@@ -1,20 +1,22 @@
 // Owner: Nikola Jovanovic (NikolaJov96)
 
-// Summary: Callbacks initialization needed for all client pages
+// Summary: Callbacks initialization for 'my-profile' page
 
 // logout button handler
-var logoutBtn = document.getElementById('logoutBtn');
+var deactivateBtn = document.getElementById('deactivateBtn');
 
-logoutBtn.onclick = function(){
+deactivateBtn.onclick = function(){
     var signOutPkg = {
-        'token':getCookie('token')
+        'token':getCookie('token'),
+        'disable':true
     };
     socket.emit('signOut', signOutPkg);
-    logMsg('Sign-out requested.');
+    logMsg('Sign-out and account deactivation requested.');
 };
 
-// logout response callback
-socket.on('signOutResponse', function(data){
+// socket.on('signOutResponse', callback) already defined in 'universal'
+
+/*socket.on('signOutResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
     
     if (data.status === 'Success'){ 
@@ -23,4 +25,4 @@ socket.on('signOutResponse', function(data){
         window.location = '/'; 
     }else if (data.status === 'TokenNoMatch') logMsg('On signOutResponse - invalid token');
     else logMsg('On signOutResponse - unknown error: ' + data.status);
-});
+});*/

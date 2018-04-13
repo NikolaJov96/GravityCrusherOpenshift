@@ -5,7 +5,6 @@
 var database = function() {
 
     var insertUserQuery = require('./db-interface-impl/insert-new-user');
-    var confirmUserQuery = require('./db-interface-impl/confirm-user');
 	var selectingSaltByUsername = require('./db-interface-impl/selecting-salt-by-username');
     var selectingSaltByEmail = require('./db-interface-impl/selecting-salt-by-email');
     var changePasswordQuery = require('./db-interface-impl/change-password');
@@ -45,11 +44,6 @@ var database = function() {
             passwordHash, passwordSalt, confirmationCode, callback);
 	};
 
-    methods.confirmUser = function(username, confirmationCode, callback) {
-
-        confirmUserQuery(methods.connection, username, confirmationCode, callback);
-    };
-
 	methods.getSaltByUsername = function(username, callback) {
 
 		selectingSaltByUsername(methods.connection, username, callback);
@@ -60,9 +54,9 @@ var database = function() {
         changePasswordQuery(methods.connection, username, oldHash, newHash, newSalt, callback);
     };
 
-    methods.changeUsername = function(oldUsername, newUsername, hash, callback) {
+    methods.changeUsername = function(oldUsername, newUsername, callback) {
 
-        changeUsernameQuery(methods.connection, oldUsername, newUsername, hash, callback);
+        changeUsernameQuery(methods.connection, oldUsername, newUsername, callback);
     };
 
     methods.createPasswordRecoveryRequest = function(email, requestCode, callback) {
@@ -115,10 +109,10 @@ var database = function() {
 
     methods.connection.connect(function(error) {
         if (!!error) {
-            console.log('Error: connection to the database failed!\n');
+            console.log('Error: connection to the database failed!');
         }
         else {
-            console.log('Connected to database\n');
+            console.log('Connected to database');
         }
     });
 
