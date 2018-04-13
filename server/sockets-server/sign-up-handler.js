@@ -43,7 +43,7 @@ function generateConfirmationCode(){
 };
 
 module.exports = function(socket){ return function(data){
-    console.log('New registration request: '+data.username+'#'+data.email);
+    console.log('Registration req: USERNAME:' + data.username +' EMAIL:' + data.email);
 
     var saltedHash = hashing.saltAndCalculateHash(data.password, appConfig.passwordHashAlgorithm);
     var confirmationCode = generateConfirmationCode();
@@ -75,10 +75,8 @@ module.exports = function(socket){ return function(data){
                 });
             }
 
-            if (socket != null){
-                socket.emit('signUpResponse', {status: status});
-            }
-
+            console.log('STATUS: ' + status);
+            socket.emit('signUpResponse', {'status': status});
         }
     );
 };};

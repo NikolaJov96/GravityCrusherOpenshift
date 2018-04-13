@@ -12,7 +12,7 @@ var requestPackages = require('./request-packages.js');
 
 // on new connection
 io.on('connection', function(socket){
-	console.log('New connection.');
+	console.log('New socket connected.');
 
 	for (var i in requestPackages){
 		socket.on(requestPackages[i].id, require(requestPackages[i].file)(socket));

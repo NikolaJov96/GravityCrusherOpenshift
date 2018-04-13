@@ -31,7 +31,7 @@ function generateRequestCode(){
 };
 
 module.exports = function(socket){ return function(data){
-    console.log("New password recovery request: "+data.email);
+    console.log("Password recovery req: EMAIL:" + data.email);
 
     var requestCode = generateRequestCode();
     db.createPasswordRecoveryRequest(data.email, requestCode,
@@ -55,6 +55,7 @@ module.exports = function(socket){ return function(data){
                     }
                 );
             }
+            console.log('STATUS: ' + status);
             socket.emit('passwordRecoveryResponse', {status: status});
         }
     );
