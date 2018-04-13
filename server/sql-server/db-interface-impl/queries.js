@@ -71,7 +71,7 @@ module.exports = {
     findUsernameByTokenCode: "SELECT * FROM user, token WHERE user.id = token.user_id AND token.token_code = ?",
 
     //input token code
-    deleteToken: "DELETE FROM token where token_code = ?",
+    deleteToken: "DELETE FROM token WHERE token_code = ?",
 
     searchTokenWithTokenCode: "SELECT * FROM token WHERE token_code = ?"
 }

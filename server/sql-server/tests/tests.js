@@ -359,9 +359,9 @@ tests = {
             ['aaabbbcccdddb']
         ]
 
-        db.getUsernameByToken('5656116151161', callbackTest('TokenNoMatch'));
-        db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
-        db.getUsernameByToken('aaabbbcccddde', callbackTest('Success'));
+        db.removeToken('5656116151161', callbackTest('TokenNoMatch'));
+        db.removeToken('aaabbbcccdddb', callbackTest('Success'));
+        db.removeToken('aaabbbcccddde', callbackTest('Success'));
     }
 };
 
