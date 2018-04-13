@@ -1,10 +1,9 @@
 // Owner: Andrija Cicovic (cicovic-andrija)
 
-// Summary: Handler definitions page initialization requests.
+// Summary: Handler definitions for page initialization requests.
 
 var db = require('../sql-server/database-interface.js');
-
-var sessionCache = {}; // token:username dictionary
+var cache = require('./token-cache.js');
 
 module.exports = function(socket){ return function(data) {
     console.log('Page init. req: TOKEN:' + data.token);
@@ -24,9 +23,9 @@ module.exports = function(socket){ return function(data) {
     }
     else {
         var token = data.token;
-        if (token in sessionCache){
+        if (cache.containsKey(token)){
             response.status = 'Success';
-            response.username = sessionCache.token;
+            response.username = cache.lookupUsername(token);
             response.loggedIn = true;
 
             console.log('    STATUS:Success USERNAME:' + response.username + ' LOGGEDIN:' + response.loggedIn);
@@ -38,7 +37,7 @@ module.exports = function(socket){ return function(data) {
                     if (status === 'Success'){
                         response.username = username;
                         response.loggedIn = true;
-                        sessionCache.token = username;
+                        cache.cacheToken(token, username);
                     }
                     console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
                             ' LOGGEDIN:' + response.loggedIn);

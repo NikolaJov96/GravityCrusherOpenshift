@@ -63,6 +63,14 @@ var debugMode = true;
 // request socket connection
 var socket = io('localhost:8001');
 
+// setter for specific cookie
+var setCookie = function(name, value, days){
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = 'expires=' + date.toUTCString();
+    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+};
+
 // getter for specific cookie
 var getCookie = function(name){
     var name = name + '=';
