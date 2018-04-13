@@ -10,7 +10,7 @@ module.exports = function(socket){ return function(data) {
 
     var response = {
         'status': null,
-        'loggedIn': false,
+        'signedIn': false,
         'username': null,
         'debugMode': true,
     };
@@ -18,7 +18,7 @@ module.exports = function(socket){ return function(data) {
     if (!('token' in data) || data.token === ''){
         response.status = 'Success';
         console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
-                ' LOGGEDIN:' + response.loggedIn);
+                ' SIGNEDIN:' + response.signedIn);
         socket.emit('pageInitResponse', response);
     }
     else {
@@ -26,9 +26,9 @@ module.exports = function(socket){ return function(data) {
         if (cache.containsKey(token)){
             response.status = 'Success';
             response.username = cache.lookupUsername(token);
-            response.loggedIn = true;
+            response.signedIn = true;
 
-            console.log('    STATUS:Success USERNAME:' + response.username + ' LOGGEDIN:' + response.loggedIn);
+            console.log('    STATUS:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
             socket.emit('pageInitResponse', response);
         } else {
             db.getUsernameByToken(token,
@@ -36,11 +36,11 @@ module.exports = function(socket){ return function(data) {
                     response.status = status;
                     if (status === 'Success'){
                         response.username = username;
-                        response.loggedIn = true;
+                        response.signedIn = true;
                         cache.cacheToken(token, username);
                     }
                     console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
-                            ' LOGGEDIN:' + response.loggedIn);
+                            ' SIGNEDIN:' + response.signedIn);
                     socket.emit('pageInitResponse', response);
                 }
             );

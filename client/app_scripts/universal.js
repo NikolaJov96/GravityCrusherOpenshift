@@ -2,10 +2,10 @@
 
 // Summary: Callbacks initialization needed for all client pages
 
-// logout button handler
-var logoutBtn = document.getElementById('logoutBtn');
+// sign out button handler
+var signoutBtn = document.getElementById('signoutBtn');
 
-logoutBtn.onclick = function(){
+signoutBtn.onclick = function(){
     var signOutPkg = {
         'token':getCookie('token')
     };
@@ -13,7 +13,7 @@ logoutBtn.onclick = function(){
     logMsg('Sign-out requested.');
 };
 
-// logout response callback
+// sign out response callback
 socket.on('signOutResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
     

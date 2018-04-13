@@ -20,16 +20,15 @@ submitBtn.onclick = function(){
             'newUsername':newUseraname.value
         };
         socket.emit('updateAccount', updateAccountPkg);
-        logMsg('Password update requested.');
+        logMsg('Username update requested.');
     }
 };
 
-// socket.on('passwordRecoveryResponse', callback) already defined in 'change-password'
-
-/*socket.on('passwordRecoveryResponse', function(data){
-    if (!('status' in data)) attrMissing('status', 'passwordRecoveryResponse', data);
+socket.on('updateAccountResponse', function(data){
+    if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
     
-    if (data.status === 'Success') logMsg('On passwordRecoveryResponse - success, check your e-mail');
-    else if (data.status === 1) logMsg('On passwordRecoveryResponse - e-mail invalid');
-    else logMsg('On passwordRecoveryResponse - unknown error: ' + data.status);
-});*/
+    if (data.status === 'Success'){ 
+        logMsg('On updateAccountResponse - success'); 
+        setTimeout(function(){ window.location = '/my-profile'; }, 2000);
+    }else logMsg('On updateAccountResponse - unknown error: ' + data.status);
+});

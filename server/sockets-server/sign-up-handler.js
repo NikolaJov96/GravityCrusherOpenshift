@@ -25,7 +25,7 @@ var registrationMailTextFormat =
 
     You are just one step away from successful registration. Please
     click on the link below to complete the registration process:
-    %s://%s/log-in?cc=%s
+    %s://%s/sign-in.html?cc=%s
 
     Please, do not reply to this e-mail. This is an automated message.
     Have a nice day.

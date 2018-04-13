@@ -2,9 +2,14 @@
 
 // Summary: Callbacks initialization for 'my-profile' page
 
-// logout button handler
+var usernameLabel = document.getElementById('username');
 var deactivateBtn = document.getElementById('deactivateBtn');
 
+initCallback = function(){
+    usernameLabel.innerHTML = 'Username: ' + username;
+}
+
+// sign out button handler
 deactivateBtn.onclick = function(){
     var signOutPkg = {
         'token':getCookie('token'),
@@ -14,7 +19,7 @@ deactivateBtn.onclick = function(){
     logMsg('Sign-out and account deactivation requested.');
 };
 
-// socket.on('signOutResponse', callback) already defined in 'universal'
+// socket.on('signOutResponse', callback) already defined in 'universal', which is included in all pages
 
 /*socket.on('signOutResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);

@@ -27,8 +27,8 @@ requests = [
 		file:'/client/sign-up.html'
 	},
 	{
-		URL:'/log-in',
-		file:'/client/log-in.html'
+		URL:'/sign-in',
+		file:'/client/sign-in.html'
 	},
 	{
 		URL:'/game',
