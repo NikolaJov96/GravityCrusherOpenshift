@@ -5,7 +5,7 @@
 var db = require('../sql-server/database-interface.js');
 var cache = require('./token-cache.js');
 
-module.exports = function(sockets){ return function(data){
+module.exports = function(socket){ return function(data){
     console.log('Sign out req: TOKEN:' + data.token);
 
     db.removeToken(data.token, function(status){
