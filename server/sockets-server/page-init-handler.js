@@ -13,12 +13,12 @@ module.exports = function(socket){ return function(data) {
         'status': null,
         'loggedIn': false,
         'username': null,
-        'debugMode': false,
+        'debugMode': true,
     };
 
     if (!('token' in data) || data.token === ''){
         response.status = 'Success';
-        console.log('STATUS:' + response.status + ' USERNAME:' + response.username +
+        console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
                 ' LOGGEDIN:' + response.loggedIn);
         socket.emit('pageInitResponse', response);
     }
@@ -29,7 +29,7 @@ module.exports = function(socket){ return function(data) {
             response.username = sessionCache.token;
             response.loggedIn = true;
 
-            console.log('STATUS:Success USERNAME:' + response.username + ' LOGGEDIN:' + response.loggedIn);
+            console.log('    STATUS:Success USERNAME:' + response.username + ' LOGGEDIN:' + response.loggedIn);
             socket.emit('pageInitResponse', response);
         } else {
             db.getUsernameByToken(token,
@@ -40,7 +40,7 @@ module.exports = function(socket){ return function(data) {
                         response.loggedIn = true;
                         sessionCache.token = username;
                     }
-                    console.log('STATUS:' + response.status + ' USERNAME:' + response.username +
+                    console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
                             ' LOGGEDIN:' + response.loggedIn);
                     socket.emit('pageInitResponse', response);
                 }

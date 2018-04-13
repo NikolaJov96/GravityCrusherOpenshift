@@ -28,7 +28,7 @@ module.exports = function(socket){ return function(data){
     method.getSalt(data.account,
         function(status, salt){
             if (status !== 'Success'){
-                console.log('STATUS:' + status);
+                console.log('    STATUS:' + status);
                 socket.emit('signInResponse', {'status':status});
             }
             else {
@@ -36,7 +36,7 @@ module.exports = function(socket){ return function(data){
                 method.verifyUser(data.account, hash,
                     function(status){
                         if (status !== 'Success'){
-                            console.log('STATUS:' + status);
+                            console.log('    STATUS:' + status);
                             socket.emit('signInResponse', {'status':status});
                         }
                         else {
@@ -44,7 +44,7 @@ module.exports = function(socket){ return function(data){
                             method.assignToken(data.account, token,
                                 function(status){
                                     if (status !== 'Success'){
-                                        console.log('STATUS:' + status);
+                                        console.log('    STATUS:' + status);
                                         socket.emit('signInResponse', {'status':status});
                                     }
                                     else {
@@ -55,11 +55,11 @@ module.exports = function(socket){ return function(data){
                                         method.verifyRegistration(data.account, confirmCode,
                                             function(status){
                                                 if (status !== 'Success'){
-                                                    console.log('STATUS:' + status);
+                                                    console.log('    STATUS:' + status);
                                                     socket.emit('signInResponse', {'status':status});
                                                 }
                                                 else {
-                                                    console.log('STATUS:' + status + ' TOKEN:' + token);
+                                                    console.log('    STATUS:' + status + ' TOKEN:' + token);
                                                     socket.emit('signInResponse', {'status':status, 'token':token});
                                                 }
                                             }

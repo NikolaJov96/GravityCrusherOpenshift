@@ -14,7 +14,7 @@ function handlePasswordChangeRequest(data, socket){
         // callback function
         function(status, salt){
             if (status !== 'Success'){
-                console.log('STATUS:' + status);
+                console.log('    STATUS:' + status);
                 socket.emit('updateAccountResponse', {'status': status});
             }
             else {
@@ -23,7 +23,7 @@ function handlePasswordChangeRequest(data, socket){
                 db.changePassword(data.oldUsername, oldHash, newSaltedHash.hash, newSaltedHash.salt,
                     // callback function
                     function(status){
-                        console.log('STATUS:' + status);
+                        console.log('    STATUS:' + status);
                         socket.emit('updateAccountResponse', {'status': status});
                     }
                 );
@@ -35,23 +35,10 @@ function handlePasswordChangeRequest(data, socket){
 function handleUsernameChangeRequest(data, socket){
     console.log('Username change req: USERNAME:' + data.oldUsername + ' NEW USERNAME:' + data.newUsername);
 
-    db.getSaltByUsername(data.oldUsername,
-        // callback function
-        function(status, salt){
-            if (status !== 'Success'){
-                console.log('STATUS:' + status);
-                socket.emit('updateAccountResponse', {'status': status});
-            }
-            else {
-                var hash = hashing.calculateHash(data.oldPassword, salt, appConfig.passwordHashAlgorithm);
-                db.changeUsername(data.oldUsername, data.newUsername, hash,
-                    // callback function
-                    function(status){
-                        console.log('STATUS:' + status);
-                        socket.emit('updateAccountResponse', {'status': status});
-                    }
-                );
-            }
+    db.changeUsername(data.oldUsername, data.newUsername,
+        function(status){
+            console.log('    STATUS:' + status);
+            socket.emit('updateAccountResponse', {'status': status});
         }
     );
 };

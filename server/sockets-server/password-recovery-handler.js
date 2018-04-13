@@ -23,7 +23,7 @@ var passwordRecoveryMailTextFormat =
     Hello %s,
 
     In order to complete your password recovery request, click on the following
-    link: %s://%s/reset-password?u=%s&rc=%s
+    link: %s://%s/reset-password?rc=%s
     `;
 
 function generateRequestCode(){
@@ -37,13 +37,14 @@ module.exports = function(socket){ return function(data){
     db.createPasswordRecoveryRequest(data.email, requestCode,
         function(status, username){
             if (status === 'Success'){
+                console.log('Attempting to send a password recovery e-mail to ' + data.email + '...');
+
                 passwordRecoveryMailOptions.to = data.email;
                 passwordRecoveryMailOptions.text =
                     util.format(passwordRecoveryMailTextFormat,
                                 username,
                                 appConfig.webAppProtocol,
                                 appConfig.domainName,
-                                username,
                                 requestCode);
                 transporter.sendMail(passwordRecoveryMailOptions,
                     function(error, info){
@@ -55,7 +56,7 @@ module.exports = function(socket){ return function(data){
                     }
                 );
             }
-            console.log('STATUS: ' + status);
+            console.log('    STATUS: ' + status);
             socket.emit('passwordRecoveryResponse', {status: status});
         }
     );
