@@ -59,6 +59,7 @@ var colorPassword = function(field){
 var loggedIn = false;
 var username = '';
 var debugMode = true;
+var initCallback = null;
 
 // request socket connection
 var socket = io('localhost:8001');
@@ -119,4 +120,5 @@ socket.on('pageInitResponse', function(data){
     logMsg('Page init response received.');
     logMsg('login status: ' + data.loggedIn);
     logMsg('Username: ' + data.username);
+    if (initCallback) initCallback();
 });
