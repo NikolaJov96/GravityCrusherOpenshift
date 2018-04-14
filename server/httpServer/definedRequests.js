@@ -4,7 +4,7 @@
 requests = [
 	{
 		URL:'/',
-		file:'/client/index.html'
+		file:'/client/html-pages/index.html'
 	},
 	{
 		URL:'/index',
