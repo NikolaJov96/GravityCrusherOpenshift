@@ -36,6 +36,7 @@ module.exports = function(socket){ return function(data){
     var requestCode = generateRequestCode();
     db.createPasswordRecoveryRequest(data.email, requestCode,
         function(status, username){
+            console.log('    STATUS: ' + status);
             if (status === 'Success'){
                 console.log('Attempting to send a password recovery e-mail to ' + data.email + '...');
 
@@ -56,9 +57,9 @@ module.exports = function(socket){ return function(data){
                     }
                 );
             }
-            console.log('    STATUS: ' + status);
             socket.emit('passwordRecoveryResponse', {status: status});
         }
     );
 
 };};
+
