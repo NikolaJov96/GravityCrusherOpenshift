@@ -7,7 +7,8 @@ var signoutBtn = document.getElementById('signoutBtn');
 
 signoutBtn.onclick = function(){
     var signOutPkg = {
-        'token':getCookie('token')
+        'token':getCookie('token'),
+        'disable':false
     };
     socket.emit('signOut', signOutPkg);
     logMsg('Sign-out requested.');

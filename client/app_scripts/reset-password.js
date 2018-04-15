@@ -33,14 +33,17 @@ submitBtn.onclick = function(){
             'password':newPass1.value,
         };
         socket.emit('passwordReset', passwordResetPkg);
-        logMsg('Password reset requested with token: ' + token);
+        logMsg('Password reset requested with requestCode: ' + requestCode);
     }
 };
 
 socket.on('passwordResetResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'passwordResetResponse', data);
     
-    if (data.status === 'Success') logMsg('On passwordResetResponse - success');
+    if (data.status === 'Success'){
+        logMsg('On passwordResetResponse - success');
+        setTimeout(function(){ window.location = '/sign-in'; }, 2000);
+    }
     else logMsg('On passwordResetResponse - unknown error: ' + data.status);
 });
 
