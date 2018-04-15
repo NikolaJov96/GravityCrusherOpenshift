@@ -5,6 +5,7 @@
 var crypto = require('crypto');
 var util = require('util');
 var nodemailer = require('nodemailer');
+var uuidv1 = require('uuid/v1');
 var emailServiceConfiguration = require('./email-service-conf.js');
 var appConfig = require('../../app-config.js');
 var db = require('../sql-server/database-interface.js');
@@ -26,16 +27,13 @@ var passwordRecoveryMailTextFormat =
     link: %s://%s/reset-password?rc=%s
     `;
 
-function generateRequestCode(){
-    return crypto.randomBytes(16).toString('hex');
-};
-
 module.exports = function(socket){ return function(data){
     console.log("Password recovery req: EMAIL:" + data.email);
 
-    var requestCode = generateRequestCode();
+    var requestCode = uuidv1();
     db.createPasswordRecoveryRequest(data.email, requestCode,
         function(status, username){
+            console.log('    STATUS: ' + status);
             if (status === 'Success'){
                 console.log('Attempting to send a password recovery e-mail to ' + data.email + '...');
 
@@ -56,9 +54,9 @@ module.exports = function(socket){ return function(data){
                     }
                 );
             }
-            console.log('    STATUS: ' + status);
             socket.emit('passwordRecoveryResponse', {status: status});
         }
     );
 
 };};
+

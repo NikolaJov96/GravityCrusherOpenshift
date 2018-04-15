@@ -22,14 +22,14 @@ submitBtn.onclick = function(){
         newPass1.focus();
     }else{
         var url = new URL(window.location.href);
-        var token = url.searchParams.get('token');
-        if (!token){
-            logMsg('No HTTP GET parameter \'token\'');
+        var requestCode = url.searchParams.get('rc');
+        if (!requestCode){
+            logMsg('No HTTP GET parameter \'rc\'');
             return;
         }
         
         var passwordResetPkg = {
-            'token':token,
+            'requestCode':requestCode,
             'password':newPass1.value,
         };
         socket.emit('passwordReset', passwordResetPkg);
@@ -43,3 +43,4 @@ socket.on('passwordResetResponse', function(data){
     if (data.status === 'Success') logMsg('On passwordResetResponse - success');
     else logMsg('On passwordResetResponse - unknown error: ' + data.status);
 });
+
