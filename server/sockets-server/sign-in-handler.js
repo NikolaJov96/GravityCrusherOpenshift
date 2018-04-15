@@ -7,7 +7,6 @@ var appConfig = require('../../app-config.js')
 var hashing = require('./hashing.js');
 var db = require('../sql-server/database-interface.js');
 
-// data = {account, password, activationKey?}
 module.exports = function(socket){ return function(data){
     console.log('Sign in req: ACCOUNT:' + data.account);
 
@@ -42,7 +41,7 @@ module.exports = function(socket){ return function(data){
                         else {
                             var token = uuidv1(); // generates an unique string
                             method.assignToken(data.account, token,
-                                function(status){
+                                function(status, reactivated){
                                     if (status !== 'Success'){
                                         console.log('    STATUS:' + status);
                                         socket.emit('signInResponse', {'status':status});
@@ -60,7 +59,13 @@ module.exports = function(socket){ return function(data){
                                                 }
                                                 else {
                                                     console.log('    STATUS:' + status + ' TOKEN:' + token);
-                                                    socket.emit('signInResponse', {'status':status, 'token':token});
+                                                    socket.emit('signInResponse',
+                                                        {
+                                                        'status':status,
+                                                        'token':token,
+                                                        'reactivated':reactivated,
+                                                        }
+                                                    );
                                                 }
                                             }
                                         );

@@ -8,7 +8,7 @@ var cache = require('./token-cache.js');
 module.exports = function(socket){ return function(data){
     console.log('Sign out req: TOKEN:' + data.token);
 
-    if ('disable' in data && data.disable === true){
+    if (data.disable){
         db.deactivateAccount(data.token,
             function(status, userSessionTokens){
                 if (status === 'Success'){
