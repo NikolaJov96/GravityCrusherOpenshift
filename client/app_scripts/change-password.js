@@ -40,6 +40,11 @@ socket.on('updateAccountResponse', function(data){
     if (data.status === 'Success'){ 
         logMsg('On updateAccountResponse - success');
         setTimeout(function(){ window.location = '/my-profile'; }, 2000);
-    }else if (data.status === 'PasswordNoMatch') logMsg('On updateAccountResponse - wrong password');
-    else logMsg('On updateAccountResponse - unknown error: ' + data.status);
+    }else if (data.status === 'PasswordNoMatch'){
+        logMsg('On updateAccountResponse - wrong password');
+        oldPass.value = '';
+        newPass1.value = '';
+        newPass2.value = '';
+        oldPass.focus();
+    }else logMsg('On updateAccountResponse - unknown error: ' + data.status);
 });

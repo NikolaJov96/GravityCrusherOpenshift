@@ -33,6 +33,15 @@ socket.on('signInResponse', function(data){
         setCookie('token', data.token, 10);
         logMsg('On signInResponse - success');
         window.location = '/';
+    }else if (data.status === 'UserNotRegistered'){
+        logMsg('On signInResponse - account not registered');
+        pass.value = '';
+        account.select();
+        account.focus();
+    }else if (data.status === 'PasswordNoMatch'){
+        logMsg('On signInResponse - wrong password');
+        pass.value = '';
+        pass.focus();
     }else if (data.status === 1) logMsg('On signInResponse - wrong password');
     else logMsg('On signInResponse - unknown error: ' + data.status);
 });
