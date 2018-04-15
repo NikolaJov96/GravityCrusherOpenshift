@@ -9,7 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>#LogIn</title>
+    <title>#SignIn</title>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="app_scripts/init-connection.js"></script>
   </head>
   <body>
     <header>
@@ -28,7 +30,7 @@
               <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
             </li>
             
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="create-room">Create Room<span class="sr-only"></span></a>
             </li>
             
@@ -54,14 +56,14 @@
                 <button type="button" class="btn btn-secondary mr-sm-2" type="button">Sign Up</button>
               </a>
 
-              <a href="log-in">
-                <button type="button" class="btn btn-warning" type="button">Log In</button>
+              <a href="sign-in">
+                <button type="button" class="btn btn-warning" type="button">Sign In</button>
               </a>
           <!--</div>-->
 
           <!-- <div class="d-none"> -->
               <a href="/">
-                <button type="button" class="btn btn-warning mr-sm-2" type="button">Log Out</button>
+                <button id="signoutBtn" type="button" class="btn btn-warning mr-sm-2" type="button">Sign Out</button>
               </a>
               
               <a class="navbar-brand" href="my-profile">
@@ -77,21 +79,21 @@
     <div class="form-group row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputUsername3" placeholder="Username">
+        <input type="email" class="form-control" id="username" placeholder="Username">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
       <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+        <input type="email" class="form-control" id="email" placeholder="Email">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+        <input type="password" class="form-control" id="pass1" placeholder="Password">
           <small id="passwordHelpBlock" class="form-text text-muted">
             Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
         </small>
@@ -101,14 +103,14 @@
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
       <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword3" placeholder="Confirm Password">
+        <input type="password" class="form-control" id="pass2" placeholder="Confirm Password">
           <small id="passwordConfirmation" class="form-text text-muted">
             Type same password as above to confirm that you will remember it.
         </small>
       </div>
     </div>
 
-      <button type="button" class="btn btn-info offset-2">Submit</button>
+      <button id="submitBtn" type="button" class="btn btn-info offset-2">Submit</button>
     
     </div>
 
@@ -119,6 +121,8 @@
       </p>
     </footer>
     <!-- Na dnu body dela se inkluduju skriptni delovi da bi se manje cekalo otvaranje same stranice, jer u ovom slucaju se prvo ucitaju elementi stranice, pa tek onda funkcionalnot pa korisnik bar moze nesto da cita-->
+    <script src="app_scripts/universal.js"></script>
+    <script src="app_scripts/sign-up.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
