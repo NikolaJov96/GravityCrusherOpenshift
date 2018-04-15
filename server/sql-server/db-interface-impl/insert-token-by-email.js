@@ -6,28 +6,86 @@ var queries = require('./queries');
 
 const RESULT = 0;
 
-var insertTokenCallback = function(info) { return function(error, rows, fields) {
+var deleteDisabledUserCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
-        console.log("error: query which inserts new token failed!\n");
-        throw error;
+        info.connection.rollback(function() {
+            console.log("error: query which reactivate user failed!\n");
+            throw error;
+        });
     }
     else {
-        if (info.callback) info.callback("Success");
+        info.connection.commit(function(error) {
+            if (!!error) {
+                info.connection.rollback(function() {
+                    console.log("error: transaction could not be commited, transaction rollback!\n");
+                    throw error;
+                });
+            }
+            else {
+                if (info.callback) info.callback("Success", true);
+            }
+        });
+    }
+}}
+
+
+var checkedIfUserDisabledCallback = function(info) { return function(error, rows, fields) {
+    if (!!error) {
+        info.connection.rollback(function() {
+            console.log("error: query which inserts new token failed!\n");
+            throw error;
+        });
+    }
+    else {
+        if (!!rows.length) {
+            info.connection.query(queries.reactivateUser, [info.id], deleteDisabledUserCallback(info));
+        }
+        else {
+            info.connection.commit(function(error) {
+                if (!!error) {
+                    info.connection.rollback(function() {
+                        console.log("error: transaction could not be commited, transaction rollback!\n");
+                        throw error;
+                    });
+                }
+                else {
+                    if (info.callback) info.callback("Success", false);
+                }
+            });
+        }
+    }
+}}
+
+var insertTokenCallback = function(info) { return function(error, rows, fields) {
+    if (!!error) {
+        info.connection.rollback(function() {
+            console.log("error: query which checks if user was disabled failed!\n");
+            throw error;
+        });
+    }
+    else {
+        info.connection.query(queries.checkIfUserIsDisabled, [info.id], checkedIfUserDisabledCallback(info));
     }
 }}
 
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
-        console.log("error: query which checks if email exists failed!\n");
+        console.log("error: query which checks if username exists failed!\n");
         throw error;
     }
     else {
         if (!!rows.length) {
             info.id = rows[RESULT].id;
-            info.connection.query(queries.insertNewToken,
-                [info.id, info.tokenCode], insertTokenCallback(info));
+            info.connection.beginTransaction(function(error) {
+                if (!!error) {
+                    console.log("error: transaction failed to be started!\n");
+                    throw error;
+                }
+                info.connection.query(queries.insertNewToken,
+                    [info.id, info.tokenCode], insertTokenCallback(info));
+            });
         }
-        else if (info.callback) info.callback("UserNotRegistered");
+        else if (info.callback) info.callback("UserNotRegistered", false);
     }
 }}
 

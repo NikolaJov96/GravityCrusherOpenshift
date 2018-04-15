@@ -63,6 +63,9 @@ module.exports = {
     //input username
     disableUser : "INSERT INTO user_disabled(user_id) VALUES (?)",
 
+    //input id
+    reactivateUser: "DELETE FROM user_disabled WHERE user_id = ?",
+
     //tables: TOKEN----------------------------------------------------------------------------------------------------
     //input id_user
     insertNewToken: "INSERT INTO token(user_id, token_code) VALUES (?, ?)",

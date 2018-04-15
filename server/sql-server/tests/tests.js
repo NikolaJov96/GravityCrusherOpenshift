@@ -217,12 +217,14 @@ tests = {
     insertTokenUsername: function(){
         var fun = 'inserting token by username';
         var callbackTest = function(exprectedStatus){
-            return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+            return function(status, flag) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status + " " + flag);
                 else{
                     console.log('ERROR ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
+                    if (flag) console.log("reactivated");
+                    else console.log("without reactivating");
                     console.log();
                 }
             };
@@ -241,12 +243,14 @@ tests = {
     insertTokenEmail: function(){
         var fun = 'inserting token by email';
         var callbackTest = function(exprectedStatus){
-            return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+            return function(status, flag) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status + " " + flag);
                 else{
                     console.log('ERROR ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
+                    if (flag) console.log("reactivated");
+                    else console.log("without reactivating");
                     console.log();
                 }
             };
@@ -259,8 +263,8 @@ tests = {
         ]
 
         db.assignTokenByEmail('Dragana6@gmail.com', 'mdiemdoemddoi', callbackTest('UserNotRegistered'));
-        db.assignTokenByEmail('Milica6@gmail.com', 'aaabbbaaacccc', callbackTest('Success'));
-        db.assignTokenByEmail('Jovan6@gmail.com', 'aaabbbaaacccd', callbackTest('Success'));
+        db.assignTokenByEmail('jelena6@gmail.com', 'aaabbbaaacccc', callbackTest('Success'));
+        db.assignTokenByEmail('petar6@gmail.com', 'aaabbbaaacccz', callbackTest('Success'));
     },
     verifyRegWithUsername: function(){
         var fun = 'verifying registration with username';
@@ -420,4 +424,5 @@ tests = {
 // }
 
 // test specific
-tests.resetPasswordTest();
+tests.insertTokenUsername();
+tests.insertTokenEmail();

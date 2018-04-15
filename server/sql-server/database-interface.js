@@ -37,8 +37,8 @@ var database = function() {
             database: connectionInfo.database
         })
     }
-    //-------------------------------------------------------------------------
-    //---------------methods---------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+    //---------------methods-------------------------------------------------------------------------------------------
 
     methods.createNewUser = function(email, username, passwordHash,
         passwordSalt, confirmationCode, callback) {
@@ -93,7 +93,7 @@ var database = function() {
     }
 
     methods.verifyRegistrationByUsername = function(username, confirmCode, callback) {
-
+        
         verifyingRegByUsername(methods.connection, username, confirmCode, callback);
     }
 
@@ -122,8 +122,15 @@ var database = function() {
         deactivateAccountModule(methods.connection, token, callback);
     }
 
-    //-------------------------------------------------------------------------
-    //-------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
+
+    methods.disconnect = function() {
+        methods.connection.end();
+        console.log("Object is no longer connected to database");
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------
 
     methods.connection.connect(function(error) {
         if (!!error) {
