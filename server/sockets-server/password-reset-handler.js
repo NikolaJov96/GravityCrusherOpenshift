@@ -6,11 +6,6 @@ var hashing = require('./hashing.js');
 var appConfig = require('../../app-config.js');
 var db = require('../sql-server/database-interface.js');
 
-function resetPassword(rc, hash, salt, callback){
-    console.log(rc + ' ' + hash + ' ' + salt);
-    callback('Success');
-};
-
 module.exports = function(socket){ return function(data) {
     console.log('Password reset req: REQUEST CODE:' + data.requestCode + ' NEW PASSWORD:' + data.password);
 
