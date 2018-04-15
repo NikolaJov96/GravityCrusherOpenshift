@@ -33,5 +33,5 @@ npm install express socket.io nodemailer mysql uuid
 
 5. Finally, run the server using the following command:
 ```
-node app.js
+node app
 ```
