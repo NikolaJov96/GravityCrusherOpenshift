@@ -342,7 +342,7 @@ tests = {
     removingToken: function(){
         var fun = 'removing token';
         var callbackTest = function(exprectedStatus){
-            return function(status, username) {
+            return function(status) {
                 if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
                 else{
                     console.log('ERROR ' + fun);
@@ -362,6 +362,55 @@ tests = {
         db.removeToken('5656116151161', callbackTest('TokenNoMatch'));
         db.removeToken('aaabbbcccdddb', callbackTest('Success'));
         db.removeToken('aaabbbcccddde', callbackTest('Success'));
+    },
+    resetPasswordTest: function() {
+        var fun = 'reset password';
+        var callbackTest = function(exprectedStatus){
+            return function(status, username) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['5656116151161', '1234554321', '6789009876'],
+            ['jovanresetujesvojusifru', '1234554321', '6789009876'],
+            ['jelenaresetujesvojusifru', 'aaabbbaaaccccaaa', 'aaabbbcccdddbbbbd']
+        ]
+
+        db.resetPassword('5656116151161',  '1234554321', '6789009876', callbackTest('RequestCodeNoMatch'));
+        db.resetPassword('jovanresetujesvojusifru',  '1234554321', '6789009876', callbackTest('Success'));
+        db.resetPassword('jelenaresetujesvojusifru', 'aaabbbaaaccccaaa', 'aaabbbcccdddbbbbd', callbackTest('Success'));
+    },
+    deactivateAccountTest: function() {
+        var fun = 'deactivate account';
+        var callbackTest = function(exprectedStatus){
+            return function(status, userSessionTokens) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log(userSessionTokens);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['5656116151161'],
+            ['aaabbbcccdddg'],
+            ['aaabbbcccdddl']
+        ]
+
+        db.deactivateAccount('5656116151161', callbackTest('TokenNoMatch'));
+        db.deactivateAccount('aaabbbcccdddf', callbackTest('Success'));
+        db.deactivateAccount('aaabbbcccdddl', callbackTest('Success'));
     }
 };
 
@@ -371,4 +420,4 @@ tests = {
 // }
 
 // test specific
-tests.removingToken();
+tests.resetPasswordTest();

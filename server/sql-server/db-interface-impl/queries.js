@@ -46,6 +46,9 @@ module.exports = {
     //input id
     deleteFromPasswordReset: "DELETE FROM user_password_reset WHERE user_id = ?",
 
+    //input confirm code
+    selectUserByConfirmCode: "SELECT * FROM user_password_reset WHERE confirm_code = ?",
+
     //tables: USER_BANNED ---------------------------------------------------------------------------------------------
     //input id
     checkIfUserIsBanned: "SELECT * FROM user_banned WHERE user_id = ?",
@@ -58,7 +61,7 @@ module.exports = {
     checkIfUserIsDisabled: "SELECT * FROM user_disabled WHERE user_id = ?",
 
     //input username
-    disableUser : "INSERT INTO user_disabled(user_id) VALUES ((select id FROM user WHERE username = ?))",
+    disableUser : "INSERT INTO user_disabled(user_id) VALUES (?)",
 
     //tables: TOKEN----------------------------------------------------------------------------------------------------
     //input id_user
@@ -73,5 +76,12 @@ module.exports = {
     //input token code
     deleteToken: "DELETE FROM token WHERE token_code = ?",
 
-    searchTokenWithTokenCode: "SELECT * FROM token WHERE token_code = ?"
+    //input token_code
+    searchTokenWithTokenCode: "SELECT * FROM token WHERE token_code = ?",
+
+    //input user id
+    selectAllTokenCodesFromUser: "SELECT token_code FROM token WHERE user_id = ?",
+
+    //input user_id
+    deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?"
 }
