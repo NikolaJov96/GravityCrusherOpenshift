@@ -12,7 +12,7 @@ module.exports = function(socket){ return function(data){
             function(status, userSessionTokens){
                 if (status === 'Success'){
                     for (token in userSessionTokens){
-                        cache.invalidateToken(token);
+                        serverState.tokenCache.invalidateToken(token);
                     }
                 }
 
@@ -23,8 +23,8 @@ module.exports = function(socket){ return function(data){
 
     } else {
         db.removeToken(data.token, function(status){
-            if (status === 'Success' && cache.containsKey(data.token)){
-                cache.invalidateToken(data.token);
+            if (status === 'Success' && serverState.tokenCache.containsKey(data.token)){
+                serverState.tokenCache.invalidateToken(data.token);
             }
 
             console.log('    STATUS:' + status);

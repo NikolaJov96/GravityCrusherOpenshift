@@ -22,9 +22,9 @@ module.exports = function(socket){ return function(data) {
     }
     else {
         var token = data.token;
-        if (cache.containsKey(token)){
+        if (serverState.tokenCache.containsKey(token)){
             response.status = 'Success';
-            response.username = cache.lookupUsername(token);
+            response.username = serverState.tokenCache.lookupUsername(token);
             response.signedIn = true;
 
             console.log('    STATUS:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
@@ -36,7 +36,7 @@ module.exports = function(socket){ return function(data) {
                     if (status === 'Success'){
                         response.username = username;
                         response.signedIn = true;
-                        cache.cacheToken(token, username);
+                        serverState.tokenCache.cacheToken(token, username);
                     }
                     console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
                             ' SIGNEDIN:' + response.signedIn);

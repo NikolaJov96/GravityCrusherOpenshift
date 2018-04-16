@@ -11,7 +11,7 @@ serv.listen(appConfig.socketsServerPort);
 
 var requestPackages = require('./request-packages.js');
 
-cache = require('./token-cache.js');
+serverState = require('./state-object.js')();
 
 // on new connection
 io.on('connection', function(socket){
