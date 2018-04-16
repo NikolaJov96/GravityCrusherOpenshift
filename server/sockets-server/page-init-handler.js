@@ -3,7 +3,6 @@
 // Summary: Handler definitions for page initialization requests.
 
 var db = require('../sql-server/database-interface.js');
-var cache = require('./token-cache.js');
 
 module.exports = function(socket){ return function(data) {
     console.log('Page init. req: TOKEN:' + data.token);

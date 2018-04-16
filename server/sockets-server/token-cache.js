@@ -4,18 +4,21 @@
 
 var tokenCache = {}; // token:username dictionary
 
-module.exports = {
-    cacheToken: function(token, username){
-        tokenCache.token = username;
-    },
-    invalidateToken: function(token){
-        delete tokenCache.token;
-    },
-    containsKey: function(token){
-        return token in tokenCache;
-    },
-    lookupUsername: function(token){
-        return tokenCache.token;
-    },
+tokenCache.cacheToken = function(token, username){
+    tokenCache[token] = username;
 };
 
+tokenCache.invalidateToken = function(token){
+    console.log(tokenCache);
+    delete tokenCache[token];
+};
+
+tokenCache.containsKey = function(token){
+    return token in tokenCache;
+};
+
+tokenCache.lookupUsername = function(token){
+    return tokenCache[token];
+};
+
+module.exports = tokenCache;
