@@ -37,6 +37,8 @@ function handleUsernameChangeRequest(data, socket){
 
     db.changeUsername(data.oldUsername, data.newUsername,
         function(status){
+            if (status == 'Success') serverState.tokenCache.renameUser(data.oldUsername, data.newUsername);
+        
             console.log('    STATUS:' + status);
             socket.emit('updateAccountResponse', {'status': status});
         }

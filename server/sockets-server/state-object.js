@@ -11,6 +11,11 @@ var TokenCache = function(){
     self.invalidateToken = function(token){ delete self.cache[token]; };
     self.containsKey = function(token){ return token in self.cache; };
     self.lookupUsername = function(token){ return self.cache[token]; };
+    self.renameUser = function(oldUsername, newUsername){
+        for (var token in self.cache){
+            if (self.cache[token] === oldUsername) self.cache[token] = newUsername;
+        }
+    };
     
     return self;
 };
