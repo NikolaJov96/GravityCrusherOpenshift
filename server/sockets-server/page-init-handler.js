@@ -5,7 +5,7 @@
 var db = require('../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data) {
-    console.log('Page init. req: TOKEN:' + data.token);
+    console.log('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
 
     var response = {
         'status': null,

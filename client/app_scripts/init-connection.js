@@ -102,7 +102,7 @@ var attrMissing = function(attr, pack, data){
 // when connection is established send init package
 socket.on('connect', function(){
     var pageInitPkg = {
-        'page':document.title,
+        'page':pageName,
         'token':getCookie('token')
     };
     socket.emit('pageInit', pageInitPkg);
