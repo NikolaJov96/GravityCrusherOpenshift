@@ -24,3 +24,11 @@ io.on('connection', function(socket){
 
 console.log('Socket.io request listener set up.');
 
+// server loop stepping all active game rooms
+setInterval(function(){
+    var i = serverState.gameRooms.length;
+    while (i--){
+        var done = serverState.gameRooms[i].step();
+        if (done) delete serverState.gameRooms[i];
+    }
+}, 40);  // run every 40ms

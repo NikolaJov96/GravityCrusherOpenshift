@@ -22,7 +22,8 @@ var TokenCache = function(){
 
 var StateObject = function(){
     var self = {
-        tokenCache: TokenCache()
+        tokenCache: TokenCache(),
+        gameRooms: []
     };
     
     return self;
