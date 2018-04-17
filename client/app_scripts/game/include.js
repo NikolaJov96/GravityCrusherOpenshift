@@ -94,6 +94,9 @@ var abstractState = function(){
         gl.enableVertexAttribArray(programInfo.coordAttribLoc);
     };
     
+    // callback to be called when socket package is received
+    self.handleSocketPackage = function(name, data){};
+    
     // function for stepping client state (only game mechanics unrelated tasks)
     self.step = function(){};
     

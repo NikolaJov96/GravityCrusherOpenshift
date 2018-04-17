@@ -2,7 +2,7 @@
 
 // Summary: State class representing loading roomState
 
-StateGame = function(){
+StateGame = function(data){
     // state initialization
     console.log('current state: game - press space or arrows');
     self = abstractState();

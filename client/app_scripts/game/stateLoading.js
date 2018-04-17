@@ -2,7 +2,7 @@
 
 // Summary: State class representing loading roomState
 
-StateLoading = function(){
+StateLoading = function(data){
     // state initialization
     console.log('current state: game loading - press space');
     self = abstractState();
