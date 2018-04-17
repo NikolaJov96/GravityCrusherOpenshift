@@ -19,6 +19,8 @@ StateLoading = function(){
     mat4.lookAt(self.viewMatrix, [screen.w / 2.0, screen.h / 2.0, 200], 
                 [screen.w / 2.0, screen.h / 2.0, 0], [0, 1, 0]);
     self.lightSource = new Float32Array([0.0, 0.0, 500.0]);
+    self.ambientColor = new Float32Array([0.5, 0.5, 0.5]);
+    self.directedColor = new Float32Array([0.5, 0.5, 0.5]);
     
     self.draw = function(){
         if (!shapeTextures.allTexturesLoaded) return;

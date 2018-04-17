@@ -26,6 +26,8 @@ var abstractState = function(){
         projMatrix: new Float32Array(16),
         viewMatrix: new Float32Array(16),
         lightSource: new Float32Array(3),
+        ambientColor: new Float32Array(3),
+        directedColor: new Float32Array(3),
         tranMatrix: new Float32Array(16),
         normMatrix: new Float32Array(16)
     };
@@ -74,6 +76,8 @@ var abstractState = function(){
             gl.uniformMatrix4fv(programInfo.matProjUnifLoc, gl.FALSE, self.projMatrix);
             gl.uniformMatrix4fv(programInfo.matViewUnifLoc, gl.FALSE, self.viewMatrix);
             gl.uniform3fv(programInfo.lightSourceUnifLoc, self.lightSource);
+            gl.uniform3fv(programInfo.ambientColorUnifLoc, self.ambientColor);
+            gl.uniform3fv(programInfo.directedColorUnifLoc, self.directedColor);
             gl.uniformMatrix4fv(programInfo.matTranUnifLoc, gl.FALSE, self.tranMatrix);
             gl.uniformMatrix4fv(programInfo.matNormUnifLoc, gl.FALSE, self.normMatrix);
 

@@ -57,6 +57,8 @@ gl.useProgram(program);
 programInfo.matProjUnifLoc = gl.getUniformLocation(program, 'projMatrix');
 programInfo.matViewUnifLoc = gl.getUniformLocation(program, 'viewMatrix');
 programInfo.lightSourceUnifLoc = gl.getUniformLocation(program, 'lightSource');
+programInfo.ambientColorUnifLoc = gl.getUniformLocation(program, 'ambientColor');
+programInfo.directedColorUnifLoc = gl.getUniformLocation(program, 'directedColor');
 programInfo.matTranUnifLoc = gl.getUniformLocation(program, 'tranMatrix');
 programInfo.matNormUnifLoc = gl.getUniformLocation(program, 'normMatrix');
 programInfo.samplerUnifLoc = gl.getUniformLocation(program, 'smpler');

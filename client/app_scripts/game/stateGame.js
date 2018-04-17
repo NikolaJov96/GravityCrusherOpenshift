@@ -25,7 +25,9 @@ StateGame = function(){
     mat4.lookAt(self.viewMatrix, [screen.w / 2.0, screen.h / 2.0, 200], 
                 [screen.w / 2.0, screen.h / 2.0, 0], [0, 1, 0]);
     self.lightSource = new Float32Array(self.starPos);
-    self.lightSource[2] = 200.0;
+    self.lightSource[2] = 40.0;
+    self.ambientColor = new Float32Array([0.6, 0.6, 0.6]);
+    self.directedColor = new Float32Array([0.9, 0.9, 0.9]);
     
     self.step = function(){
         if (self.pressed[0]){
