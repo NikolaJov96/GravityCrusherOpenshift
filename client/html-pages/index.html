@@ -26,7 +26,7 @@
     <nav class="navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="../img/mala-kornjaca-2.png" style="margin-top: -25px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,38 +38,53 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Components</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="create-room">
                             Create Room
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="game-rooms">
                             Game Rooms
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="statistics">
                             Statistics
                         </a>
                     </li>
+
+                    <div class="d-none">
+                        <li class="nav-item">
+                            <a class="nav-link" href="sign-up">
+                                <button type="button" class="btn btn-danger">Sign Up</button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sign-in">
+                                <button type="button" class="btn btn-danger">Sign In</button>
+                            </a>
+                        </li>
+                    </div>
+
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <button type="button" class="btn btn-danger">Sign Up</button>
+                        <a class="nav-link" href="/">
+                            <button type="button" class="btn btn-danger">Sign Out</button>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <button type="button" class="btn btn-danger">Sign In</button>
+                        <a class="nav-link" href="my-profile">
+                            <img src="../img/srednji-grifon.jpg" style="height: 60px; width: 60px; margin-top: -10px; margin-bottom: -10px">
                         </a>
                     </li>
+
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="page-header" data-parallax="true" style=" background-image: url('../img/svemir2.jpg'); ">
+    <div class="page-header" style=" background-image: url('../img/svemir2.jpg');
+        min-height: 720px; ">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -96,7 +111,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="info">
-                                <div class="icon icon-info">
+                                <div class="icon icon-warning">
                                     <i class="material-icons">chat</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">Signing Up</h4>
@@ -105,8 +120,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="info">
-                                <div class="icon icon-success">
-                                    <i class="material-icons">verified_user</i>
+                                <div class="icon icon-info">
+                                    <i class="material-icons">videogame_asset</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">In-game Controls</h4>
                                 <p style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -114,8 +129,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="info">
-                                <div class="icon icon-danger">
-                                    <i class="material-icons">fingerprint</i>
+                                <div class="icon icon-success">
+                                    <i class="material-icons">verified_user</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">Game Goals</h4>
                                 <p style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -154,7 +169,7 @@
                                     <div class="col-md-6 ml-auto mr-auto">
                                         <img src="../img/mandula-slika.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                                     </div>
-                                    <h4 class="card-title" style="color: white;">Mandić Filip
+                                    <h4 class="card-title" style="color: white;">Filip Mandić
                                         <br>
                                         <small class="card-description" style="color: white;">Programmer</small>
                                     </h4>
@@ -194,7 +209,7 @@
                                     <div class="col-md-6 ml-auto mr-auto">
                                         <img src="../img/zo-slika.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                                     </div>
-                                    <h4 class="card-title" style="color: white;">Žo
+                                    <h4 class="card-title" style="color: white;">Nikola Jovanović
                                         <br>
                                         <small class="card-description" style="color: white;">Programmer</small>
                                     </h4>
@@ -216,7 +231,7 @@
     <footer class="footer ">
         <div class="container">
             <div class="copyright pull-right">
-                <p style="color: white;">    
+                <p style="color: white; margin-right: 10px;">    
                     &copy;2018 made with <i class="material-icons" style="color: red;">favorite</i> by A'Tuin
                 </p>
             </div>
