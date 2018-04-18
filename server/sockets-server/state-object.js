@@ -2,20 +2,25 @@
 
 // Summary: Definition and methods for working with token cache.
 
+var User = function(name, socket){
+    var self = {
+        name: name,
+        socket: socket
+    };
+    
+    return self;
+};
+
 var TokenCache = function(){
     var self = {
-        cache: {}  // token:username map
+        cache: {}  // token:user map
     };
 
-    self.cacheToken = function(token, username){ self.cache[token] = username; };
-    self.invalidateToken = function(token){ delete self.cache[token]; };
+    self.cacheToken = function(token, user){ self.cache[token] = user; };
+    self.invalidateToken = function(token){ if (token in self.cache) delete self.cache[token]; };
     self.containsKey = function(token){ return token in self.cache; };
-    self.lookupUsername = function(token){ return self.cache[token]; };
-    self.renameUser = function(oldUsername, newUsername){
-        for (var token in self.cache){
-            if (self.cache[token] === oldUsername) self.cache[token] = newUsername;
-        }
-    };
+    self.lookupUser = function(token){ return self.cache[token]; };
+    self.updateSocket = function(token, socket){ socket.user = self.cache[token]; };
 
     return self;
 };
@@ -23,7 +28,36 @@ var TokenCache = function(){
 var StateObject = function(){
     var self = {
         tokenCache: TokenCache(),
+        users: {},
         gameRooms: []
+    };
+    
+    self.addUser = function(token, username, socket){
+        var newUser = User(username, socket);
+        self.users[username] = newUser;
+        self.tokenCache.cacheToken(token, newUser);
+        socket.user = newUser;
+    };
+    
+    self.renameUser = function(socket, newUsername){
+        if (socket.user){
+            var user = self.users[socket.user.name];
+            delete self.users[socket.user.name];
+            socket.user.name = newUsername;
+            self.users[socket.user.name] = user;
+        }else{
+            console.log('No user connected to the scoket!');
+        }
+    };
+    
+    self.removeUser = function(token, tokensToDelete){
+        var user = self.tokenCache.lookupUser(token);
+        delete self.users[user.name];
+        for (delToken in tokensToDelete){
+            console.log('delToken: ' + delToken);
+            console.log(tokensToDelete);
+            serverState.tokenCache.invalidateToken(tokensToDelete[delToken]);
+        }
     };
 
     return self;

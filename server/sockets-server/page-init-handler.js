@@ -15,19 +15,23 @@ module.exports = function(socket){ return function(data) {
     };
 
     if (!('token' in data) || data.token === ''){
+        // guest user
         response.status = 'Success';
-        console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
+        console.log('    STATUS 1:' + response.status + ' USERNAME:' + response.username +
                 ' SIGNEDIN:' + response.signedIn);
         socket.emit('pageInitResponse', response);
     }
     else {
         var token = data.token;
+        console.log('token: ' + token)
         if (serverState.tokenCache.containsKey(token)){
+            serverState.tokenCache.updateSocket(token, socket);
+            
             response.status = 'Success';
-            response.username = serverState.tokenCache.lookupUsername(token);
+            response.username = serverState.tokenCache.lookupUser(token).name;
             response.signedIn = true;
 
-            console.log('    STATUS:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
+            console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
             socket.emit('pageInitResponse', response);
         } else {
             db.getUsernameByToken(token,
@@ -36,9 +40,9 @@ module.exports = function(socket){ return function(data) {
                     if (status === 'Success'){
                         response.username = username;
                         response.signedIn = true;
-                        serverState.tokenCache.cacheToken(token, username);
+                        serverState.addUser(token, username, socket);
                     }
-                    console.log('    STATUS:' + response.status + ' USERNAME:' + response.username +
+                    console.log('    STATUS 3:' + response.status + ' USERNAME:' + response.username +
                             ' SIGNEDIN:' + response.signedIn);
                     socket.emit('pageInitResponse', response);
                 }

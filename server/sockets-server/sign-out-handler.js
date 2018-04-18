@@ -8,23 +8,19 @@ module.exports = function(socket){ return function(data){
     console.log('Sign out req: TOKEN:' + data.token);
 
     if (data.disable){
-        db.deactivateAccount(data.token,
-            function(status, userSessionTokens){
-                if (status === 'Success'){
-                    for (token in userSessionTokens){
-                        serverState.tokenCache.invalidateToken(token);
-                    }
-                }
-
-                console.log('    STATUS:' + status);
-                socket.emit('signOutResponse', {'status':status, 'deactivated':true});
+        db.deactivateAccount(data.token, function(status, userSessionTokens){
+            if (status === 'Success'){
+                serverState.removeUser(data.token, userSessionTokens);
             }
-        );
 
+            console.log('    STATUS:' + status);
+            socket.emit('signOutResponse', {'status':status, 'deactivated':true});
+        });
+        
     } else {
         db.removeToken(data.token, function(status){
-            if (status === 'Success' && serverState.tokenCache.containsKey(data.token)){
-                serverState.tokenCache.invalidateToken(data.token);
+            if (status === 'Success'){
+                serverState.removeUser(data.token, [data.token]);
             }
 
             console.log('    STATUS:' + status);
