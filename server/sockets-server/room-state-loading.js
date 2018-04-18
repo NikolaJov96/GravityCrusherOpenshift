@@ -2,15 +2,15 @@
 
 // Summary: Class representing one game room
 
-var RoomStateLoading = function(gameRoom){
+module.exports = function(gameRoom){
     var self = {
         room: gameRoom
     };
-    
+
     self.step = function(){
         var ret = { action: null };
         return ret;
     };
-    
+
     return self;
 };

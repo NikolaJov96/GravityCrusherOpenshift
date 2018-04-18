@@ -6,7 +6,7 @@ var TokenCache = function(){
     var self = {
         cache: {}  // token:username map
     };
-    
+
     self.cacheToken = function(token, username){ self.cache[token] = username; };
     self.invalidateToken = function(token){ delete self.cache[token]; };
     self.containsKey = function(token){ return token in self.cache; };
@@ -16,7 +16,7 @@ var TokenCache = function(){
             if (self.cache[token] === oldUsername) self.cache[token] = newUsername;
         }
     };
-    
+
     return self;
 };
 
@@ -25,7 +25,7 @@ var StateObject = function(){
         tokenCache: TokenCache(),
         gameRooms: []
     };
-    
+
     return self;
 };
 

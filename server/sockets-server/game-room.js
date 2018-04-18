@@ -2,9 +2,9 @@
 
 // Summary: Class representing one game room
 
-var RoomStateLoading = require('room-state-loading.js');
+var RoomStateLoading = require('./room-state-loading.js');
 
-var GameRoom = function(name, host, join, map){
+module.exports = function(name, host, join, map){
     var self = {
         name: name,
         p1: host,
@@ -12,7 +12,7 @@ var GameRoom = function(name, host, join, map){
         joined: false,  // has player2 joined the game room
         state: RoomStateLoading(self)
     };
-    
+
     self.step = function(){
         var ret = self.state.step();
         if (ret.action === 'nextState') self.state = ret.nextState();
@@ -20,11 +20,11 @@ var GameRoom = function(name, host, join, map){
 
         return false;  // game room is stil active
     };
-    
-    self.playerJoined(join){
+
+    self.playerJoined = function(join){
         if (join) self.p2 = join;
         self.joined = true;
     }
-    
+
     return self;
 };

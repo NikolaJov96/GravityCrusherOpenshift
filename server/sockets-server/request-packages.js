@@ -31,7 +31,10 @@ requestPackages = [
         id:'passwordReset',
         file:'./password-reset-handler.js',
     },
+    {
+        id:'createGameRoom',
+        file:'./create-game-room-handler.js',
+    }
 ];
 
 module.exports = requestPackages;
-
