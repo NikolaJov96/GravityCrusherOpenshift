@@ -415,6 +415,30 @@ tests = {
         db.deactivateAccount('5656116151161', callbackTest('TokenNoMatch'));
         db.deactivateAccount('aaabbbcccdddf', callbackTest('Success'));
         db.deactivateAccount('aaabbbcccdddl', callbackTest('Success'));
+    },
+    checkUsername: function() {
+        var fun = 'username check';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Dragana'],
+            ['Milica'],
+            ['Jovan']
+        ]
+
+        db.checkIfUserExists('Dragana', callbackTest('UsernameNotExists'));
+        db.checkIfUserExists('Milica', callbackTest('Success'));
+        db.checkIfUserExists('Jovan', callbackTest('Success'));
     }
 };
 
@@ -424,5 +448,4 @@ tests = {
 // }
 
 // test specific
-tests.insertTokenUsername();
-tests.insertTokenEmail();
+tests.checkUsername();

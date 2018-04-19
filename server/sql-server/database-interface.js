@@ -20,7 +20,7 @@ var database = function() {
     var removingUsernameToken = require('./db-interface-impl/remove-token');
     var resetPasswordModule = require('./db-interface-impl/reset-password');
     var deactivateAccountModule = require('./db-interface-impl/deactivate-account');
-
+    var userCheckModule = require('./db-interface-impl/user-check');
     var mysql = require('mysql');
 
     /*
@@ -93,7 +93,7 @@ var database = function() {
     }
 
     methods.verifyRegistrationByUsername = function(username, confirmCode, callback) {
-        
+
         verifyingRegByUsername(methods.connection, username, confirmCode, callback);
     }
 
@@ -120,6 +120,11 @@ var database = function() {
     methods.deactivateAccount = function(token, callback) {
 
         deactivateAccountModule(methods.connection, token, callback);
+    }
+
+    methods.checkIfUserExists = function(username, callback) {
+
+        userCheckModule(methods.connection, username, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------
