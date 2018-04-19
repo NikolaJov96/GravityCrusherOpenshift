@@ -20,6 +20,10 @@ io.on('connection', function(socket){
     for (var i in requestPackages){
         socket.on(requestPackages[i].id, require(requestPackages[i].file)(socket));
     }
+    socket.on('disconnect', function(){ return function(){
+        socket.user.socket = null;
+        socket.user.page = '';
+    };}(socket));
 });
 
 console.log('Socket.io request listener set up.');

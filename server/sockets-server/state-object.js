@@ -2,10 +2,11 @@
 
 // Summary: Definition and methods for working with token cache.
 
-var User = function(name, socket, isGuest){
+var User = function(name, socket, page, isGuest){
     var self = {
         name: name,
         socket: socket,
+        page: page,
         isGuest: isGuest
     };
     
@@ -33,8 +34,8 @@ var StateObject = function(){
         gameRooms: []
     };
     
-    self.addUser = function(token, username, socket, isGuest){
-        var newUser = User(username, socket, isGuest);
+    self.addUser = function(token, username, socket, page, isGuest){
+        var newUser = User(username, socket, page, isGuest);
         self.users[username] = newUser;
         self.tokenCache.cacheToken(token, newUser);
         socket.user = newUser;
