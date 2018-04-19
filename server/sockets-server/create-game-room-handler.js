@@ -16,6 +16,8 @@ module.exports = function(socket){ return function(data){
                 else {
                     var newRoom = require('./game-room.js')(data.name, socket.user, data.opponent, data.gameMap);
                     serverState.gameRooms.push(newRoom);
+                    
+                    // TODO: update game room pages with the new game room
 
                     socket.emit('createGameRoomResponse', { status: 'Success' });
                 }

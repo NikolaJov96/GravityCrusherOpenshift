@@ -6,6 +6,8 @@ module.exports = function(gameRoom){
     var self = {
         room: gameRoom
     };
+    
+    console.log('Room ' + self.room.name + ' is in game-end state.');
 
     self.step = function(){
         var ret = { action: null };

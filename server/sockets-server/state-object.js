@@ -27,8 +27,9 @@ var TokenCache = function(){
     return self;
 };
 
-var StateObject = function(){
+var StateObject = function(frameTime){
     var self = {
+        frameTime: frameTime,
         tokenCache: TokenCache(),
         users: {},
         gameRooms: []

@@ -11,25 +11,28 @@ serv.listen(appConfig.socketsServerPort);
 
 var requestPackages = require('./request-packages.js');
 
-serverState = require('./state-object.js')();
+const frameTime = 40;  // run every 40ms (25fps)
+serverState = require('./state-object.js')(frameTime);
 
 // on new connection
 io.on('connection', function(socket){
     console.log('New socket connected.');
+    socket.user = null;
 
     for (var i in requestPackages){
         socket.on(requestPackages[i].id, require(requestPackages[i].file)(socket));
     }
     socket.on('disconnect', function(){ return function(){
-        socket.user.socket = null;
-        socket.user.page = '';
+        if (socket.user){
+            socket.user.socket = null;
+            socket.user.page = '';
+        }
     };}(socket));
 });
 
 console.log('Socket.io request listener set up.');
 
 // server loop stepping all active game rooms
-const frameTime = 40;  // run every 40ms (25fps)
 const telemetryIterTime = 30;  // get telemetry every X seconds
 const telemetryVerbose = true;  // print telemetry to console
 const telemetry = require('./telemetry.js')(telemetryIterTime, frameTime, telemetryVerbose);

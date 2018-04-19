@@ -40,7 +40,7 @@ module.exports = function(socket){ return function(data) {
                     if (status === 'Success'){
                         response.username = username;
                         response.signedIn = true;
-                        serverState.addUser(token, username, socket, data.page true);
+                        serverState.addUser(token, username, socket, data.page, true);
                     }
                     console.log('    STATUS 3:' + response.status + ' USERNAME:' + response.username +
                             ' SIGNEDIN:' + response.signedIn);
