@@ -26,7 +26,7 @@ console.log('Socket.io request listener set up.');
 
 // server loop stepping all active game rooms
 const frameTime = 40;  // run every 40ms (25fps)
-const telemetryIterTime = 60;  // get telemetry every X seconds
+const telemetryIterTime = 6;  // get telemetry every X seconds
 const telemetryVerbose = true;  // print telemetry to console
 const telemetry = require('./telemetry.js')(telemetryIterTime, frameTime, telemetryVerbose);
 

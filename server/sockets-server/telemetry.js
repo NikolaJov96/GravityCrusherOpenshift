@@ -19,11 +19,15 @@ module.exports = function(interval, frameTime, verbose){
         if (self.counter++ === self.maxCounter){
             self.teleIterations++;
             var avrgIterTime = self.accumulatedTime / self.maxCounter;
-            var iter = { iterTime: avrgIterTime, activeRooms: serverState.gameRooms.length };
-            self.history.push(iter);
+            var interval = { 
+                intervalTime: avrgIterTime,
+                activeRooms: serverState.gameRooms.length,
+                activeUsers: Object.keys(serverState.users).length
+            };
+            self.history.push(interval);
             if (self.verbose){
-                console.log('Telemetry iteration: ' + self.teleIterations);
-                console.log(iter);
+                console.log('Telemetry interval: ' + self.teleIterations);
+                console.log(interval);
             }
             self.counter = 0;
             self.accumulatedTime = 0.0;

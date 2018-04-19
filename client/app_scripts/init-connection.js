@@ -120,5 +120,9 @@ socket.on('pageInitResponse', function(data){
     logMsg('Page init response received.');
     logMsg('Sign in status: ' + data.signedIn);
     logMsg('Username: ' + data.username);
+    if (!signedIn){
+        setCookie('token', '', 0);
+        logMsg('Login denied, token deleted.');
+    }
     if (initCallback) initCallback();
 });
