@@ -34,6 +34,10 @@ requestPackages = [
     {
         id:'createGameRoom',
         file:'./create-game-room-handler.js',
+    },
+    {
+        id:'selectGameRoom',
+        file:'./select-game-room-handler.js',
     }
 ];
 

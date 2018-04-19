@@ -8,15 +8,18 @@ module.exports = function(socket){ return function(data){
     console.log('Create room req: Data: ');
     console.log(data);
 
-    db.checkIfUserExists(data.opponent, function(socket, data) { return function(status) {
-            console.log(status);
-            if (status == 'UsernameNotExists') socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
-            else {
-                var newRoom = require('./game-room.js')(data.name, 'player host', data.opponent, data.gameMap);
-                serverState.gameRooms.push(newRoom);
+    if (data.opponent !== socket.user.name){
+        db.checkIfUserExists(data.opponent, function(socket, data) { return function(status) {
+                console.log(status);
+                if (status == 'UsernameNotExists')
+                    socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+                else {
+                    var newRoom = require('./game-room.js')(data.name, socket.user, data.opponent, data.gameMap);
+                    serverState.gameRooms.push(newRoom);
 
-                socket.emit('createGameRoomResponse', { status: 'Success' });
-            }
-        };
-    }(socket, data));
+                    socket.emit('createGameRoomResponse', { status: 'Success' });
+                }
+            };
+        }(socket, data));
+    } else socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
 }};

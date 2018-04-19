@@ -6,13 +6,15 @@
 var choseRoom = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
-    var openRoomsSelectPkg = {
-        roomId:123,
-        action:0
+    var selectGameRoomPkg = {
+        roomName:'room',
+        action:'play'
     };
-    socket.emit('openRoomsSelect', openRoomsSelectPkg);
+    socket.emit('selectGameRoom', selectGameRoomPkg);
     logMsg('Game room sellection requested.');
 };
+
+document.getElementById('playGame').onclick = choseRoom;
 
 socket.on('openRoomsStateUpdate', function(data){
     if ('added' in data){
@@ -35,11 +37,12 @@ socket.on('openRoomsStateUpdate', function(data){
     }
 });
 
-socket.on('openRoomsSelectResponse', function(data){
-    if (!('status' in data)) attrMissing('status', 'openRoomsSelectResponse', data);
+socket.on('selectGameRoomResponse', function(data){
+    if (!('status' in data)) attrMissing('status', 'selectGameRoomResponse', data);
     
-    if (data.status === 'Success'){ logMsg('On openRoomsSelectResponse - success'); window.location = 'game'; }
-    else if (data.status === 1) logMsg('On openRoomsSelectResponse - player slot taken');
-    else if (data.status === 2) logMsg('On openRoomsSelectResponse - invalid room');
-    else logMsg('On openRoomsSelectResponse - unknown error: ' + data.status);
+    if (data.status === 'Success'){ logMsg('On selectGameRoomResponse - success'); window.location = 'game'; }
+    else if (data.status === 'PlayerSlotTaken') logMsg('On selectGameRoomResponse - player slot taken');
+    else if (data.status === 'InvalidRoom') logMsg('On selectGameRoomResponse - invalid room');
+    else if (data.status === 'JoinDenied') logMsg('On selectGameRoomResponse - another player is required to join');
+    else logMsg('On selectGameRoomResponse - unknown error: ' + data.status);
 });

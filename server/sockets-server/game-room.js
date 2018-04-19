@@ -3,12 +3,15 @@
 // Summary: Class representing one game room
 
 var RoomStateLoading = require('./room-state-loading.js');
+var RoomStateGame = require('./room-state-game.js');
+var RoomStateGameEnd = require('./room-state-game-end.js');
 
-module.exports = function(name, host, join, map){
+module.exports = function(name, host, joinName, map){
     var self = {
         name: name,
-        p1: host,
-        p2: join,
+        host: host,
+        joinName: joinName,
+        join: null,
         joined: false,  // has player2 joined the game room
         state: RoomStateLoading(self)
     };
