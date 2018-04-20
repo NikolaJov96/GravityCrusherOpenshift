@@ -5,6 +5,7 @@
 var roomName = document.getElementById('roomName');
 var submitBtn = document.getElementById('submitBtn');
 var opponent = document.getElementById('inputPlayer2Name');
+var map = document.getElementById('map');
 
 // send create room request
 submitBtn.onclick = function(){
@@ -18,7 +19,7 @@ submitBtn.onclick = function(){
             opponent:opponent.value,
             chatEnabled:true,
             spectatorsEnabled:true,
-            gameMap:0
+            gameMap:map.value
         };
         socket.emit('createGameRoom', createGameRoomPkg);
         logMsg('Game room creation requested.');

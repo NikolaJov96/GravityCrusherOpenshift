@@ -9,6 +9,7 @@ module.exports = function(name, host, joinName, map){
         name: name,
         host: host,
         joinName: joinName,
+        map: map,
         join: null,
     };
     self.state = RoomStateLoading(self);

@@ -2,19 +2,40 @@
 
 // Summary: Callbacks initialization for 'game-rooms' page
 
-// send create room request
-var choseRoom = function(){
-    if (!socket.connected){ logMsg('Server not yet connected.'); return; }
-    
-    var selectGameRoomPkg = {
-        roomName:'room',
-        action:'play'
-    };
-    socket.emit('selectGameRoom', selectGameRoomPkg);
-    logMsg('Game room sellection requested.');
+var table = document.getElementById('roomsTable');
+var tableBody = document.getElementById('roomsTableBody');
+var noRooms = document.getElementById('noRooms');
+
+var drawTable = function(rooms){
+    if (rooms.length === 0) noRooms.style.display = 'inline';
+    else{
+        var innerTable = '';
+        for (var i in rooms){
+            innerTable += 
+`
+<tr>
+    <td scope="row">` + rooms[i].name + `</td>
+    <td>` + rooms[i].host + `</td>
+    <td>` + rooms[i].map + `</td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary">Play</button></td>
+    <td>Enabled</td>
+</tr>
+`;
+        }
+        table.style.display = 'table';
+        tableBody.innerHTML = innerTable;
+    }
 };
 
-document.getElementById('playGame').onclick = choseRoom;
+initCallback = function(data){
+    if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
+    else if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
+    else{
+        drawTable(data.payload.rooms);
+    }
+};
+if (initCallbackData) initCallback(initCallbackData);
 
 socket.on('openRoomsStateUpdate', function(data){
     if ('added' in data){
@@ -36,6 +57,20 @@ socket.on('openRoomsStateUpdate', function(data){
         }
     }
 });
+
+// send create room request
+var choseRoom = function(name, action){
+    if (!socket.connected){ logMsg('Server not yet connected.'); return; }
+    
+    var selectGameRoomPkg = {
+        roomName:name,
+        action:action
+    };
+    socket.emit('selectGameRoom', selectGameRoomPkg);
+    logMsg('Game room sellection requested.');
+};
+
+// document.getElementById('playGame').onclick = choseRoom;
 
 socket.on('selectGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'selectGameRoomResponse', data);

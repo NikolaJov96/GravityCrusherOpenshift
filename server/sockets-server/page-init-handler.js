@@ -40,6 +40,16 @@ module.exports = function(socket){ return function(data) {
                     }
                 }
             }
+            else if (data.page === 'GameRooms'){
+                response.payload = { rooms: [] };
+                for (var i in serverState.gameRooms){
+                    response.payload.rooms.push({
+                        name: serverState.gameRooms[i].name,
+                        host: serverState.gameRooms[i].host.name,
+                        map: serverState.gameRooms[i].map,
+                    });
+                }
+            }
 
             console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
             socket.emit('pageInitResponse', response);

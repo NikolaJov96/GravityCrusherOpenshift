@@ -101,7 +101,6 @@ StateGame = function(data){
     
     // on key up callback
     self.onKeyUp = function(event){
-        if (event.keyCode === ' '.charCodeAt()) return StateGameEnd;
         if (event.keyCode === 37) self.pressed[0] = false; // l
         if (event.keyCode === 38) self.pressed[1] = false; // u
         if (event.keyCode === 39) self.pressed[2] = false; // r
