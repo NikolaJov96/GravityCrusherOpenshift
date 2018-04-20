@@ -4,7 +4,7 @@
 
 StateGameEnd = function(data){
     // state initialization
-    console.log('current state: game end - press space');
+    console.log('current state: game end');
     self = abstractState();
     self.pressed = [false, false, false, false];
     self.translation = screen.w * 0.6 + Math.random() * screen.w * 0.2;

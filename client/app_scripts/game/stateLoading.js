@@ -4,7 +4,7 @@
 
 StateLoading = function(data){
     // state initialization
-    console.log('current state: game loading - press space');
+    console.log('current state: game loading');
     self = abstractState();
     self.pressed = [false, false, false, false];
     self.translation = screen.w * 0.6 + Math.random() * screen.w * 0.2;

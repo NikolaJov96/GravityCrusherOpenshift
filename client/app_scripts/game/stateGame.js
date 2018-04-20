@@ -4,7 +4,7 @@
 
 StateGame = function(data){
     // state initialization
-    console.log('current state: game - press space or arrows');
+    console.log('current state: game - move using arrows');
     self = abstractState();
     self.pressed = [false, false, false, false];
     self.translation = [screen.w * 0.35, screen.h * 0.35, 0.0];
