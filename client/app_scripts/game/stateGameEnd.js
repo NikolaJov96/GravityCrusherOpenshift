@@ -50,5 +50,11 @@ StateGameEnd = function(data){
         return null;
     };
     
+    var superFinish = self.finish;
+    self.finish = function(){ 
+        logMsg('game-end state finished');
+        superFinish();
+    };
+    
     return self;
 };

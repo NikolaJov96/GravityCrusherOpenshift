@@ -50,5 +50,11 @@ StateLoading = function(data){
         return null;
     };
     
+    var superFinish = self.finish;
+    self.finish = function(){ 
+        logMsg('loading state finished');
+        superFinish();
+    };
+    
     return self;
 };

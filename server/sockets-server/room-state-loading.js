@@ -15,6 +15,7 @@ module.exports = function(gameRoom){
     
     self.initResponse = function(user){
         return {
+            state: 'loading',
             roll: (user.isGuest ? 'join' : 'host'),
             host: self.room.host.name,
             hostActive: (self.room.host.page === 'Game' ? true : false),

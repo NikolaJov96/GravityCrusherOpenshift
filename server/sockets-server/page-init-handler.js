@@ -33,8 +33,12 @@ module.exports = function(socket){ return function(data) {
             response.username = user.name;
             response.signedIn = true;
             if (data.page === 'Game'){
-                var room = null;
-                // response.playload = room.state.initResponse(user);
+                for (var i in serverState.gameRooms){
+                    if (serverState.gameRooms[i].containsUser(user)){
+                        response.payload = serverState.gameRooms[i].state.initResponse(user);
+                        break;
+                    }
+                }
             }
 
             console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);

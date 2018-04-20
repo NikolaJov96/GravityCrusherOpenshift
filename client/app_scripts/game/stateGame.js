@@ -110,5 +110,11 @@ StateGame = function(data){
         return null;
     };
     
+    var superFinish = self.finish;
+    self.finish = function(){ 
+        logMsg('game state finished');
+        superFinish();
+    };
+    
     return self;
 };

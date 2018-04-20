@@ -22,7 +22,10 @@ var TokenCache = function(){
     self.invalidateToken = function(token){ if (token in self.cache) delete self.cache[token]; };
     self.containsKey = function(token){ return token in self.cache; };
     self.lookupUser = function(token){ return self.cache[token]; };
-    self.updateSocket = function(token, socket){ socket.user = self.cache[token]; };
+    self.updateSocket = function(token, socket){ 
+        socket.user = self.cache[token]; 
+        socket.user.socket = socket;
+    };
 
     return self;
 };

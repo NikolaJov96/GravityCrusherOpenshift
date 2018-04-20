@@ -60,6 +60,7 @@ var signedIn = false;
 var username = '';
 var debugMode = true;
 var initCallback = null;
+var initCallbackData = null;
 
 // request socket connection
 var socket = io('localhost:8001');
@@ -123,5 +124,11 @@ socket.on('pageInitResponse', function(data){
         setCookie('token', '', 0);
         logMsg('Login denied, token deleted.');
     }
-    if (initCallback) initCallback(data);
+    if (initCallback){
+        logMsg('Calling init callback.');
+        initCallback(data);
+    }else{
+        logMsg('Caching init callback data.');
+        initCallbackData = data;
+    }
 });

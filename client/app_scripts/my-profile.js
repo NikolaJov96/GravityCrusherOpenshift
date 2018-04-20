@@ -7,7 +7,8 @@ var deactivateBtn = document.getElementById('deactivateBtn');
 
 initCallback = function(data){
     usernameLabel.innerHTML = 'Username: ' + username;
-}
+};
+if (initCallbackData) initCallback(initCallbackData);
 
 // sign out button handler
 deactivateBtn.onclick = function(){
