@@ -93,8 +93,7 @@ var logMsg = function(msg){
 // missing attribute log message
 var attrMissing = function(attr, pack, data){
     if (debugMode){
-        console.log('Attribute "' + attr + '" missing from package "' +
-                    pack + '", data contents:');
+        console.log('Attribute "' + attr + '" missing from package "' + pack + '", data contents:');
         console.log(data);
     }
 };

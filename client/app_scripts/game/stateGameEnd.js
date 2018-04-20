@@ -2,9 +2,9 @@
 
 // Summary: State class representing loading roomState
 
-StateLoading = function(data){
+StateGameEnd = function(data){
     // state initialization
-    console.log('current state: game loading - press space');
+    console.log('current state: game end - press space');
     self = abstractState();
     self.pressed = [false, false, false, false];
     self.translation = screen.w * 0.6 + Math.random() * screen.w * 0.2;
@@ -18,7 +18,7 @@ StateLoading = function(data){
                screen.h / 2.0, -screen.h / 2.0, 0, 1000);
     mat4.lookAt(self.viewMatrix, [screen.w / 2.0, screen.h / 2.0, 200], 
                 [screen.w / 2.0, screen.h / 2.0, 0], [0, 1, 0]);
-    self.lightSource = new Float32Array([0.0, 0.0, 500.0]);
+    self.lightSource = new Float32Array([screen.w, screen.h, 500.0]);
     self.ambientColor = new Float32Array([0.5, 0.5, 0.5]);
     self.directedColor = new Float32Array([0.5, 0.5, 0.5]);
     
@@ -26,7 +26,7 @@ StateLoading = function(data){
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
         
         // draw 1st ship
-        mat4.fromTranslation(self.tranMatrix, [self.translation, screen.h * 0.6, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [self.translation, screen.h * 0.4, 0.0]);
         mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
@@ -35,18 +35,18 @@ StateLoading = function(data){
         self.objs.ship.draw();
         
         // draw 2nd ship
-        mat4.fromTranslation(self.tranMatrix, [screen.w / 2.0, screen.h * 0.6, 0.0]);
+        mat4.fromTranslation(self.tranMatrix, [screen.w / 2.0, screen.h * 0.4, 0.0]);
         mat4.rotate(self.tranMatrix, self.tranMatrix, self.rotation, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
-        mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.2, 0.2, 0.2]);
         mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
         self.objs.ship.draw();
     };
     
     // on key up callback, returns next state constructor, or null
     self.onKeyUp = function(event){
-        if (event.keyCode === ' '.charCodeAt()) return StateGame;
+        if (event.keyCode === ' '.charCodeAt()) return StateLoading;
         return null;
     };
     
