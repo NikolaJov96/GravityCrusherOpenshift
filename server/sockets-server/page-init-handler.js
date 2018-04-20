@@ -36,6 +36,7 @@ module.exports = function(socket){ return function(data) {
                 for (var i in serverState.gameRooms){
                     if (serverState.gameRooms[i].containsUser(user)){
                         response.payload = serverState.gameRooms[i].state.initResponse(user);
+                        response.payload.messages = serverState.gameRooms[i].getMessages();
                         break;
                     }
                 }

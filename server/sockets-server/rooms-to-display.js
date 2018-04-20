@@ -13,7 +13,5 @@ module.exports = function(user){
             canPlay: (serverState.gameRooms[i].join ? false : true)
         });
     }
-    console.log('                ################################');
-    console.log(rooms);
     return rooms;
 }

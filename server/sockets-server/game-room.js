@@ -11,6 +11,8 @@ module.exports = function(name, host, joinName, map){
         joinName: joinName,
         map: map,
         join: null,
+        messages: [],
+        newMessages: []
     };
     self.state = RoomStateLoading(self);
 
@@ -24,6 +26,17 @@ module.exports = function(name, host, joinName, map){
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
+        
+        var text = '';
+        for (var i in self.newMessages){
+            self.messages.push(self.newMessages[i]);
+            text += self.newMessages[i].sender + ':  ' + self.newMessages[i].text + '</br>'
+        }
+        self.newMessages = [];
+        if (text.length > 0){
+            if (self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
+            if (self.join && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
+        }
 
         return false;  // game room is stil active
     };
@@ -33,6 +46,12 @@ module.exports = function(name, host, joinName, map){
         if (self.join && user.name === self.join.name) return true;
         return false;
     };
+    
+    self.getMessages = function(){
+        var text = '';
+        for (var i in self.messages) text += self.messages[i].sender + ':  ' + self.messages[i].text + '</br>';
+        return text;
+    }
 
     return self;
 };

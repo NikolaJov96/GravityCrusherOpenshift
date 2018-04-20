@@ -38,6 +38,10 @@ requestPackages = [
     {
         id:'selectGameRoom',
         file:'./select-game-room-handler.js',
+    },
+    {
+        id:'sendMessage',
+        file:'./send-message-handler.js',
     }
 ];
 
