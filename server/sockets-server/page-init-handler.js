@@ -41,7 +41,15 @@ module.exports = function(socket){ return function(data) {
                 }
             }
             else if (data.page === 'GameRooms'){
-                response.payload = { rooms: require('./rooms-to-display.js')(user) };
+                var room = null;
+                for (var i in serverState.gameRooms){
+                    if (serverState.gameRooms[i].containsUser(user)){
+                        room = serverState.gameRooms[i];
+                        break;
+                    }
+                }
+                if (room) response.payload = { redirect: true };
+                else response.payload = { redirect: false, rooms: require('./rooms-to-display.js')(user) };
             }
 
             console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);

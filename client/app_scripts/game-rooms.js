@@ -18,7 +18,8 @@ var drawTable = function(rooms){
     <td>` + rooms[i].host + `</td>
     <td>` + rooms[i].map + `</td>
     <td><button onclick="choseRoom('` + rooms[i].name + `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
-    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary">Play</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary"` +
+        (rooms[i].canPlay ? '' : ' disabled') + `>Play</button></td>
     <td>Enabled</td>
 </tr>
 `;
@@ -30,9 +31,16 @@ var drawTable = function(rooms){
 
 initCallback = function(data){
     if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
-    else if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
+    else if (!('redirect' in data.payload)) attrMissing('redirect', 'initCallback.playload', data.payload);
     else{
-        drawTable(data.payload.rooms);
+        if (data.payload.redirect){
+            window.location = '/game';
+        }else{
+            if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
+            else{
+                drawTable(data.payload.rooms);
+            }
+        }
     }
 };
 if (initCallbackData) initCallback(initCallbackData);
