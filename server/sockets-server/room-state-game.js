@@ -11,6 +11,8 @@ module.exports = function(gameRoom){
     
     console.log('Room ' + self.room.name + ' is in game state.');
 
+    self.initResponse = function(user){ return null; }
+    
     self.step = function(){
         var ret = { action: null };
         return ret;

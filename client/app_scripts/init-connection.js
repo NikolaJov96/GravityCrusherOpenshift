@@ -124,5 +124,5 @@ socket.on('pageInitResponse', function(data){
         setCookie('token', '', 0);
         logMsg('Login denied, token deleted.');
     }
-    if (initCallback) initCallback();
+    if (initCallback) initCallback(data);
 });

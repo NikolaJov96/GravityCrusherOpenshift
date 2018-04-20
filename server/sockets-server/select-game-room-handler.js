@@ -15,7 +15,6 @@ module.exports = function(socket){ return function(data){
     if (targetRoom){
         if (targetRoom.joinName === socket.user.name){
             targetRoom.join = socket.user;
-            targetRoom.joined = true;
 
             socket.emit('selectGameRoomResponse', { status: 'Success' });
         }

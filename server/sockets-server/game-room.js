@@ -10,7 +10,6 @@ module.exports = function(name, host, joinName, map){
         host: host,
         joinName: joinName,
         join: null,
-        joined: false  // has player2 joined the game room
     };
     self.state = RoomStateLoading(self);
 
@@ -21,11 +20,6 @@ module.exports = function(name, host, joinName, map){
 
         return false;  // game room is stil active
     };
-
-    self.playerJoined = function(join){
-        if (join) self.p2 = join;
-        self.joined = true;
-    }
 
     return self;
 };

@@ -5,7 +5,7 @@
 var usernameLabel = document.getElementById('username');
 var deactivateBtn = document.getElementById('deactivateBtn');
 
-initCallback = function(){
+initCallback = function(data){
     usernameLabel.innerHTML = 'Username: ' + username;
 }
 
