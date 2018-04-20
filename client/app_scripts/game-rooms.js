@@ -37,8 +37,13 @@ initCallback = function(data){
 };
 if (initCallbackData) initCallback(initCallbackData);
 
-socket.on('openRoomsStateUpdate', function(data){
-    if ('added' in data){
+socket.on('gameRoomsUpdate', function(data){
+    if (!('rooms' in data)) attrMissing('rooms', 'gameRoomsUpdate', data);
+    else{
+        noRooms.style.display = 'none';
+        drawTable(data.rooms);
+    }
+    /*if ('added' in data){
         for (var room in data.added){
             // add rows to rooms table
             logMsg('Room added: ' + room);
@@ -55,7 +60,7 @@ socket.on('openRoomsStateUpdate', function(data){
             // disable Play button
             logMsg('Room slotTaken: ' + room);
         }
-    }
+    }*/
 });
 
 // send create room request

@@ -18,7 +18,9 @@ module.exports = function(socket){ return function(data){
                     serverState.gameRooms.push(newRoom);
                     for (var user in serverState.users){
                         if (serverState.users[user].page === 'GameRooms'){
-                            // TODO: send init package
+                            serverState.users[user].socket.emit('gameRoomsUpdate', { 
+                                rooms: require('./rooms-to-display.js')(serverState.users[user])
+                            });
                         }
                     }
                     
