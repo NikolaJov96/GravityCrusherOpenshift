@@ -23,8 +23,6 @@ StateLoading = function(data){
     self.directedColor = new Float32Array([0.5, 0.5, 0.5]);
     
     self.draw = function(){
-        if (!shapeTextures.allTexturesLoaded) return;
-        
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
         
         // draw 1st ship

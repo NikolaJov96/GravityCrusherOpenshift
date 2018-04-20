@@ -68,11 +68,12 @@ programInfo.coordAttribLoc = gl.getAttribLocation(program, 'textCoord');
 
 // room init and the main loop
 preloadTextures();
-roomState = StateLoading();
 
 var mainLoop = function(){
-    roomState.step();
-    roomState.draw();
+    if (shapeTextures.allTexturesLoaded && roomState){
+        roomState.step();
+        roomState.draw();
+    }
     window.requestAnimationFrame(mainLoop);
 };
 window.requestAnimationFrame(mainLoop);
