@@ -44,12 +44,6 @@ StateLoading = function(data){
         self.objs.ship.draw();
     };
     
-    // on key up callback, returns next state constructor, or null
-    self.onKeyUp = function(event){
-        if (event.keyCode === ' '.charCodeAt()) return StateGame;
-        return null;
-    };
-    
     var superFinish = self.finish;
     self.finish = function(){ 
         logMsg('loading state finished');

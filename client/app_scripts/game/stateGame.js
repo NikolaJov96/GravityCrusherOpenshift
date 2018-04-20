@@ -91,23 +91,21 @@ StateGame = function(data){
         }
     };
     
-    // on key down callback, returns next state constructor, or null
+    // on key down callback
     self.onKeyDown = function(event){
         if (event.keyCode === 37) self.pressed[0] = true; // l
         if (event.keyCode === 38) self.pressed[1] = true; // u
         if (event.keyCode === 39) self.pressed[2] = true; // r
         if (event.keyCode === 40) self.pressed[3] = true; // d
-        return null;
     };
     
-    // on key up callback, returns next state constructor, or null
+    // on key up callback
     self.onKeyUp = function(event){
         if (event.keyCode === ' '.charCodeAt()) return StateGameEnd;
         if (event.keyCode === 37) self.pressed[0] = false; // l
         if (event.keyCode === 38) self.pressed[1] = false; // u
         if (event.keyCode === 39) self.pressed[2] = false; // r
         if (event.keyCode === 40) self.pressed[3] = false; // d
-        return null;
     };
     
     var superFinish = self.finish;
