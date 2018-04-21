@@ -13,6 +13,8 @@ module.exports = function(name, host, joinName, map){
         join: null,
         messages: [],
         newMessages: []
+        hostCommand: null,
+        joinCommand: null
     };
     self.state = RoomStateLoading(self);
 
@@ -20,13 +22,13 @@ module.exports = function(name, host, joinName, map){
         var ret = self.state.step();
         if (ret.action === 'nextState'){
             self.state = ret.nextState(self);
-            if (self.host.socket && self.host.page === 'Game') 
+            if (self.host.socket && self.host.page === 'Game')
                 self.host.socket.emit('initRoomState', self.state.initResponse(self.host));
-            if (self.join.socket && self.join.page === 'Game') 
+            if (self.join.socket && self.join.page === 'Game')
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
-        
+
         var text = '';
         for (var i in self.newMessages){
             self.messages.push(self.newMessages[i]);
@@ -40,13 +42,13 @@ module.exports = function(name, host, joinName, map){
 
         return false;  // game room is stil active
     };
-    
+
     self.containsUser = function(user){
         if (user.name === self.host.name) return true;
         if (self.join && user.name === self.join.name) return true;
         return false;
     };
-    
+
     self.getMessages = function(){
         var text = '';
         for (var i in self.messages) text += self.messages[i].sender + ':  ' + self.messages[i].text + '</br>';

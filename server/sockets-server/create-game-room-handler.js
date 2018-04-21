@@ -10,7 +10,6 @@ module.exports = function(socket){ return function(data){
 
     if (data.opponent !== socket.user.name){
         db.checkIfUserExists(data.opponent, function(socket, data) { return function(status) {
-                console.log(status);
                 if (status == 'UsernameNotExists')
                     socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
                 else {
@@ -18,12 +17,12 @@ module.exports = function(socket){ return function(data){
                     serverState.gameRooms.push(newRoom);
                     for (var user in serverState.users){
                         if (serverState.users[user].page === 'GameRooms'){
-                            serverState.users[user].socket.emit('gameRoomsUpdate', { 
+                            serverState.users[user].socket.emit('gameRoomsUpdate', {
                                 rooms: require('./rooms-to-display.js')(serverState.users[user])
                             });
                         }
                     }
-                    
+
                     // TODO: update game room pages with the new game room
 
                     socket.emit('createGameRoomResponse', { status: 'Success' });
