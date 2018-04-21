@@ -2,18 +2,20 @@
 
 // Summary: This file contains handler for clienet sockets during game
 
-var db = require('../sql-server/database-interface.js');
-
 module.exports = function(socket){ return function(data){
-    console.log('Game commands handler: Data: ');
-    console.log(data);
+    // to frequent to print each time
+    // console.log('Game commands handler: Data: ');
+    // console.log(data);
 
+    console.log('aaasdfasdf');
     for (var i in serverState.gameRooms) {
-        if (socket.user.name === serverState.gameRooms[i].host) {
+        if (socket.user.name === serverState.gameRooms[i].host.name) {
             serverState.gameRooms[i].hostCommand = data;
+            console.log('a');
         }
         else if ((serverState.gameRooms[i].join) && (socket.user.name === serverState.gameRooms[i].joinName)) {
-                serverState.gameRooms[i].joinCommand = data;
+            serverState.gameRooms[i].joinCommand = data;
+            console.log('b');
         }
     }
 }};

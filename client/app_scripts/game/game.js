@@ -14,6 +14,10 @@ document.onkeyup = function(event){
     if (roomState) roomState.onKeyUp(event);
 };
 
+document.onkeypress = function(event){
+    if (roomState) roomState.onKeyPress(event);
+};
+
 initCallback = function(data){
     if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
     else if (!('state' in data.payload)) attrMissing('state', 'initCallback.playload', data.payload);
@@ -55,6 +59,10 @@ socket.on('initRoomState', function(data){
         if (roomState) roomState.finish();
         roomState = StateGameEnd(data);
     }else logMsg('Undefined state: ' + data.state);
+});
+
+socket.on('gameState', function(data){
+    if (roomState) roomState.handleStatePackage(data);
 });
 
 chatBtn.onclick = function(){

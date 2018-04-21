@@ -95,7 +95,7 @@ var abstractState = function(){
     };
     
     // callback to be called when socket package is received
-    self.handleSocketPackage = function(name, data){};
+    self.handleStatePackage = function(data){};
     
     // function for stepping client state (only game mechanics unrelated tasks)
     self.step = function(){};
@@ -103,11 +103,14 @@ var abstractState = function(){
     // screen rendering
     self.draw = function(){};
     
-    // on key down callback, returns next state constructor, or null
-    self.onKeyDown = function(event){ return null; };
+    // on key down callback
+    self.onKeyDown = function(event){};
     
-    // on key up callback, returns next state constructor, or null
-    self.onKeyUp = function(event){ return null; };
+    // on key up callback
+    self.onKeyUp = function(event){};
+    
+    // on key press callback
+    self.onKeyPress = function(event){};
 
     // to be called by main loop when exiting current room state
     // call before discarding room state object

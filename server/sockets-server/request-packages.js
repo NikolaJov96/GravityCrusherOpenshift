@@ -42,6 +42,10 @@ requestPackages = [
     {
         id:'sendMessage',
         file:'./send-message-handler.js',
+    },
+    {
+        id:'gameCommand',
+        file:'./game-commands-receiver.js',
     }
 ];
 
