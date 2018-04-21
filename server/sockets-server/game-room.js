@@ -12,7 +12,7 @@ module.exports = function(name, host, joinName, map){
         map: map,
         join: null,
         messages: [],
-        newMessages: []
+        newMessages: [],
         hostCommand: null,
         joinCommand: null
     };
@@ -29,8 +29,8 @@ module.exports = function(name, host, joinName, map){
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
 
-        hostCommand = null;
-        joinCommand = null;
+        self.hostCommand = null;
+        self.joinCommand = null;
 
         var text = '';
         for (var i in self.newMessages){

@@ -8,7 +8,7 @@ module.exports = function(gameRoom){
     var self = {
         room: gameRoom,
         counter: 10 * 1000 / serverState.frameTime,
-        activared: false
+        activated: false
     };
     
     console.log('Room ' + self.room.name + ' is in loading state.');
@@ -28,8 +28,8 @@ module.exports = function(gameRoom){
     self.step = function(){
         var ret = { action: null };
         
-        if (self.room.join && self.room.join.page === 'Game' && self.room.host.page === 'Game') self.activared = true;
-        if (self.activared){
+        if (self.room.join && self.room.join.page === 'Game' && self.room.host.page === 'Game') self.activated = true;
+        if (self.activated){
             if (--self.counter === 0){
                 ret.action = 'nextState';
                 ret.nextState = RoomStateGame;
