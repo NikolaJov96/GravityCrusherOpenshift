@@ -12,7 +12,7 @@ module.exports = function(socket){ return function(data){
         if (socket.user.name === serverState.gameRooms[i].host) {
             serverState.gameRooms[i].hostCommand = data;
         }
-        else if ((serverState.gameRooms.join) && (socket.user.name === serverState.gameRooms[i].joinName)) {
+        else if ((serverState.gameRooms[i].join) && (socket.user.name === serverState.gameRooms[i].joinName)) {
                 serverState.gameRooms[i].joinCommand = data;
         }
     }

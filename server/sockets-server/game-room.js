@@ -29,6 +29,9 @@ module.exports = function(name, host, joinName, map){
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
 
+        hostCommand = null;
+        joinCommand = null;
+
         var text = '';
         for (var i in self.newMessages){
             self.messages.push(self.newMessages[i]);
