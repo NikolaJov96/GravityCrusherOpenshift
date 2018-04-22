@@ -2,30 +2,40 @@
 
 // Summary: Callbacks initialization for 'game-rooms' page
 
+var roomName = document.getElementById('roomName');
 var table = document.getElementById('roomsTable');
 var tableBody = document.getElementById('roomsTableBody');
 var noRooms = document.getElementById('noRooms');
 
-var drawTable = function(rooms){
-    if (rooms.length === 0) noRooms.style.display = 'inline';
-    else{
-        var innerTable = '';
-        for (var i in rooms){
-            innerTable += 
+var rooms = [];
+
+var drawTable = function(){
+    var innerTable = '';
+    for (var i in rooms){
+        if (rooms[i].name.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
+           rooms[i].host.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
+           rooms[i].map.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0) continue;
+        innerTable += 
 `
 <tr>
     <td scope="row">` + rooms[i].name + `</td>
     <td>` + rooms[i].host + `</td>
     <td>` + rooms[i].map + `</td>
-    <td><button onclick="choseRoom('` + rooms[i].name + `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + 
+        `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
     <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary"` +
         (rooms[i].canPlay ? '' : ' disabled') + `>Play</button></td>
     <td>Enabled</td>
 </tr>
 `;
-        }
+    }
+    if (innerTable.length > 0){
+        noRooms.style.display = 'none';
         table.style.display = 'table';
         tableBody.innerHTML = innerTable;
+    }else{
+        noRooms.style.display = 'inline';
+        table.style.display = 'none';
     }
 };
 
@@ -38,18 +48,22 @@ initCallback = function(data){
         }else{
             if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
             else{
-                drawTable(data.payload.rooms);
+                rooms = data.payload.rooms;
+                drawTable();
             }
         }
     }
 };
 if (initCallbackData) initCallback(initCallbackData);
 
+roomName.onchange = drawTable;
+
 socket.on('gameRoomsUpdate', function(data){
     if (!('rooms' in data)) attrMissing('rooms', 'gameRoomsUpdate', data);
     else{
-        noRooms.style.display = 'none';
-        drawTable(data.rooms);
+        //noRooms.style.display = 'none';
+        rooms = data.rooms;
+        drawTable();
     }
     /*if ('added' in data){
         for (var room in data.added){
