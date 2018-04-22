@@ -21,6 +21,8 @@ var database = function() {
     var resetPasswordModule = require('./db-interface-impl/reset-password');
     var deactivateAccountModule = require('./db-interface-impl/deactivate-account');
     var userCheckModule = require('./db-interface-impl/user-check');
+    var selectingStatisticsForUserModule = require('./db-interface-impl/selecting-statistics-for-user');
+    var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
     var mysql = require('mysql');
 
     /*
@@ -125,6 +127,14 @@ var database = function() {
     methods.checkIfUserExists = function(username, callback) {
 
         userCheckModule(methods.connection, username, callback);
+    }
+
+    methods.getStatistics = function(metric, rowCount, data, callback) {
+
+        if (data.mode === 'user')
+            selectingStatisticsForUserModule(methods.connection, metric, rowCount, data, callback);
+        else if (data.mode == 'position')
+                selectingStatisticsForPositionModule(methods.connection, metric, rowCount, data, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------
