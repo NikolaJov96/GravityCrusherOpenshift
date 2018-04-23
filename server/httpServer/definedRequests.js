@@ -8,59 +8,51 @@ requests = [
 	},
 	{
 		URL:'/index',
-		file:'/client/index.html'
+		file:'/client/html-pages/index.html'
 	},
 	{
 		URL:'/create-room',
-		file:'/client/create-room.html'
+		file:'/client/html-pages/create-room.html'
 	},
 	{
 		URL:'/game-rooms',
-		file:'/client/game-rooms.html'
-	},
-	{
-		URL:'/about-us',
-		file:'/client/about-us.html'
+		file:'/client/html-pages/game-rooms.html'
 	},
 	{
 		URL:'/sign-up',
-		file:'/client/sign-up.html'
+		file:'/client/html-pages/sign-up.html'
 	},
 	{
-		URL:'/log-in',
-		file:'/client/log-in.html'
+		URL:'/sign-in',
+		file:'/client/html-pages/sign-in.html'
 	},
 	{
 		URL:'/game',
-		file:'/client/game.html'
-	},
-	{
-		URL:'/game-description',
-		file:'/client/game-description.html'
+		file:'/client/html-pages/game.html'
 	},
 	{
 		URL:'/statistics',
-		file:'/client/statistics.html'
+		file:'/client/html-pages/statistics.html'
 	},
 	{
 		URL:'/my-profile',
-		file:'/client/my-profile.html'
+		file:'/client/html-pages/my-profile.html'
 	},
 	{
 		URL:'/change-password',
-		file:'/client/change-password.html'
+		file:'/client/html-pages/change-password.html'
 	},
 	{
 		URL:'/forgot-password',
-		file:'/client/forgot-password.html'
+		file:'/client/html-pages/forgot-password.html'
 	},
 	{
 		URL:'/reset-password',
-		file:'/client/reset-password.html'
+		file:'/client/html-pages/reset-password.html'
 	},
 	{
 		URL:'/change-username',
-		file:'/client/change-username.html'
+		file:'/client/html-pages/change-username.html'
 	}
 ]
 
