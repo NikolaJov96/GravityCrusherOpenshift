@@ -8,6 +8,7 @@ var dropDown = document.getElementById('dropDown');
 var columns = [];
 var selectedColumn = '';
 var startIndex = 0;
+var maxRow = 0;
 var findMe = false;
 
 var drawTable = function(rows){
@@ -33,9 +34,11 @@ initCallback = function(data){
     else if (!('metrics' in data.payload)) attrMissing('metrics', 'initCallback.payload', data.payload);
     else if (!('default' in data.payload)) attrMissing('default', 'initCallback.payload', data.payload);
     else if (!('data' in data.payload)) attrMissing('data', 'initCallback.payload', data.payload);
+    else if (!('maxRow' in data.payload)) attrMissing('maxRow', 'initCallback.payload', data.payload);
     else{
         columns = data.payload.metrics;
         selectedColumn = data.payload.default;
+        maxRow = data.payload.maxRow;
         drawTable(data.payload.data);
         table.style.display = 'table';
         var text = '';
@@ -54,9 +57,11 @@ socket.on('getStatisticsResponse', function(data){
     else {
         if (data.status === 'InvalidUser') logMsg('On getStatisticsResponse - invalid user');
         else {
-            if (!('rooms' in data)) attrMissing('rooms', 'getStatisticsResponse', data);
+            else if (!('data' in data.payload)) attrMissing('data', 'initCallback.payload', data.payload);
+            else if (!('maxRow' in data.payload)) attrMissing('maxRow', 'initCallback.payload', data.payload);
             else{
-                drawTable(data.rooms);
+                maxRow = data.payload.maxRow;
+                drawTable(data.data);
             }
         }
     }
@@ -69,7 +74,7 @@ var getPlayerStats = function(playerName){
     if (playerName.length === 0) playerName = username;
     var getStatisticsPkg = {
         metric: selectedColumn,
-        mode: '',
+        mode: 'user',
         username: playerName,
         rowCount: 10
     };
@@ -83,11 +88,10 @@ var getPositionStats = function(delta){
     findMe = false;
     var getStatisticsPkg = {
         metric: selectedColumn,
-        mode: '',
+        mode: 'position',
         startPosition: startIndex + delta,
         rowCount: 10
     };
     socket.emit('getStatistics', getStatisticsPkg);
     logMsg('Game statistics requested.');
 };
-
