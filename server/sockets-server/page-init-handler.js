@@ -63,6 +63,7 @@ module.exports = function(socket){ return function(data) {
                         console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
                         socket.emit('pageInitResponse', response);
                 });
+                return;
             }
             console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
             socket.emit('pageInitResponse', response);

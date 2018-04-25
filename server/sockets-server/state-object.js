@@ -36,7 +36,7 @@ var StateObject = function(frameTime){
         tokenCache: TokenCache(),
         users: {},
         gameRooms: [],
-        statisticsColumns: [ 'Rank', 'Username', 'Games Played', 'Games Won' ],
+        statisticsColumns: [ 'Rank', 'Username', 'Games Played', 'Games Won', 'Games Won Percentage' ],
         initStatNumber: 10,
     };
 

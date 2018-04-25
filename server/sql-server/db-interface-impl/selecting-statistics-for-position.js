@@ -19,9 +19,9 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                 outputResult[i] = {
                     rank: rows[i].row,
                     username:  rows[i].username,
-                    gamesPlayed: rows[i].games_played_count,
-                    gamesWon: rows[i].games_won_count,
-                    gamesWonPercentage: (rows[i].games_played_count != 0) ?
+                    'Games Played': rows[i].games_played_count,
+                    'Games Won': rows[i].games_won_count,
+                    'Games Won Percentage': (rows[i].games_played_count != 0) ?
                         (rows[i].games_won_count / rows[i].games_played_count * 100) : (0),
                 }
             }
