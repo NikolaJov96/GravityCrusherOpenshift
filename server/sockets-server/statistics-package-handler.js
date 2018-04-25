@@ -15,7 +15,7 @@ var callbackFunction = function(socket, data) { return function(status, table, m
         maxRow: maxRow
     };
     socket.emit('getStatisticsResponse', response);
-}}
+}};
 
 module.exports = function(socket){ return function(data){
     console.log('Get statistics: Data: ');
@@ -24,4 +24,4 @@ module.exports = function(socket){ return function(data){
     if (data.mode === 'user')
         db.getStatisticsForUser(data.metric, data.rowCount, data.username, callbackFunction(socket, data));
     else db.getStatisticsForPosition(data.metric, data.rowCount, data.startPosition, callbackFunction(socket, data));
-}
+}};

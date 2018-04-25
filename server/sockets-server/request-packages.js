@@ -46,6 +46,10 @@ requestPackages = [
     {
         id:'gameCommand',
         file:'./game-commands-receiver.js',
+    },
+    {
+        id:'getStatistics',
+        file:'./statistics-package-handler'
     }
 ];
 

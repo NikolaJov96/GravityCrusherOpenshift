@@ -26,14 +26,6 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                 }
             }
 
-            for(var i in outputResult)
-            {
-
-                for(var key in outputResult[i])
-                    console.log(outputResult[i][key]);
-                console.log();
-            }
-
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
             if (info.callback) info.callback("Success", outputResult, maxRow);

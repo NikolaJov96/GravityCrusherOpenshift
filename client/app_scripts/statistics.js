@@ -16,9 +16,8 @@ var drawTable = function(rows){
 
     for (var i in columns) innerTable += '<th scope="col">' + columns[i] + '</th>';
     innerTable += '</tr></thead><tbody>';
-    startIndex = rows[0].rank;
+    startIndex = rows[0][columns[0]];
     for (var i in rows){
-        logMsg(rows[i]);
         innerTable += '<tr>';
         for (var j in columns){
             innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>' + rows[i][columns[j]] + '</td>';
@@ -57,10 +56,10 @@ socket.on('getStatisticsResponse', function(data){
     else {
         if (data.status === 'InvalidUser') logMsg('On getStatisticsResponse - invalid user');
         else {
-            else if (!('data' in data.payload)) attrMissing('data', 'initCallback.payload', data.payload);
-            else if (!('maxRow' in data.payload)) attrMissing('maxRow', 'initCallback.payload', data.payload);
+            if (!('data' in data)) attrMissing('data', 'initCallback.payload', data);
+            else if (!('maxRow' in data)) attrMissing('maxRow', 'initCallback.payload', data);
             else{
-                maxRow = data.payload.maxRow;
+                maxRow = data.maxRow;
                 drawTable(data.data);
             }
         }
@@ -69,7 +68,7 @@ socket.on('getStatisticsResponse', function(data){
 
 var getPlayerStats = function(playerName){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
-    
+
     findMe = true;
     if (playerName.length === 0) playerName = username;
     var getStatisticsPkg = {
@@ -84,7 +83,7 @@ var getPlayerStats = function(playerName){
 
 var getPositionStats = function(delta){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
-    
+
     findMe = false;
     var getStatisticsPkg = {
         metric: selectedColumn,
