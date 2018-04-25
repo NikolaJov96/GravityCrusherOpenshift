@@ -11,22 +11,18 @@ var startIndex = 0;
 var findMe = false;
 
 var drawTable = function(rows){
-    var innerTable = '<thead><tr><th scope="col">Rank</th><th scope="col">Palyer Name</th>';
+    var innerTable = '<thead>';
 
     for (var i in columns) innerTable += '<th scope="col">' + columns[i] + '</th>';
     innerTable += '</tr></thead><tbody>';
     startIndex = rows[0].rank;
     for (var i in rows){
-        innerTable +=
-`
-<tr>
-    <td scope="row">` + rows[i].rank + `</td>
-    <td>` + rows[i].username + `</td>
-    <td>` + rows[i].gold + `</td>
-    <td>` + rows[i].win8 + `</td>
-    <td>` + rows[i].kills + `</td>
-    <td>` + rows[i].gamesPlayed + `</td>
-</tr>`;
+        logMsg(rows[i]);
+        innerTable += '<tr>';
+        for (var j in columns){
+            innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>' + rows[i][columns[j]] + '</td>';
+        }
+        innerTable += '</tr>';
     }
     innerTable += '</tbody>';
     table.innerHTML = innerTable;
@@ -69,6 +65,7 @@ socket.on('getStatisticsResponse', function(data){
 var getPlayerStats = function(playerName){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
+    findMe = true;
     if (playerName.length === 0) playerName = username;
     var getStatisticsPkg = {
         metric: selectedColumn,
@@ -83,6 +80,7 @@ var getPlayerStats = function(playerName){
 var getPositionStats = function(delta){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
+    findMe = false;
     var getStatisticsPkg = {
         metric: selectedColumn,
         mode: '',

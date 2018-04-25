@@ -17,8 +17,8 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
             var outputResult = [];
             for(var i in rows) {
                 outputResult[i] = {
-                    rank: rows[i].row,
-                    username:  rows[i].username,
+                    'Rank': rows[i].row,
+                    'Username': rows[i].username,
                     'Games Played': rows[i].games_played_count,
                     'Games Won': rows[i].games_won_count,
                     'Games Won Percentage': (rows[i].games_played_count != 0) ?
