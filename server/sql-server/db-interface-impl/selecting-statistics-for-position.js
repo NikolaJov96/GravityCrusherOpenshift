@@ -13,13 +13,30 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
             throw error;
         }
         else {
-            for(var i in rows)
-                for(var key in rows[i])
-                    console.log(rows[i][key]);
+
+            var outputResult = [];
+            for(var i in rows) {
+                outputResult[i] = {
+                    rank: rows[i].row,
+                    username:  rows[i].username,
+                    gamesPlayed: rows[i].games_played_count,
+                    gamesWon: rows[i].games_won_count,
+                    gamesWonPercentage: (rows[i].games_played_count != 0) ?
+                        (rows[i].games_won_count / rows[i].games_played_count * 100) : (0),
+                }
+            }
+
+            for(var i in outputResult)
+            {
+
+                for(var key in outputResult[i])
+                    console.log(outputResult[i][key]);
+                console.log();
+            }
 
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
-            if (info.callback) info.callback("Success", rows, maxRow);
+            if (info.callback) info.callback("Success", outputResult, maxRow);
         }
 }}
 
@@ -31,24 +48,27 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
         else {
             for(var key in rows[RESULT]) info.activeUsersCount = rows[RESULT][key];
 
-            if(info.data.start <= 0) info.data.start = 0;
-            else info.data.start--;
+            console.log(info.start);
 
-            if (info.data.start > info.activeUsersCount - info.rowCount)
-                    info.data.start = info.activeUsersCount - info.rowCount;
+            if(info.start <= 0 || info.activeUsersCount <= info.rowCount) info.start = 0;
+            else info.start--;
 
-            info.connection.query(queries.selectStatisticsWithUsername,
-                [info.data.start, info.metric, info.rowCount, info.data.start], callbackTableToPass(info));
+            if ((info.start > info.activeUsersCount - info.rowCount) && (info.activeUsersCount > info.rowCount))
+                    info.start = info.activeUsersCount - info.rowCount;
+
+            console.log(info.start + "   " + info.metric + "   " + info.rowCount + "   " + info.start);
+            info.connection.query(queries.selectStatistics,
+                [info.start, info.metric, info.rowCount, info.start], callbackTableToPass(info));
         }
 }}
 
-var getStatisticsModule = function(connection, metric, rowCount, data, callback) {
+var getStatisticsModule = function(connection, metric, rowCount, start, statNamesToColumns, callback) {
 
     info = {
         connection : connection,
-        metric : metric,
+        metric : statNamesToColumns[metric],
         rowCount : rowCount,
-        data : data,
+        start : start,
         callback : callback
     }
 

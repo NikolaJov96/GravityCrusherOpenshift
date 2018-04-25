@@ -25,11 +25,8 @@ var database = function() {
     var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
     var mysql = require('mysql');
 
-    /*
-    methods = {
-        connection : connectToDB
-    }
-    */
+    var statNamesToColumns = { 'Games Played': 'games_played_count', 'Games Won': 'games_won_count' };
+
 	connectionInfo = require('./db-connection/db-connection-file');
     methods = {
         connection : mysql.createConnection({
@@ -129,12 +126,14 @@ var database = function() {
         userCheckModule(methods.connection, username, callback);
     }
 
-    methods.getStatistics = function(metric, rowCount, data, callback) {
+    methods.getStatisticsForUser = function(metric, rowCount, username, callback) {
 
-        if (data.mode === 'user')
-            selectingStatisticsForUserModule(methods.connection, metric, rowCount, data, callback);
-        else if (data.mode == 'position')
-                selectingStatisticsForPositionModule(methods.connection, metric, rowCount, data, callback);
+        selectingStatisticsForUserModule(methods.connection, metric, rowCount, username, statNamesToColumns, callback);
+    }
+
+    methods.getStatisticsForPosition = function(metric, rowCount, start, callback) {
+
+        selectingStatisticsForPositionModule(methods.connection, metric, rowCount, start, statNamesToColumns, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

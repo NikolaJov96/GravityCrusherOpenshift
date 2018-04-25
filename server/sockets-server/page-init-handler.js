@@ -27,7 +27,7 @@ module.exports = function(socket){ return function(data) {
         if (serverState.tokenCache.containsKey(token)){
             serverState.tokenCache.updateSocket(token, socket);
             serverState.tokenCache.lookupUser(token).page = data.page;
-            
+
             var user = serverState.tokenCache.lookupUser(token);
             response.status = 'Success';
             response.username = user.name;
@@ -53,32 +53,20 @@ module.exports = function(socket){ return function(data) {
                 else response.payload = { redirect: false, rooms: require('./rooms-to-display.js')(user) };
             }
             else if (data.page === 'Statistics'){
-                response.payload = { 
-                    metrics: [ 'Gold', 'Win rate', 'Kills', 'Games Played' ],
-                    default: 'Gold',
-                    data: [
-                        {
-                            rank: 1,
-                            username: 'user123',
-                            gold: 123,
-                            win8: 13,
-                            kills: 0,
-                            gamesPlayed: 15033
-                        },
-                        {
-                            rank: 2,
-                            username: 'killer',
-                            gold: 999999,
-                            win8: 100,
-                            kills: 9999999,
-                            gamesPlayed: 5789
-                        }
-                    ]
-                };
+                var res = db.getStatisticsForPosition('Games Won', serverState.initStatNumber, 0,
+                    function(status, table, maxRow) {
+                        response.payload = {
+                            metrics: serverState.statisticsColumns,
+                            default: 'Games Won',
+                            data: table
+                        };
+                        console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
+                        socket.emit('pageInitResponse', response);
+                });
             }
-
             console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
             socket.emit('pageInitResponse', response);
+
         } else {
             db.getUsernameByToken(token,
                 function(status, username){
@@ -96,4 +84,3 @@ module.exports = function(socket){ return function(data) {
         }
     }
 };};
-

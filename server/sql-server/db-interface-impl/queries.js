@@ -106,7 +106,7 @@ module.exports = {
                             WHERE NOT EXISTS (SELECT * FROM user_disabled WHERE user_id = statistics.user_id)`,
 
     //input integers - number of rows to return and offset
-    selectStatisticsWithUsername:  `SELECT @ROW := @ROW + 1 AS row, user.username, statistics.games_played_count, statistics.games_won_count
+    selectStatistics:  `SELECT @ROW := @ROW + 1 AS row, user.username, statistics.games_played_count, statistics.games_won_count
                                     FROM user, statistics, (SELECT @ROW := ?)r
                                     WHERE user.id = statistics.user_id AND
                                     NOT EXISTS (SELECT *

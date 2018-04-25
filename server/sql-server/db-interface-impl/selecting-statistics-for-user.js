@@ -13,13 +13,30 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
             throw error;
         }
         else {
-            for(var i in rows)
-                for(var key in rows[i])
-                    console.log(rows[i][key]);
+
+            var outputResult = [];
+            for(var i in rows) {
+                outputResult[i] = {
+                    rank: rows[i].row,
+                    username:  rows[i].username,
+                    gamesPlayed: rows[i].games_played_count,
+                    gamesWon: rows[i].games_won_count,
+                    gamesWonPercentage: (rows[i].games_played_count != 0) ?
+                        (rows[i].games_won_count / rows[i].games_played_count * 100) : (0),
+                }
+            }
+
+            for(var i in outputResult)
+            {
+
+                for(var key in outputResult[i])
+                    console.log(outputResult[i][key]);
+                console.log();
+            }
 
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
-            if (info.callback) info.callback("Success", rows, maxRow);
+            if (info.callback) info.callback("Success", outputResult, maxRow);
         }
 }}
 
@@ -40,7 +57,7 @@ var callbackFront = function(info) { return function(error, rows, fields) {
             else if (info.backUsersCount <= half)
                     offset = info.frontUsersCount - info.rowCount + info.backUsersCount + 1;
 
-            info.connection.query(queries.selectStatisticsWithUsername,
+            info.connection.query(queries.selectStatistics,
                 [offset, info.metric, info.rowCount, offset], callbackTableToPass(info));
         }
 }}
@@ -55,7 +72,7 @@ var callbackActiveUsers = function(info) { return function(error, rows, fields) 
 
             if (info.activeUsersCount <= info.rowCount) {
                 //pozovi upit koji odmah izvrsi dohvatanje rezultata sa offsetom 0
-                info.connection.query(queries.selectStatisticsWithUsername,
+                info.connection.query(queries.selectStatistics,
                     [START_OFFSET, info.metric, info.rowCount, START_OFFSET], callbackTableToPass(info));
             }
             else {
@@ -81,17 +98,17 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
         }
 }}
 
-var getStatisticsModule = function(connection, metric, rowCount, data, callback) {
+var getStatisticsModule = function(connection, metric, rowCount, username, statNamesToColumns, callback) {
 
     info = {
         connection : connection,
-        metric : metric,
+        metric : statNamesToColumns[metric],
         rowCount : rowCount,
-        data : data,
+        username : username,
         callback : callback
     }
 
-    info.connection.query(queries.selectUsersStatistics, [metric, info.data.username], selectCallbackQuery(info));
+    info.connection.query(queries.selectUsersStatistics, [info.metric, info.username], selectCallbackQuery(info));
 }
 
 module.exports = getStatisticsModule;

@@ -444,7 +444,7 @@ tests = {
         var fun = 'selecting statistics';
         var callbackTest = function(exprectedStatus){
             return function(status, rows, maxRow) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status + '\n');
                 else{
                     console.log('ERROR ' + fun);
                     console.log('expected status: ' + exprectedStatus);
@@ -490,10 +490,13 @@ tests = {
             ['games_won_count', 10, data2],
             ['games_won_count', 10, data3]
         ]
+        db.getStatisticsForUser('Games Played', 1, data1.username, callbackTest('Success'));
+        db.getStatisticsForUser('Games Won', 2, data2.username, callbackTest('Success'));
+        db.getStatisticsForUser('Games Won', 3, data3.username, callbackTest('Success'));
 
-        db.getStatistics('games_won_count', 4, data4, callbackTest('Success'));
-        db.getStatistics('games_played_count', 5, data5, callbackTest('Success'));
-        db.getStatistics('games_won_count', 5, data6, callbackTest('Success'));
+        db.getStatisticsForPosition('Games Won', 4, data4.start, callbackTest('Success'));
+        db.getStatisticsForPosition('Games Played', 5, data5.start, callbackTest('Success'));
+        db.getStatisticsForPosition('Games Won', 5, data6.start, callbackTest('Success'));
     }
 };
 
