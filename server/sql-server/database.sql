@@ -94,7 +94,7 @@ CREATE TABLE `statistics` (
 
 LOCK TABLES `statistics` WRITE;
 /*!40000 ALTER TABLE `statistics` DISABLE KEYS */;
-INSERT INTO `statistics` VALUES (1,0,0),(2,0,0),(3,0,0),(4,0,0),(5,0,0),(6,0,0),(7,0,0),(8,0,0);
+INSERT INTO `statistics` VALUES (1,0,0),(2,10,8),(3,8,8),(4,9,3),(5,10,9),(6,5,4),(7,7,1),(8,6,3);
 /*!40000 ALTER TABLE `statistics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,1,'2018-04-15 10:17:51','aaabbbcccddda'),(2,2,'2018-04-15 10:17:51','aaabbbcccdddb'),(3,3,'2018-04-15 10:17:52','aaabbbcccdddc'),(4,1,'2018-04-15 10:17:52','aaabbbcccdddd'),(5,2,'2018-04-15 10:17:52','aaabbbcccddde'),(6,4,'2018-04-15 10:17:52','aaabbbcccdddf'),(7,5,'2018-04-15 10:17:52','aaabbbcccdddg'),(8,6,'2018-04-15 10:17:52','aaabbbcccdddh'),(9,7,'2018-04-15 10:17:52','aaabbbcccdddi'),(10,4,'2018-04-15 10:17:52','aaabbbcccdddj'),(11,7,'2018-04-15 10:17:52','aaabbbcccdddk'),(12,8,'2018-04-15 10:17:52','aaabbbcccdddl'),(13,9,'2018-04-15 10:17:52','aaabbbcccdddm');
+INSERT INTO `token` VALUES (1,1,'2018-04-25 14:50:19','aaabbbcccddda'),(2,2,'2018-04-25 14:50:19','aaabbbcccdddb'),(3,3,'2018-04-25 14:50:19','aaabbbcccdddc'),(4,1,'2018-04-25 14:50:19','aaabbbcccdddd'),(5,2,'2018-04-25 14:50:19','aaabbbcccddde'),(6,4,'2018-04-25 14:50:20','aaabbbcccdddf'),(7,5,'2018-04-25 14:50:20','aaabbbcccdddg'),(8,6,'2018-04-25 14:50:20','aaabbbcccdddh'),(9,7,'2018-04-25 14:50:20','aaabbbcccdddi'),(10,4,'2018-04-25 14:50:20','aaabbbcccdddj'),(11,7,'2018-04-25 14:50:20','aaabbbcccdddk'),(12,8,'2018-04-25 14:50:20','aaabbbcccdddl'),(13,9,'2018-04-25 14:50:20','aaabbbcccdddm');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +153,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-15 10:17:51'),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-15 10:17:51'),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-15 10:17:51'),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-15 10:17:51'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-15 10:17:51'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-15 10:17:51'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-15 10:17:51'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-15 10:17:51'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-15 10:17:51');
+INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','123456789aaaffffddd','ad46a4da64d64dd','2018-04-25 14:50:18'),(2,'Andrija','andrija6@gmail.com','123456789aaaffccddd','aad2ad1ad3ad13ad13ad13','2018-04-25 14:50:18'),(3,'Nikola','nikola6@gmail.com','aaaaaaaaafffffdddddcdccc','fb54f646bf6bfbfbbfb','2018-04-25 14:50:18'),(4,'Nemanja','nemanja6@gmail.com','aacacacacacacc54acacac','bf87b98f44b56f4b56','2018-04-25 14:50:18'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-04-25 14:50:18'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-04-25 14:50:19'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-04-25 14:50:19'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-04-25 14:50:19'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-04-25 14:50:19');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ CREATE TABLE `user_banned` (
 
 LOCK TABLES `user_banned` WRITE;
 /*!40000 ALTER TABLE `user_banned` DISABLE KEYS */;
-INSERT INTO `user_banned` VALUES (5,'2018-04-15 10:17:51'),(8,'2018-04-15 10:17:51');
+INSERT INTO `user_banned` VALUES (5,'2018-04-25 14:50:19'),(8,'2018-04-25 14:50:19');
 /*!40000 ALTER TABLE `user_banned` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +203,7 @@ CREATE TABLE `user_disabled` (
 
 LOCK TABLES `user_disabled` WRITE;
 /*!40000 ALTER TABLE `user_disabled` DISABLE KEYS */;
-INSERT INTO `user_disabled` VALUES (6,'2018-04-15 10:17:51'),(7,'2018-04-15 10:17:51');
+INSERT INTO `user_disabled` VALUES (6,'2018-04-25 14:50:19'),(7,'2018-04-25 14:50:19');
 /*!40000 ALTER TABLE `user_disabled` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +255,7 @@ CREATE TABLE `user_password_reset` (
 
 LOCK TABLES `user_password_reset` WRITE;
 /*!40000 ALTER TABLE `user_password_reset` DISABLE KEYS */;
-INSERT INTO `user_password_reset` VALUES (5,'2018-04-15 10:17:51','jovanresetujesvojusifru'),(6,'2018-04-15 10:17:51','jelenaresetujesvojusifru'),(8,'2018-04-15 10:17:51','petarresetujesvojusifru');
+INSERT INTO `user_password_reset` VALUES (5,'2018-04-25 14:50:19','jovanresetujesvojusifru'),(6,'2018-04-25 14:50:19','jelenaresetujesvojusifru'),(8,'2018-04-25 14:50:19','petarresetujesvojusifru');
 /*!40000 ALTER TABLE `user_password_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,6 +301,60 @@ WHERE id <= 10000;
 
 DELETE FROM token
 WHERE id <= 10000;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `fill_statistics_table` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_statistics_table`()
+BEGIN
+
+UPDATE statistics
+SET games_played_count = 10,
+	games_won_count = 8
+WHERE user_id = 2;
+
+UPDATE statistics
+SET games_played_count = 8,
+	games_won_count = 8
+WHERE user_id = 3;
+
+UPDATE statistics
+SET games_played_count = 9,
+	games_won_count = 3
+WHERE user_id = 4;
+
+UPDATE statistics
+SET games_played_count = 10,
+	games_won_count = 9
+WHERE user_id = 5;
+
+UPDATE statistics
+SET games_played_count = 5,
+	games_won_count = 4
+WHERE user_id = 6;
+
+UPDATE statistics
+SET games_played_count = 7,
+	games_won_count = 1
+WHERE user_id = 7;
+
+UPDATE statistics
+SET games_played_count = 6,
+	games_won_count = 3
+WHERE user_id = 8;
 
 END ;;
 DELIMITER ;
@@ -550,6 +604,7 @@ CALL clear_database();
 CALL restart_sequence();
 
 CALL insert_users();
+CALL fill_statistics_table();
 CALL insert_other_users_tables();
 CALL insert_pass_reset();
 CALL insert_tokens();
@@ -598,4 +653,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-15 12:20:54
+-- Dump completed on 2018-04-25 17:01:45

@@ -58,7 +58,8 @@ module.exports = function(socket){ return function(data) {
                         response.payload = {
                             metrics: serverState.statisticsColumns,
                             default: 'Games Won',
-                            data: table
+                            data: table,
+                            maxRow: maxRow
                         };
                         console.log('    STATUS 2:Success USERNAME:' + response.username + ' SIGNEDIN:' + response.signedIn);
                         socket.emit('pageInitResponse', response);
