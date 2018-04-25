@@ -90,7 +90,7 @@
       </div>
       
       <div class="row">
-        <button type="button" class="btn btn-dark col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-8 offset-sm-2 col-10 offset-1">Find Me</button>
+        <button type="button" class="btn btn-dark col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-sm-8 offset-sm-2 col-10 offset-1" onclick="getPlayerStats('');">Find Me</button>
       </div>
 
       <div class="offset-lg-2 col-lg-8 offset-md-1 col-md-10 table-responsive" style="margin-top: 18px">
@@ -99,9 +99,9 @@
       </div>
 
       <div class="offset-md-5 col-2-md offset-4">
-        <button type="button" class="btn btn-dark col-1" type="button"><</button>
+        <button type="button" class="btn btn-dark col-1" type="button" onclick="getPositionStats(-10);"><</button>
         2/10
-        <button type="button" class="btn btn-dark col-1" type="button">></button>
+        <button type="button" class="btn btn-dark col-1" type="button" onclick="getPositionStats(10);">></button>
       </div>
     </div>
 

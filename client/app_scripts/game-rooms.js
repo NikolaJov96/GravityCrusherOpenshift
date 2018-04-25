@@ -97,8 +97,6 @@ var choseRoom = function(name, action){
     logMsg('Game room sellection requested.');
 };
 
-// document.getElementById('playGame').onclick = choseRoom;
-
 socket.on('selectGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'selectGameRoomResponse', data);
     
