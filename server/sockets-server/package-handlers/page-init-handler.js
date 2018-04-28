@@ -2,7 +2,7 @@
 
 // Summary: Handler definitions for page initialization requests.
 
-var db = require('../sql-server/database-interface.js');
+var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data) {
     console.log('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
@@ -50,7 +50,7 @@ module.exports = function(socket){ return function(data) {
                     }
                 }
                 if (room) response.payload = { redirect: true };
-                else response.payload = { redirect: false, rooms: require('./rooms-to-display.js')(user) };
+                else response.payload = { redirect: false, rooms: require('../rooms-to-display.js')(user) };
             }
             else if (data.page === 'Statistics'){
                 var res = db.getStatisticsForPosition('Games Won', serverState.initStatNumber, 0,

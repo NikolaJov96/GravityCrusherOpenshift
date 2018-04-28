@@ -6,9 +6,9 @@ var crypto = require('crypto');
 var util = require('util');
 var nodemailer = require('nodemailer');
 var uuidv1 = require('uuid/v1');
-var emailServiceConfiguration = require('./email-service-conf.js');
-var appConfig = require('../../app-config.js');
-var db = require('../sql-server/database-interface.js');
+var emailServiceConfiguration = require('../email-service-conf.js');
+var appConfig = require('../../../app-config.js');
+var db = require('../../sql-server/database-interface.js');
 
 var transporter = nodemailer.createTransport(emailServiceConfiguration);
 

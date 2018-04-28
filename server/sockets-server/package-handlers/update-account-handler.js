@@ -2,9 +2,9 @@
 
 // Summary: Handler definition for account update packages.
 
-var hashing = require('./hashing.js');
-var appConfig = require('../../app-config.js');
-var db = require('../sql-server/database-interface.js');
+var hashing = require('../hashing.js');
+var appConfig = require('../../../app-config.js');
+var db = require('../../sql-server/database-interface.js');
 
 function handlePasswordChangeRequest(data, socket){
     console.log('Password change req: USERNAME:' + data.oldUsername +
