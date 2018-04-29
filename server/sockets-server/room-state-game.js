@@ -35,12 +35,12 @@ module.exports = function(gameRoom){
             roll: ((user.name === self.room.host.name) ? 'host' : 'join'),
             host: self.room.host.name,
             hostActive: (self.room.host.page === 'Game' ? true : false),
-            join: (self.room.joinName),
-            joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
+            join: self.room.joinName,
+            joinActive: (self.room.join.page === 'Game' ? true : false),
             playerData: self.players,
             starData: self.stars
         };
-    }
+    };
     
     self.step = function(){
         var ret = { action: null };
@@ -76,19 +76,20 @@ module.exports = function(gameRoom){
         
         var gameState = {
             hostActive: (self.room.host.page === 'Game' ? true : false),
-            joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
+            joinActive: (self.room.join.page === 'Game' ? true : false),
             counter: self.counter * serverState.frameTime / 1000,
             playerData: self.players
         };
         if (self.room.host.page === 'Game'){
             self.room.host.socket.emit('gameState', gameState);
         }
-        if (self.room.join && self.room.join.page === 'Game'){
+        if (self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
         
-        if ((self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
-           (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y) < 7){
+        var distSq = (self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
+           (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y);
+        if (distSq < 300){
             ret.action = 'nextState';
             ret.nextState = RoomStateGameEnd;
             console.log('Room ' + self.room.name + ' game state finished.');

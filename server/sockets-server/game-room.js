@@ -14,7 +14,8 @@ module.exports = function(name, host, joinName, map){
         messages: [],
         newMessages: [],
         hostCommand: {},
-        joinCommand: {}
+        joinCommand: {},
+        winner: ''
     };
     self.state = RoomStateLoading(self);
 

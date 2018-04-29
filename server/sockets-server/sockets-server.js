@@ -43,7 +43,7 @@ setInterval(function(){
     var i = serverState.gameRooms.length;
     while (i--){
         var done = serverState.gameRooms[i].step();
-        if (done) delete serverState.gameRooms[i];
+        if (done) serverState.gameRooms.splice(i, 1);
     }
     
     telemetry.endIterationn();
