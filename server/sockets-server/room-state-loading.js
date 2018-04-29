@@ -18,7 +18,7 @@ module.exports = function(gameRoom){
     self.initResponse = function(user){
         return {
             state: 'loading',
-            roll: ((user.name === self.room.host.name) ? 'host' : 'join'),
+            role: ((user.name === self.room.host.name) ? 'host' : 'join'),
             host: self.room.host.name,
             hostActive: (self.room.host.page === 'Game' ? true : false),
             hostReady: self.hostReady,
@@ -34,12 +34,12 @@ module.exports = function(gameRoom){
         
         if (self.room.hostCommand){
             var comm = self.room.hostCommand;
-            console.log(comm);
+            // console.log(comm);
             if ('ready' in comm) self.hostReady = comm.ready;
         }
         if (self.room.joinCommand){
             var comm = self.room.joinCommand;
-            console.log(comm);
+            // console.log(comm);
             if ('ready' in comm) self.joinReady = comm.ready;
         }
         

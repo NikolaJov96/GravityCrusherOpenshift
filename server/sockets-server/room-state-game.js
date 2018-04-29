@@ -4,8 +4,8 @@
 
 var RoomStateGameEnd = require('./room-state-game-end.js');
 
-const width = 100;
-const height = 100;
+const width = 1280;
+const height = 760;
 const speed = 1;
 
 module.exports = function(gameRoom){
@@ -13,9 +13,7 @@ module.exports = function(gameRoom){
         room: gameRoom,
         counter: 3 * 60 * 1000 / serverState.frameTime,
         players: [ {}, {} ],
-        sun: {
-            x: width / 2.0, y: height / 2.0
-        }
+        stars: [ { x: width / 2.0, y: height / 2.0 } ]
     };
     
     for (var i = 0; i < 2; i++){
@@ -40,7 +38,7 @@ module.exports = function(gameRoom){
             join: (self.room.joinName),
             joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
             playerData: self.players,
-            sunData: self.sun;
+            starData: self.stars
         };
     }
     
@@ -49,16 +47,13 @@ module.exports = function(gameRoom){
         
         var comms = [ self.room.hostCommand, self.room.joinCommand ];
         for (var i in comms){
-            if ('arrUp' in comms[i]) self.players[i].arrUp = true;
-            if ('arrDown' in comms[i]) self.players[i].arrDown = true;
-            if ('arrLeft' in comms[i]) self.players[i].arrLeft = true;
-            if ('arrRight' in comms[i]) self.players[i].arrRight = true;
+            if ('arrUp' in comms[i]) self.players[i].arrUp = comms[i].arrUp;
+            if ('arrDown' in comms[i]) self.players[i].arrDown = comms[i].arrDown;
+            if ('arrLeft' in comms[i]) self.players[i].arrLeft = comms[i].arrLeft;
+            if ('arrRight' in comms[i]) self.players[i].arrRight = comms[i].arrRight;
         }
         
         for (var i = 0; i < 2; i++){
-            if (self.players[i].arrUp) self.players[i].x -= 0;
-            
-            
             if (self.players[i].arrLeft){
                 self.players[i].roll += 0.015;
                 if (self.players[i].roll > 0.5) self.players[i].roll = 0.5;
