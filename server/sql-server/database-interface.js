@@ -25,7 +25,9 @@ var database = function() {
     var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
     var mysql = require('mysql');
 
-    var statNamesToColumns = { 'Games Played': 'games_played_count', 'Games Won': 'games_won_count' };
+    var statNamesToColumns = { 'Games Played': 'games_played_count',
+                                'Games Won': 'games_won_count',
+                                'Games Won Percentage': 'win_rate' };
 
 	connectionInfo = require('./db-connection/db-connection-file');
     methods = {

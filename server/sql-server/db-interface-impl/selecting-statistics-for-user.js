@@ -26,6 +26,13 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                 }
             }
 
+            for (var i in rows) {
+                for (var key in rows[i]) {
+                    console.log(rows[i][key] + " ");
+                }
+                console.log();
+            }
+
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
             if (info.callback) info.callback("Success", outputResult, maxRow);
@@ -81,7 +88,8 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
         }
         else {
             if (!!rows.length) {
-                for(var key in rows[0]) info.columnValue = rows[0][key];
+                for(var key in rows[0]) info.columnValue = rows[0][info.metric];
+                console.log(rows[0][info.metric]);
 
                 info.connection.query(queries.getActiveUsersCount,
                     [], callbackActiveUsers(info));
@@ -100,7 +108,7 @@ var getStatisticsModule = function(connection, metric, rowCount, username, statN
         callback : callback
     }
 
-    info.connection.query(queries.selectUsersStatistics, [info.metric, info.username], selectCallbackQuery(info));
+    info.connection.query(queries.selectUsersStatistics, [info.username], selectCallbackQuery(info));
 }
 
 module.exports = getStatisticsModule;

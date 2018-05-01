@@ -26,6 +26,13 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                 }
             }
 
+            for (var i in rows) {
+                for (var key in rows[i]) {
+                    console.log(rows[i][key] + " ");
+                }
+                console.log();
+            }
+
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
             if (info.callback) info.callback("Success", outputResult, maxRow);
@@ -40,15 +47,12 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
         else {
             for(var key in rows[RESULT]) info.activeUsersCount = rows[RESULT][key];
 
-            console.log(info.start);
-
             if(info.start <= 0 || info.activeUsersCount <= info.rowCount) info.start = 0;
             else info.start--;
 
             if ((info.start > info.activeUsersCount - info.rowCount) && (info.activeUsersCount > info.rowCount))
                     info.start = info.activeUsersCount - info.rowCount;
 
-            console.log(info.start + "   " + info.metric + "   " + info.rowCount + "   " + info.start);
             info.connection.query(queries.selectStatistics,
                 [info.start, info.metric, info.rowCount, info.start], callbackTableToPass(info));
         }
