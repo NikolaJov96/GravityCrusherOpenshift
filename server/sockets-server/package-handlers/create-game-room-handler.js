@@ -2,7 +2,7 @@
 
 // Summary: This file contains handler neccesary for creating new room
 
-var db = require('../sql-server/database-interface.js');
+var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data){
     console.log('Create room req: Data: ');
@@ -13,12 +13,12 @@ module.exports = function(socket){ return function(data){
                 if (status == 'UsernameNotExists')
                     socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
                 else {
-                    var newRoom = require('./game-room.js')(data.name, socket.user, data.opponent, data.gameMap);
+                    var newRoom = require('../game-room.js')(data.name, socket.user, data.opponent, data.gameMap);
                     serverState.gameRooms.push(newRoom);
                     for (var user in serverState.users){
                         if (serverState.users[user].page === 'GameRooms'){
                             serverState.users[user].socket.emit('gameRoomsUpdate', {
-                                rooms: require('./rooms-to-display.js')(serverState.users[user])
+                                rooms: require('../rooms-to-display.js')(serverState.users[user])
                             });
                         }
                     }

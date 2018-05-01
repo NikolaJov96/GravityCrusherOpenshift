@@ -13,8 +13,9 @@ module.exports = function(name, host, joinName, map){
         join: null,
         messages: [],
         newMessages: [],
-        hostCommand: null,
-        joinCommand: null
+        hostCommand: {},
+        joinCommand: {},
+        winner: ''
     };
     self.state = RoomStateLoading(self);
 
@@ -29,8 +30,8 @@ module.exports = function(name, host, joinName, map){
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
 
-        self.hostCommand = null;
-        self.joinCommand = null;
+        self.hostCommand = {};
+        self.joinCommand = {};
 
         var text = '';
         for (var i in self.newMessages){

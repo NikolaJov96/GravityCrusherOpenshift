@@ -6,7 +6,7 @@ StateLoading = function(data){
     // state initialization
     console.log('current state: game loading');
     self = abstractState();
-    self.roll = data.roll;
+    self.role = data.role;
     self.hostName = data.host;
     self.hostActive = data.hostActive;
     self.hostReady = data.hostReady;
@@ -111,9 +111,9 @@ StateLoading = function(data){
     self.onKeyPress = function(event){
         // on space pressed change ready status
         if (event.key === ' '){
-            if (self.roll === 'host') socket.emit('gameCommand', { ready: (self.hostReady ? false : true) });
-            else if (self.roll === 'join') socket.emit('gameCommand', { ready: (self.joinReady ? false : true) });
-            else logMsg('Undefined roll: ' + self.roll);
+            if (self.role === 'host') socket.emit('gameCommand', { ready: (self.hostReady ? false : true) });
+            else if (self.role === 'join') socket.emit('gameCommand', { ready: (self.joinReady ? false : true) });
+            else logMsg('Undefined role: ' + self.role);
         }
     };
     
