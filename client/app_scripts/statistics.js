@@ -42,6 +42,7 @@ initCallback = function(data){
         table.style.display = 'table';
         var text = '';
         for (var i in data.payload.metrics){
+            if (i < 2) continue;
             text += '<option' + (data.payload.metrics[i] == selectedColumn ? ' selected="selected"' : '') +
                 '>' + data.payload.metrics[i] + '</option>';
         }
@@ -61,10 +62,17 @@ socket.on('getStatisticsResponse', function(data){
             else{
                 maxRow = data.maxRow;
                 drawTable(data.data);
+                logMsg('Statistics updated.');
             }
         }
     }
 });
+
+dropDown.onchange = function(){
+    selectedColumn = dropDown.value;
+    if (findMe) getPlayerStats('');
+    else getPositionStats(0);
+}
 
 var getPlayerStats = function(playerName){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
