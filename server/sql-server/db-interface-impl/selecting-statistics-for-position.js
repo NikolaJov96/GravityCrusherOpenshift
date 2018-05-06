@@ -60,6 +60,8 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
 
 var getStatisticsModule = function(connection, metric, rowCount, start, statNamesToColumns, callback) {
 
+    if (! metric in statNamesToColumns) return;
+
     info = {
         connection : connection,
         metric : statNamesToColumns[metric],
