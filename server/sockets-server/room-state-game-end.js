@@ -6,7 +6,7 @@ module.exports = function(gameRoom){
     var self = {
         room: gameRoom
     };
-    
+
     console.log('Room ' + self.room.name + ' is in game-end state.');
 
     self.initResponse = function(user){ return null; }
@@ -18,3 +18,4 @@ module.exports = function(gameRoom){
 
     return self;
 };
+

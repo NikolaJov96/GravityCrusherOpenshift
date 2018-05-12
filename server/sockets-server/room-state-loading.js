@@ -12,9 +12,9 @@ module.exports = function(gameRoom){
         hostReady: false,
         joinReady: false
     };
-    
+
     console.log('Room ' + self.room.name + ' is in loading state.');
-    
+
     self.initResponse = function(user){
         return {
             state: 'loading',
@@ -31,7 +31,7 @@ module.exports = function(gameRoom){
 
     self.step = function(){
         var ret = { action: null };
-        
+
         if (self.room.hostCommand){
             var comm = self.room.hostCommand;
             console.log(comm);
@@ -42,7 +42,7 @@ module.exports = function(gameRoom){
             console.log(comm);
             if ('ready' in comm) self.joinReady = comm.ready;
         }
-        
+
         var gameState = {
             hostReady: self.hostReady,
             hostActive: (self.room.host.page === 'Game' ? true : false),
@@ -56,7 +56,7 @@ module.exports = function(gameRoom){
         if (self.room.join && self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
-        
+
         if (self.room.join && self.room.join.page === 'Game' && self.room.host.page === 'Game') self.activated = true;
         if (self.activated){
             if (--self.counter === 0){
@@ -70,7 +70,7 @@ module.exports = function(gameRoom){
             ret.nextState = RoomStateGame;
             console.log('Room ' + self.room.name + ' players ready.');
         }
-        
+
         return ret;
     };
 

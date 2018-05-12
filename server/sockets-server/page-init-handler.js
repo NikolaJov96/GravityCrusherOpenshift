@@ -27,7 +27,7 @@ module.exports = function(socket){ return function(data) {
         if (serverState.tokenCache.containsKey(token)){
             serverState.tokenCache.updateSocket(token, socket);
             serverState.tokenCache.lookupUser(token).page = data.page;
-            
+
             var user = serverState.tokenCache.lookupUser(token);
             response.status = 'Success';
             response.username = user.name;
@@ -53,7 +53,7 @@ module.exports = function(socket){ return function(data) {
                 else response.payload = { redirect: false, rooms: require('./rooms-to-display.js')(user) };
             }
             else if (data.page === 'Statistics'){
-                response.payload = { 
+                response.payload = {
                     metrics: [ 'Gold', 'Win rate', 'Kills', 'Games Played' ],
                     default: 'Gold',
                     data: [

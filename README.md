@@ -35,3 +35,8 @@ npm install express socket.io nodemailer mysql uuid
 ```
 node app
 ```
+
+## Documentation
+All available documentation (description, use cases, data model etc.) can be found
+under the doc/ directory tree.
+
