@@ -2,9 +2,9 @@
 
 // Summary: Handler definition for reset password requests.
 
-var hashing = require('./hashing.js');
-var appConfig = require('../../app-config.js');
-var db = require('../sql-server/database-interface.js');
+var hashing = require('../hashing.js');
+var appConfig = require('../../../app-config.js');
+var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data) {
     console.log('Password reset req: REQUEST CODE:' + data.requestCode + ' NEW PASSWORD:' + data.password);

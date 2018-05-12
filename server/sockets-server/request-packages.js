@@ -5,47 +5,51 @@
 requestPackages = [
     {
         id:'updateAccount',
-        file:'./update-account-handler.js',
+        file:'./package-handlers/update-account-handler.js',
     },
     {
         id:'passwordRecovery',
-        file:'./password-recovery-handler.js',
+        file:'./package-handlers/password-recovery-handler.js',
     },
     {
         id:'pageInit',
-        file:'./page-init-handler.js',
+        file:'./package-handlers/page-init-handler.js',
     },
     {
         id:'signIn',
-        file:'./sign-in-handler.js',
+        file:'./package-handlers/sign-in-handler.js',
     },
     {
         id:'signOut',
-        file:'./sign-out-handler.js',
+        file:'./package-handlers/sign-out-handler.js',
     },
     {
         id:'signUp',
-        file:'./sign-up-handler.js',
+        file:'./package-handlers/sign-up-handler.js',
     },
     {
         id:'passwordReset',
-        file:'./password-reset-handler.js',
+        file:'./package-handlers/password-reset-handler.js',
     },
     {
         id:'createGameRoom',
-        file:'./create-game-room-handler.js',
+        file:'./package-handlers/create-game-room-handler.js',
     },
     {
         id:'selectGameRoom',
-        file:'./select-game-room-handler.js',
+        file:'./package-handlers/select-game-room-handler.js',
     },
     {
         id:'sendMessage',
-        file:'./send-message-handler.js',
+        file:'./package-handlers/send-message-handler.js',
     },
     {
         id:'gameCommand',
         file:'./game-commands-receiver.js',
+    },
+    {
+        id:'getStatistics',
+        file:'./package-handlers/statistics-package-handler'
     }
 ];
 

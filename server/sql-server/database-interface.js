@@ -21,13 +21,14 @@ var database = function() {
     var resetPasswordModule = require('./db-interface-impl/reset-password');
     var deactivateAccountModule = require('./db-interface-impl/deactivate-account');
     var userCheckModule = require('./db-interface-impl/user-check');
+    var selectingStatisticsForUserModule = require('./db-interface-impl/selecting-statistics-for-user');
+    var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
     var mysql = require('mysql');
 
-    /*
-    methods = {
-        connection : connectToDB
-    }
-    */
+    var statNamesToColumns = { 'Games Played': 'games_played_count',
+                                'Games Won': 'games_won_count',
+                                'Games Won Percentage': 'win_rate' };
+
 	connectionInfo = require('./db-connection/db-connection-file');
     methods = {
         connection : mysql.createConnection({
@@ -125,6 +126,16 @@ var database = function() {
     methods.checkIfUserExists = function(username, callback) {
 
         userCheckModule(methods.connection, username, callback);
+    }
+
+    methods.getStatisticsForUser = function(metric, rowCount, username, callback) {
+
+        selectingStatisticsForUserModule(methods.connection, metric, rowCount, username, statNamesToColumns, callback);
+    }
+
+    methods.getStatisticsForPosition = function(metric, rowCount, start, callback) {
+
+        selectingStatisticsForPositionModule(methods.connection, metric, rowCount, start, statNamesToColumns, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

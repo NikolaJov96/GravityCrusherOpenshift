@@ -439,6 +439,67 @@ tests = {
         db.checkIfUserExists('Dragana', callbackTest('UsernameNotExists'));
         db.checkIfUserExists('Milica', callbackTest('Success'));
         db.checkIfUserExists('Jovan', callbackTest('Success'));
+    },
+    selectingStatistics: function() {
+        var fun = 'selecting statistics';
+        var callbackTest = function(exprectedStatus, metric){
+            return function(status, rows, maxRow) {
+                if (status === exprectedStatus)
+                    console.log('OK  ' + fun + ': ' + status + ' ' + 'metric:' + metric + '\n');
+                else{
+                    console.log('ERROR ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var data1 = {
+            mode: 'user',
+            username: 'Jelena'
+        }
+
+        var data2 = {
+            mode: 'user',
+            username: 'Nemanja'
+        }
+
+        var data3 = {
+            mode: 'user',
+            username: 'Nikola'
+        }
+
+        var data4 = {
+            mode: 'position',
+            start: -2
+        }
+
+        var data5 = {
+            mode: 'position',
+            start: 3
+        }
+
+        var data6 = {
+            mode: 'position',
+            start: 12
+        }
+
+
+        var test_ulazi = [
+            ['games_played_count', 10, data1],
+            ['games_won_count', 10, data2],
+            ['games_won_count', 10, data3]
+        ]
+        db.getStatisticsForUser('Games Won Percentage', 1, data1.username,
+            callbackTest('Success', 'Games Won Percentage'));
+        db.getStatisticsForUser('Games Won', 2, data2.username, callbackTest('Success', 'Games Won'));
+        db.getStatisticsForUser('Games Won', 3, data3.username, callbackTest('Success', 'Games Won'));
+
+        db.getStatisticsForPosition('Games Won Percentage', 4, data4.start,
+            callbackTest('Success', 'Games Won Percentage'));
+        db.getStatisticsForPosition('Games Played', 5, data5.start, callbackTest('Success', 'Games Played'));
+        db.getStatisticsForPosition('Games Won', 5, data6.start, callbackTest('Success', 'Games Won'));
     }
 };
 
@@ -448,4 +509,4 @@ tests = {
 // }
 
 // test specific
-tests.checkUsername();
+tests.selectingStatistics();

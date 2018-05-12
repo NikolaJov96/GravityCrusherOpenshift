@@ -86,5 +86,41 @@ module.exports = {
     selectAllTokenCodesFromUser: "SELECT token_code FROM token WHERE user_id = ?",
 
     //input user_id
-    deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?"
+    deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?",
+
+    //tables:statistics, user, user_disabled---------------------------------------------------------------------------
+    //input username
+    selectUsersStatistics: `SELECT games_played_count, games_won_count,
+                                (games_won_count/GREATEST(games_played_count, 1)) as win_rate
+                            FROM user u INNER JOIN statistics s ON u.id = s.user_id
+                            WHERE u.username  = ?;`,
+
+    //input column to check, params
+    getActiveUsersInFrontCount: `SELECT COUNT(*)
+                                FROM statistics sm INNER JOIN
+                                    (SELECT user_id, (games_won_count/GREATEST(games_played_count, 1)) as win_rate
+                                    FROM statistics) st ON sm.user_id = st.user_id
+                                WHERE
+                                ?? > ? AND
+                                NOT EXISTS (SELECT * FROM user_disabled ud WHERE ud.user_id = sm.user_id)`,
+
+
+
+    //without input
+    getActiveUsersCount:   `SELECT COUNT(*)
+                            FROM statistics
+                            WHERE NOT EXISTS (SELECT * FROM user_disabled WHERE user_id = statistics.user_id)`,
+
+    //input integers - number of rows to return and offset
+    selectStatistics:  `SELECT @ROW := @ROW + 1 AS row, user.username, statistics.games_played_count,
+                            statistics.games_won_count, (games_won_count/GREATEST(games_played_count, 1)) as win_rate
+                                    FROM user, statistics, (SELECT @ROW := ?)r
+                                    WHERE user.id = statistics.user_id AND
+                                    NOT EXISTS (SELECT *
+                                                FROM user_disabled
+                                                WHERE user_disabled.user_id = statistics.user_id)
+                                    ORDER BY ?? DESC
+                                    LIMIT ?
+                                    OFFSET ?`
+
 }

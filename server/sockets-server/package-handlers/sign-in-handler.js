@@ -3,9 +3,9 @@
 // Summary: Handler definitions for sign in requests.
 
 var uuidv1 = require('uuid/v1');
-var appConfig = require('../../app-config.js')
-var hashing = require('./hashing.js');
-var db = require('../sql-server/database-interface.js');
+var appConfig = require('../../../app-config.js')
+var hashing = require('../hashing.js');
+var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data){
     console.log('Sign in req: ACCOUNT:' + data.account);

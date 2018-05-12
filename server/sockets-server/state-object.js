@@ -9,7 +9,7 @@ var User = function(name, socket, page, isGuest){
         page: page,
         isGuest: isGuest
     };
-    
+
     return self;
 };
 
@@ -22,8 +22,8 @@ var TokenCache = function(){
     self.invalidateToken = function(token){ if (token in self.cache) delete self.cache[token]; };
     self.containsKey = function(token){ return token in self.cache; };
     self.lookupUser = function(token){ return self.cache[token]; };
-    self.updateSocket = function(token, socket){ 
-        socket.user = self.cache[token]; 
+    self.updateSocket = function(token, socket){
+        socket.user = self.cache[token];
         socket.user.socket = socket;
     };
 
@@ -35,16 +35,18 @@ var StateObject = function(frameTime){
         frameTime: frameTime,
         tokenCache: TokenCache(),
         users: {},
-        gameRooms: []
+        gameRooms: [],
+        statisticsColumns: [ 'Rank', 'Username', 'Games Played', 'Games Won', 'Games Won Percentage' ],
+        initStatNumber: 10,
     };
-    
+
     self.addUser = function(token, username, socket, page, isGuest){
         var newUser = User(username, socket, page, isGuest);
         self.users[username] = newUser;
         self.tokenCache.cacheToken(token, newUser);
         socket.user = newUser;
     };
-    
+
     self.renameUser = function(socket, newUsername){
         if (socket.user){
             var user = self.users[socket.user.name];
@@ -55,7 +57,7 @@ var StateObject = function(frameTime){
             console.log('No user connected to the scoket!');
         }
     };
-    
+
     self.removeUser = function(token, tokensToDelete){
         var user = self.tokenCache.lookupUser(token);
         delete self.users[user.name];

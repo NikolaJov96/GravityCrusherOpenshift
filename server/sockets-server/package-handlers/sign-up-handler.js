@@ -5,10 +5,10 @@
 var crypto = require('crypto');
 var util = require('util');
 var nodemailer = require('nodemailer');
-var hashing = require('./hashing.js');
-var emailServiceConfiguration = require('./email-service-conf.js');
-var appConfig = require('../../app-config.js');
-var db = require('../sql-server/database-interface.js');
+var hashing = require('../hashing.js');
+var emailServiceConfiguration = require('../email-service-conf.js');
+var appConfig = require('../../../app-config.js');
+var db = require('../../sql-server/database-interface.js');
 
 var transporter = nodemailer.createTransport(emailServiceConfiguration);
 
