@@ -10,7 +10,7 @@ var requestDeleteCallback = function(info) { return function(error, rows, fields
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query that deletes request failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,7 +18,7 @@ var requestDeleteCallback = function(info) { return function(error, rows, fields
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -33,7 +33,7 @@ var changeInfoInUserCallback = function(info) { return function(error, rows, fie
     if (!!error){
         info.connection.rollback(function() {
             console.log("error: query that changes hash and salt failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -44,7 +44,7 @@ var changeInfoInUserCallback = function(info) { return function(error, rows, fie
 var selectIdCallbackQuery = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which finds user by confirm code failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             if (!!rows.length) {
@@ -52,7 +52,7 @@ var selectIdCallbackQuery = function(info) { return function(error, rows, fields
                 info.connection.beginTransaction(function(error) {
                     if (!!error) {
                         console.log("error: transaction failed to be started!\n");
-                        throw error;
+                        console.log(error);
                     }
                     info.connection.query(queries.setNewPasswordAndSalt,
                         [info.newHash, info.newSalt, info.user_id], changeInfoInUserCallback(info));

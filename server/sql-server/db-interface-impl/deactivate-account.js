@@ -10,7 +10,7 @@ var insertInDisableUsersCallback = function(info) { return function(error, rows,
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query that inserts in disabled users failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,7 +18,7 @@ var insertInDisableUsersCallback = function(info) { return function(error, rows,
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -33,7 +33,7 @@ var tokenDeletesCallback = function(info) { return function(error, rows, fields)
     if (!!error){
         info.connection.rollback(function() {
             console.log("error: query that deletes all tokens from user failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -45,7 +45,7 @@ var findTokensIdCallback = function(info) { return function(error, rows, fields)
     if (!!error){
         info.connection.rollback(function() {
             console.log("error: query that finds all tokens failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -57,7 +57,7 @@ var findTokensIdCallback = function(info) { return function(error, rows, fields)
     if (!!error){
         info.connection.rollback(function() {
             console.log("error: query that finds all tokens failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -70,7 +70,7 @@ var findTokensIdCallback = function(info) { return function(error, rows, fields)
 var selectCallbackQuery = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which finds token failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             if (!!rows.length) {
@@ -78,7 +78,7 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
                 info.connection.beginTransaction(function(error) {
                     if (!!error) {
                         console.log("error: transaction failed to be started!\n");
-                        throw error;
+                        console.log(error);
                     }
                     info.connection.query(queries.selectAllTokenCodesFromUser,
                         [info.user_id], findTokensIdCallback(info));

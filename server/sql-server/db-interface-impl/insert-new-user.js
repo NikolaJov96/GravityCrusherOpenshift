@@ -8,7 +8,7 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query that inserts into user_not_confirmed failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -16,7 +16,7 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -31,7 +31,7 @@ var insertIntoUser = function(info) { return function(error, rows, fields) {
     if (!!error){
         info.connection.rollback(function() {
             console.log("error: query that insert into user failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -43,14 +43,14 @@ var insertIntoUser = function(info) { return function(error, rows, fields) {
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if username is used failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!rows.length) {
             info.connection.beginTransaction(function(error) {
                 if (!!error) {
                     console.log("error: transaction failed to be started!\n");
-                    throw error;
+                    console.log(error);
                 }
                 info.connection.query(queries.insertUser,
                     [info.username, info.email, info.passwordHash, info.passwordSalt], insertIntoUser(info));
@@ -66,7 +66,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
 var emailCheckcallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if email is used failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!rows.length)

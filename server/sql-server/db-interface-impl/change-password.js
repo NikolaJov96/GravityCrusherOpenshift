@@ -10,7 +10,7 @@ var changePasswordCall = function(info) { return function(error, rows, fields) {
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query that inserts new hash and salt failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,7 +18,7 @@ var changePasswordCall = function(info) { return function(error, rows, fields) {
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -31,7 +31,7 @@ var changePasswordCall = function(info) { return function(error, rows, fields) {
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which search for username failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
@@ -39,7 +39,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
                 info.connection.beginTransaction(function(error) {
                     if (!!error) {
                         console.log("error: transaction failed to be started!\n");
-                        throw error;
+                        console.log(error);
                     }
                     info.connection.query(queries.setNewPasswordAndSalt,
                         [info.newHash, info.newSalt, rows[RESULT].id], changePasswordCall(info));

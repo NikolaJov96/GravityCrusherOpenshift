@@ -9,7 +9,7 @@ const RESULT = 0;
 var insertCallback = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query that inserts row failed!\n");
-            throw error;
+            console.log(error);
         }
         else if (info.callback) info.callback("Success", info.username);
 }}
@@ -17,7 +17,7 @@ var insertCallback = function(info) { return function(error, rows, fields) {
 var deletingCallback = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query that delete old row failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             info.connection.query(queries.insertIntoPasswordReset,
@@ -28,7 +28,7 @@ var deletingCallback = function(info) { return function(error, rows, fields) {
 var searchInPasswordRecoveryCallback = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which searches if user exists in password recovery failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             if (!!rows.length) {
@@ -44,7 +44,7 @@ var searchInPasswordRecoveryCallback = function(info) { return function(error, r
 var searchInUserCallback = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which searches for user failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             if (!!rows.length) {
