@@ -10,7 +10,7 @@ const START_OFFSET = 0;
 var callbackTableToPass = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which selects data failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
 
@@ -26,13 +26,6 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                 }
             }
 
-            for (var i in rows) {
-                for (var key in rows[i]) {
-                    console.log(rows[i][key] + " ");
-                }
-                console.log();
-            }
-
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
 
             if (info.callback) info.callback("Success", outputResult, maxRow);
@@ -42,7 +35,7 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
 var callbackFront = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which finds better ranged users count failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             for(var key in rows[RESULT]) info.frontUsersCount = rows[RESULT][key];
@@ -64,7 +57,7 @@ var callbackFront = function(info) { return function(error, rows, fields) {
 var callbackActiveUsers = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which finds users count failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             for(var key in rows[RESULT]) info.activeUsersCount = rows[RESULT][key];
@@ -84,7 +77,7 @@ var callbackActiveUsers = function(info) { return function(error, rows, fields) 
 var selectCallbackQuery = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which search for users statistics failed!\n");
-            throw error;
+            console.log(error);
         }
         else {
             if (!!rows.length) {

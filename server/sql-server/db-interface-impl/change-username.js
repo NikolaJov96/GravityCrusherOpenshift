@@ -10,7 +10,7 @@ var changeUsernameCallback = function(info) { return function(error, rows, field
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which checks inserts new username failed\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,7 +18,7 @@ var changeUsernameCallback = function(info) { return function(error, rows, field
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -32,7 +32,7 @@ var newUsernameCheckCallback = function(info) { return function(error, rows, fie
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which checks if newUsername is used failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -47,7 +47,7 @@ var newUsernameCheckCallback = function(info) { return function(error, rows, fie
 var oldUsernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if oldUsername is used failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
@@ -55,7 +55,7 @@ var oldUsernameCheckCallback = function(info) { return function(error, rows, fie
             info.connection.beginTransaction(function(error) {
                 if (!!error) {
                     console.log("error: transaction failed to be started!\n");
-                    throw error;
+                    console.log(error);
                 }
                 info.connection.query(queries.searchInUserByUsername,
                     [info.newUsername], newUsernameCheckCallback(info));

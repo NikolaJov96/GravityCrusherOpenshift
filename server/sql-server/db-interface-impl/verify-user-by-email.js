@@ -9,7 +9,7 @@ const RESULT = 0;
 var emailCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which search for username failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
