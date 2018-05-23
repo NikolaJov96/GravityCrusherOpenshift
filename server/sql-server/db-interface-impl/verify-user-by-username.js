@@ -6,6 +6,21 @@ var queries = require('./queries');
 
 const RESULT = 0;
 
+var bannCheckCallback = function(info) { return function(error, rows, fields) {
+    if (!!error) {
+        console.log("error: query which checks if user is banned failed!\n");
+        console.log(error);
+    }
+    else {
+        if (!!rows.length) {
+            if (info.callback) info.callback("UserBanned");
+        }
+        else {
+            if (info.callback) info.callback("Success");
+        }
+    }
+}}
+
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which search for username failed!\n");
@@ -14,7 +29,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     else {
         if (!!rows.length) {
             if (rows[RESULT].password_hash === info.hash) {
-                if (info.callback) info.callback("Success");
+                info.connection.query(queries.checkIfUserIsBanned, [rows[RESULT].id], bannCheckCallback(info));
             }
             else {
                 if (info.callback) info.callback("PasswordNoMatch");
