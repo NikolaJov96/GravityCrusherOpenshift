@@ -42,6 +42,9 @@ socket.on('signInResponse', function(data){
         logMsg('On signInResponse - wrong password');
         pass.value = '';
         pass.focus();
-    }else if (data.status === 1) logMsg('On signInResponse - wrong password');
-    else logMsg('On signInResponse - unknown error: ' + data.status);
+    }else if (data.status === 'UserBanned'){
+        logMsg('On signInResponse - user is banned');
+        pass.value = '';
+        pass.focus();
+    }else logMsg('On signInResponse - unknown error: ' + data.status);
 });
