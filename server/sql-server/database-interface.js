@@ -23,6 +23,10 @@ var database = function() {
     var userCheckModule = require('./db-interface-impl/user-check');
     var selectingStatisticsForUserModule = require('./db-interface-impl/selecting-statistics-for-user');
     var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
+    var insertStatisticsModule = require('./db-interface-impl/insert-statistics-for-player');
+    var bannUserModule = require('./db-interface-impl/bann-user');
+
+
     var mysql = require('mysql');
 
     var statNamesToColumns = { 'Games Played': 'games_played_count',
@@ -136,6 +140,16 @@ var database = function() {
     methods.getStatisticsForPosition = function(metric, rowCount, start, callback) {
 
         selectingStatisticsForPositionModule(methods.connection, metric, rowCount, start, statNamesToColumns, callback);
+    }
+
+    methods.bannUser = function(username, bannDate, callback) {
+
+        bannUserModule(methods.connection, username, bannDate, callback);
+    }
+
+    methods.insertStatisticsForPlayer = function(username, outcome, callback) {
+
+        insertStatisticsModule(methods.connection, username, outcome, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

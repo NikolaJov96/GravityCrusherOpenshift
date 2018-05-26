@@ -53,8 +53,8 @@ module.exports = {
     //input id
     checkIfUserIsBanned: "SELECT * FROM user_banned WHERE user_id = ?",
 
-    //input username, bann date
-    bannUser : "INSERT INTO user_banned(user_id, bann_date) VALUES ((select id FROM user WHERE username = ?), ?)",
+    //input id, bann date
+    bannUser : "INSERT INTO user_banned(user_id, bann_date) VALUES (?, ?)",
 
     //tables: USER_DISABLED -------------------------------------------------------------------------------------------
     //input id
@@ -97,14 +97,11 @@ module.exports = {
 
     //input column to check, params
     getActiveUsersInFrontCount: `SELECT COUNT(*)
-                                FROM statistics sm INNER JOIN
+                                 FROM statistics sm INNER JOIN
                                     (SELECT user_id, (games_won_count/GREATEST(games_played_count, 1)) as win_rate
                                     FROM statistics) st ON sm.user_id = st.user_id
-                                WHERE
-                                ?? > ? AND
-                                NOT EXISTS (SELECT * FROM user_disabled ud WHERE ud.user_id = sm.user_id)`,
-
-
+                                 WHERE ?? > ?
+                                 AND NOT EXISTS (SELECT * FROM user_disabled ud WHERE ud.user_id = sm.user_id)`,
 
     //without input
     getActiveUsersCount:   `SELECT COUNT(*)
@@ -114,13 +111,24 @@ module.exports = {
     //input integers - number of rows to return and offset
     selectStatistics:  `SELECT @ROW := @ROW + 1 AS row, user.username, statistics.games_played_count,
                             statistics.games_won_count, (games_won_count/GREATEST(games_played_count, 1)) as win_rate
-                                    FROM user, statistics, (SELECT @ROW := ?)r
-                                    WHERE user.id = statistics.user_id AND
-                                    NOT EXISTS (SELECT *
-                                                FROM user_disabled
-                                                WHERE user_disabled.user_id = statistics.user_id)
-                                    ORDER BY ?? DESC
-                                    LIMIT ?
-                                    OFFSET ?`
+                        FROM user, statistics, (SELECT @ROW := ?)r
+                        WHERE user.id = statistics.user_id
+                        AND NOT EXISTS (SELECT *
+                                    FROM user_disabled
+                                        WHERE user_disabled.user_id = statistics.user_id)
+                        ORDER BY ?? DESC
+                        LIMIT ?
+                        OFFSET ?`,
+
+    //input id
+    updateStatisticsWon: `UPDATE statistics
+                          SET games_played_count = games_played_count + 1,
+                          games_won_count = games_won_count + 1
+                          WHERE user_id = ?`,
+
+    //input id
+    updateStatisticsLost: `UPDATE statistics
+                           SET games_played_count = games_played_count + 1
+                           WHERE user_id = ?`
 
 }

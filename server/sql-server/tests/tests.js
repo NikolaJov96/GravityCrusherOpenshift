@@ -10,9 +10,9 @@ tests = {
         var fun = 'test Insert new user';
         var callbackTest = function(exprectedStatus){
             return function(status, email, username, confirmationCode) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('email: ' + email);
@@ -40,9 +40,9 @@ tests = {
         var fun = 'getting salt from user';
         var callbackTest = function(exprectedStatus){
             return function(status, salt) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('salt: ' + salt);
@@ -65,9 +65,9 @@ tests = {
         var fun = 'test change password';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -92,9 +92,9 @@ tests = {
         var fun = 'test change username';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -117,9 +117,9 @@ tests = {
         var fun = 'password recovery request';
         var callbackTest = function(exprectedStatus){
             return function(status, salt) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('salt: ' + salt);
@@ -145,9 +145,9 @@ tests = {
         var fun = 'selecting salt by email';
         var callbackTest = function(exprectedStatus){
             return function(status, salt) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('salt: ' + salt);
@@ -170,9 +170,9 @@ tests = {
         var fun = 'verification of user with username';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -188,15 +188,16 @@ tests = {
 
         db.verifyUserByUsername('Dragana', 'tralalalalala', callbackTest('UserNotRegistered'));
         db.verifyUserByUsername('jelena', 'tralalalalalala', callbackTest('PasswordNoMatch'));
+        db.verifyUserByUsername('jovan', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
         db.verifyUserByUsername('Nikola', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
     },
     verifyWithEmail: function(){
         var fun = 'verification of user with email';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -212,15 +213,16 @@ tests = {
 
         db.verifyUserByEmail('Dragana6@gmail.com', 'tralalalalala', callbackTest('UserNotRegistered'));
         db.verifyUserByEmail('jelena6@gmail.com', 'tralalalalalala', callbackTest('PasswordNoMatch'));
+        db.verifyUserByEmail('jovan6@gmail.com', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
         db.verifyUserByEmail('Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
     },
     insertTokenUsername: function(){
         var fun = 'inserting token by username';
         var callbackTest = function(exprectedStatus){
             return function(status, flag) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status + " " + flag);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + flag);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     if (flag) console.log("reactivated");
@@ -244,9 +246,9 @@ tests = {
         var fun = 'inserting token by email';
         var callbackTest = function(exprectedStatus){
             return function(status, flag) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status + " " + flag);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + flag);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     if (flag) console.log("reactivated");
@@ -270,9 +272,9 @@ tests = {
         var fun = 'verifying registration with username';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -296,9 +298,9 @@ tests = {
         var fun = 'verifying registration with email';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -322,9 +324,9 @@ tests = {
         var fun = 'getting token by username';
         var callbackTest = function(exprectedStatus){
             return function(status, username) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('username: ' + username);
@@ -347,9 +349,9 @@ tests = {
         var fun = 'removing token';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -371,9 +373,9 @@ tests = {
         var fun = 'reset password';
         var callbackTest = function(exprectedStatus){
             return function(status, username) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -395,9 +397,9 @@ tests = {
         var fun = 'deactivate account';
         var callbackTest = function(exprectedStatus){
             return function(status, userSessionTokens) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log(userSessionTokens);
@@ -420,9 +422,9 @@ tests = {
         var fun = 'username check';
         var callbackTest = function(exprectedStatus){
             return function(status) {
-                if (status === exprectedStatus) console.log('OK  ' + fun + ': ' + status);
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -445,9 +447,9 @@ tests = {
         var callbackTest = function(exprectedStatus, metric){
             return function(status, rows, maxRow) {
                 if (status === exprectedStatus)
-                    console.log('OK  ' + fun + ': ' + status + ' ' + 'metric:' + metric + '\n');
+                    console.log('PASS  ' + fun + ': ' + status + ' ' + 'metric:' + metric + '\n');
                 else{
-                    console.log('ERROR ' + fun);
+                    console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log();
@@ -500,7 +502,57 @@ tests = {
             callbackTest('Success', 'Games Won Percentage'));
         db.getStatisticsForPosition('Games Played', 5, data5.start, callbackTest('Success', 'Games Played'));
         db.getStatisticsForPosition('Games Won', 5, data6.start, callbackTest('Success', 'Games Won'));
-    }
+    },
+    bannUser: function() {
+        var fun = 'bann user';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Dragana', new Date('2018-07-10T17:00:00')],
+            ['Milica', new Date('2018-07-10T17:00:00')],
+            ['Jovan', new Date('2018-07-10T17:00:00')]
+        ]
+
+        db.bannUser('Dragana', new Date('2018-07-10T17:00:00'), callbackTest('UserNotFound'));
+        db.bannUser('Milica', new Date('2018-07-10T17:00:00'), callbackTest('Success'));
+        db.bannUser('Jelena', new Date('2018-07-10T17:00:00'), callbackTest('Success'));
+    },
+    insertStatistics: function() {
+        var fun = 'bann user';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Dragana', 'Won'],
+            ['Milica', 'Won'],
+            ['Jovan', 'Lost']
+        ]
+
+        db.insertStatisticsForPlayer('Dragana', 'Won', callbackTest('UserNotFound'));
+        db.insertStatisticsForPlayer('Milica', 'Won', callbackTest('Success'));
+        db.insertStatisticsForPlayer('Jelena', 'Lost', callbackTest('Success'));
+    },
+
+
 };
 
 // test all
@@ -509,4 +561,4 @@ tests = {
 // }
 
 // test specific
-tests.selectingStatistics();
+tests.insertStatistics();
