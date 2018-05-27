@@ -1,0 +1,22 @@
+// Owner: Filip Mandic (mandula8)
+
+// Summary: This file contains handler that handle requests for banning user
+
+var db = require('../../sql-server/database-interface.js');
+
+//TODO: different bann periods
+
+const milisInDay = 86400000;
+const dayToBann = 7;
+
+module.exports = function(socket){ return function(data){
+    console.log('Bann user req: Data: ');
+    console.log(data);
+
+    var bannToDate = new Date();
+    bannToDate.setDate(bannToDate.getDate() + dayToBann);
+    db.bannUser(data.opponent, function(socket, data) { return function(status, bannDate) {
+            socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
+        }
+    };}(socket, data));
+}};

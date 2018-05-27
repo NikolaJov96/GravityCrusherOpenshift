@@ -169,12 +169,13 @@ tests = {
     verifyWithUsername: function(){
         var fun = 'verification of user with username';
         var callbackTest = function(exprectedStatus){
-            return function(status) {
-                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+            return function(status, bannDate) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
+                    console.log(bannDate);
                     console.log();
                 }
             };
@@ -194,12 +195,13 @@ tests = {
     verifyWithEmail: function(){
         var fun = 'verification of user with email';
         var callbackTest = function(exprectedStatus){
-            return function(status) {
-                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+            return function(status, bannDate) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
+                    console.log(bannDate);
                     console.log();
                 }
             };
@@ -561,4 +563,4 @@ tests = {
 // }
 
 // test specific
-tests.insertStatistics();
+tests.verifyWithEmail();

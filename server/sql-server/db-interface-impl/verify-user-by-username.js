@@ -13,10 +13,10 @@ var bannCheckCallback = function(info) { return function(error, rows, fields) {
     }
     else {
         if (!!rows.length) {
-            if (info.callback) info.callback("UserBanned");
+            if (info.callback) info.callback("UserBanned", rows[RESULT].bann_date);
         }
         else {
-            if (info.callback) info.callback("Success");
+            if (info.callback) info.callback("Success", null);
         }
     }
 }}
@@ -32,10 +32,10 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
                 info.connection.query(queries.checkIfUserIsBanned, [rows[RESULT].id], bannCheckCallback(info));
             }
             else {
-                if (info.callback) info.callback("PasswordNoMatch");
+                if (info.callback) info.callback("PasswordNoMatch", null);
             }
         }
-        else if (info.callback) info.callback("UserNotRegistered");
+        else if (info.callback) info.callback("UserNotRegistered", null);
     }
 }}
 
