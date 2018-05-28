@@ -48,3 +48,9 @@ setInterval(function(){
     
     telemetry.endIterationn();
 }, frameTime);
+
+setInterval(function(){
+    // check accounts waiting to be activated for timeout
+    // check banned users for ban timeout
+    // check token timeouts
+}, 1000 * 60 * 60);  // run every hour
