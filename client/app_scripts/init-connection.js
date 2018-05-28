@@ -61,6 +61,8 @@ var username = '';
 var debugMode = true;
 var initCallback = null;
 var initCallbackData = null;
+var universalCallback = null;
+var callUniversalCallback = false;
 
 // request socket connection
 var socket = io('localhost:8001');
@@ -127,8 +129,13 @@ socket.on('pageInitResponse', function(data){
     if (initCallback){
         logMsg('Calling init callback.');
         initCallback(data);
-    }else{
-        logMsg('Caching init callback data.');
+    }else{ 
+        logMsg('Caching init callback data.'); 
         initCallbackData = data;
+    }
+    if (universalCallback){
+        universalCallback();
+    }else{
+        callUniversalCallback = true;
     }
 });

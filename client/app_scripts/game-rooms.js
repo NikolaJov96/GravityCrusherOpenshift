@@ -15,15 +15,15 @@ var drawTable = function(){
         if (rooms[i].name.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
            rooms[i].host.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
            rooms[i].map.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0) continue;
-        innerTable += 
+        innerTable +=
 `
 <tr>
     <td scope="row">` + rooms[i].name + `</td>
     <td>` + rooms[i].host + `</td>
     <td>` + rooms[i].map + `</td>
     <td><button onclick="choseRoom('` + rooms[i].name + 
-        `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
-    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary"` +
+        `', 'watch');" type="button" class="btn btn-success">Watch</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-danger"` +
         (rooms[i].canPlay ? '' : ' disabled') + `>Play</button></td>
     <td>Enabled</td>
 </tr>

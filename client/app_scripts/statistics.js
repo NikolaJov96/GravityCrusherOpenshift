@@ -20,7 +20,9 @@ var drawTable = function(rows){
     for (var i in rows){
         innerTable += '<tr>';
         for (var j in columns){
-            innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>' + rows[i][columns[j]] + '</td>';
+            innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>' + 
+                ( rows[i][columns[j]] % 1 == 0 ? rows[i][columns[j]] : parseFloat(rows[i][columns[j]]).toFixed(3) ) + 
+                '</td>';
         }
         innerTable += '</tr>';
     }
