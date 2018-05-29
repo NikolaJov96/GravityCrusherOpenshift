@@ -14,12 +14,26 @@ module.exports = function(socket){ return function(data) {
     
     var genPayload = function(data, user, response){
         if (data.page === 'Game'){
+            response.payload = "redirect";
             for (var i in serverState.gameRooms){
                 if (serverState.gameRooms[i].containsUser(user)){
                     response.payload = serverState.gameRooms[i].state.initResponse(user);
                     response.payload.messages = serverState.gameRooms[i].getMessages();
-                    console.log('    page: Game, approved');
+                    console.log('    page: Game, play');
                     break;
+                } else {
+                    var specFound = false;
+                    for (j in serverState.gameRooms[i].spectators){
+                        if (serverState.gameRooms[i].spectators[j].name === user.name){
+                            specFound = true;
+                            break;
+                        }
+                    }
+                    if (specFound){
+                        response.payload = serverState.gameRooms[i].state.initResponse(user);
+                        response.payload.messages = serverState.gameRooms[i].getMessages();
+                        console.log('    page: Game, spectate');
+                    }
                 }
                 // allow user to watch and bound it to the room until socket connection break
             }
@@ -37,6 +51,20 @@ module.exports = function(socket){ return function(data) {
             } else {
                 console.log('    page: GameRooms');
                 response.payload = { redirect: false, rooms: require('../rooms-to-display.js')(user) };
+            }
+        } else if (data.page === 'CreateRoom'){
+            var room = null;
+            for (var i in serverState.gameRooms){
+                if (serverState.gameRooms[i].containsUser(user)){
+                    room = serverState.gameRooms[i];
+                    break;
+                }
+            }
+            if (room){
+                console.log('    page: CreateRoom, redirect to the game');
+                response.payload = { redirect: true };
+            } else {
+                response.payload = { redirect: false };
             }
         } else if (data.page === 'Statistics'){
             var res = db.getStatisticsForPosition('Games Won', serverState.initStatNumber, 0,
@@ -78,8 +106,12 @@ module.exports = function(socket){ return function(data) {
             serverState.tokenCache.lookupUser(data.token).page = data.page;
             var user = serverState.tokenCache.lookupUser(data.token);
             response.status = 'Success';
-            response.username = user.name;
-            response.signedIn = true;
+            if (!user.isGuest){
+                response.username = user.name;
+                response.signedIn = true;
+            } else {
+                response.token = data.token;
+            }
             console.log('Init handler, cache token match, user ' + user.name);
             genPayload(data, user, response);
         } else {

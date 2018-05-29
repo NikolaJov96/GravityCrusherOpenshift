@@ -19,6 +19,9 @@ document.onkeypress = function(event){
 };
 
 initCallback = function(data){
+    if ('payload' in data && data.payload === 'redirect'){
+        window.location = 'index';
+    }
     if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
     else if (!('state' in data.payload)) attrMissing('state', 'initCallback.playload', data.payload);
     else if (!('messages' in data.payload)) attrMissing('messages', 'initCallback.playload', data.payload);

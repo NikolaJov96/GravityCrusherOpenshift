@@ -9,6 +9,17 @@ var map = document.getElementById('map');
 var roomReach = document.getElementById('roomReach');
 var submitBtn = document.getElementById('submitBtn');
 
+initCallback = function(data){
+    if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
+    else if (!('redirect' in data.payload)) attrMissing('redirect', 'initCallback.playload', data.payload);
+    else{
+        if (data.payload.redirect){
+            window.location = 'game';
+        }
+    }
+};
+if (initCallbackData) initCallback(initCallbackData);
+
 // send create room request
 submitBtn.onclick = function(){
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
@@ -38,5 +49,7 @@ socket.on('createGameRoomResponse', function(data){
         logMsg('On createGameRoomResponse - invalid opponent');
         opponent.select();
         opponent.focus();
+    }else if (data.status === 'AlreadyInGame') {
+        logMsg('On createGameRoomResponse - user is already in the game');
     }else logMsg('On createGameRoomResponse - unknown error: ' + data.status);
 });

@@ -17,6 +17,15 @@ module.exports = function(socket){ return function(data){
             if (targetRoom.joinName === socket.user.name){
                 socket.emit('selectGameRoomResponse', { status: 'MustPlay' });
             } else if (targetRoom.roomPublic) {
+                var isSpec = false;
+                for (i in targetRoom.spectators){
+                    if (targetRoom.spectators[i].name === socket.user.name){
+                        isSpec = true;
+                    }
+                }
+                if (!isSpec){
+                    targetRoom.spectators.push(socket.user);
+                }
                 socket.emit('selectGameRoomResponse', { status: 'Success' });
             } else {
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });

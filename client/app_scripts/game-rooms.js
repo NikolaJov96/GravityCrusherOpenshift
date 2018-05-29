@@ -44,7 +44,7 @@ initCallback = function(data){
     else if (!('redirect' in data.payload)) attrMissing('redirect', 'initCallback.playload', data.payload);
     else{
         if (data.payload.redirect){
-            window.location = '/game';
+            window.location = 'game';
         }else{
             if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
             else{

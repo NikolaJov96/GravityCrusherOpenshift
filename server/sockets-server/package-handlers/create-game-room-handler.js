@@ -7,11 +7,19 @@ var db = require('../../sql-server/database-interface.js');
 module.exports = function(socket){ return function(data){
     console.log('Create room req: Data: ');
     console.log(data);
-
-    if (data.opponent === socket.user.name){
-        socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+    
+    var locked = false;
+    for (i in serverState.gameRooms){
+        if (serverState.gameRooms[i].containsUser(socket.user)){
+            locked = true;
+        }
     }
-    if (!data.gamePublic){
+
+    if (locked){
+        socket.emit('createGameRoomResponse', { status: 'AlreadyInGame' });
+    } else if (!data.gamePublic && data.opponent === socket.user.name){
+        socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+    } else if (!data.gamePublic){
         db.checkIfUserExists(data.opponent, function(socket, data) { return function(status) {
             if (status == 'UsernameNotExists'){
                 socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
