@@ -15,10 +15,11 @@ module.exports = function(socket){ return function(data){
     if (targetRoom){
         if (targetRoom.joinName === socket.user.name){
             targetRoom.join = socket.user;
-
             socket.emit('selectGameRoomResponse', { status: 'Success' });
-        }
-        else socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });  // another player is bound to join
+        } else if (targetRoom.visible && data.action === 'watch') {
+            targetRoom.join = socket.user; /// change!
+            socket.emit('selectGameRoomResponse', { status: 'Success' });
+        } else socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });  // another player is bound to join
     } 
     else socket.emit('selectGameRoomResponse', { status: 'InvalidRoom' });
 }};

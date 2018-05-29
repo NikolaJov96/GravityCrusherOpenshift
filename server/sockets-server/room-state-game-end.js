@@ -34,4 +34,3 @@ module.exports = function(gameRoom){
 
     return self;
 };
-

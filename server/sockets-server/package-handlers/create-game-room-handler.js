@@ -13,7 +13,7 @@ module.exports = function(socket){ return function(data){
                 if (status == 'UsernameNotExists')
                     socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
                 else {
-                    var newRoom = require('../game-room.js')(data.name, socket.user, data.opponent, data.gameMap);
+                    var newRoom = require('../game-room.js')(data.name, socket.user, data.opponent, data.gameMap, true);
                     serverState.gameRooms.push(newRoom);
                     for (var user in serverState.users){
                         if (serverState.users[user].page === 'GameRooms'){

@@ -53,4 +53,5 @@ setInterval(function(){
     // check accounts waiting to be activated for timeout
     // check banned users for ban timeout
     // check token timeouts
+    // remove long inactive temporary accounts
 }, 1000 * 60 * 60);  // run every hour

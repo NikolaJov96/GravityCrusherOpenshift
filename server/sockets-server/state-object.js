@@ -45,6 +45,7 @@ var StateObject = function(frameTime){
         self.users[username] = newUser;
         self.tokenCache.cacheToken(token, newUser);
         socket.user = newUser;
+        return newUser;
     };
 
     self.renameUser = function(socket, newUsername){
