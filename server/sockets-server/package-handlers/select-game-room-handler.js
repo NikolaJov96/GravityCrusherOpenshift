@@ -30,8 +30,9 @@ module.exports = function(socket){ return function(data){
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
             }
         } else if (data.action === 'play') {
-            if (targetRoom.joinName === socket.user.name || targetRoom.gamePublic){
+            if (targetRoom.gamePublic || targetRoom.joinName === socket.user.name){
                 targetRoom.join = socket.user;
+                targetRoom.joinName = socket.user.name;
                 socket.emit('selectGameRoomResponse', { status: 'Success' });
             } else {
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
