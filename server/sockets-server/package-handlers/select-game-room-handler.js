@@ -5,8 +5,6 @@
 module.exports = function(socket){ return function(data){
     console.log('Select room req: Name: ' + data.roomName + ' action: ' + data.action);
     
-    // check if user is locked by some room
-    
     var targetRoom = null;
     for (i in serverState.gameRooms) 
         if (serverState.gameRooms[i].name === data.roomName) 
@@ -30,10 +28,19 @@ module.exports = function(socket){ return function(data){
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
             }
         } else if (data.action === 'play') {
-            if (targetRoom.gamePublic || targetRoom.joinName === socket.user.name){
+            if (targetRoom.join){
+                socket.emit('selectGameRoomResponse', { status: 'PlaceTaken' });
+            } else if (targetRoom.gamePublic || targetRoom.joinName === socket.user.name){
                 targetRoom.join = socket.user;
                 targetRoom.joinName = socket.user.name;
                 socket.emit('selectGameRoomResponse', { status: 'Success' });
+                for (var user in serverState.users){
+                    if (serverState.users[user].page === 'GameRooms'){
+                        serverState.users[user].socket.emit('gameRoomsUpdate', {
+                            rooms: require('../rooms-to-display.js')(serverState.users[user])
+                        });
+                    }
+                }
             } else {
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
             }

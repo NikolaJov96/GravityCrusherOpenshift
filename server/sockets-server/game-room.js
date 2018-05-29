@@ -31,6 +31,12 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
                 self.host.socket.emit('initRoomState', self.state.initResponse(self.host));
             if (self.join.socket && self.join.page === 'Game')
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
+            for (i in self.spectators){
+                if (self.spectators[i].page === 'Game'){
+                    // chage to spectator user
+                    self.spectators[i].socket.emit('initRoomState', self.state.initResponse(self.join));
+                }
+            }
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
 

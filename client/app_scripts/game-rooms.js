@@ -104,5 +104,6 @@ socket.on('selectGameRoomResponse', function(data){
     else if (data.status === 'PlayerSlotTaken') logMsg('On selectGameRoomResponse - player slot taken');
     else if (data.status === 'InvalidRoom') logMsg('On selectGameRoomResponse - invalid room');
     else if (data.status === 'JoinDenied') logMsg('On selectGameRoomResponse - another player is required to join');
+    else if (data.status === 'PlaceTaken') logMsg('On selectGameRoomResponse - another player took the place');
     else logMsg('On selectGameRoomResponse - unknown error: ' + data.status);
 });

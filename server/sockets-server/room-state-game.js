@@ -86,6 +86,11 @@ module.exports = function(gameRoom){
         if (self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
+        for (i in self.room.spectators){
+            if (self.room.spectators[i].page === 'Game'){
+                self.room.spectators[i].socket.emit('gameState', gameState);
+            }
+        }
         
         var distSq = (self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
            (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y);
