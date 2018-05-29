@@ -2,9 +2,10 @@
 
 // Summary: Callbacks initialization for 'game' page
 
+var chatBody = document.getElementById('chatBody');
 var chatBtn = document.getElementById('chatBtn');
 var chatText = document.getElementById('chatText');
-var chatBody = document.getElementById('chatBody');
+var chatDiv = document.getElementById('chatDiv');
 
 document.onkeydown = function(event){
     if (roomState) roomState.onKeyDown(event);
@@ -39,6 +40,8 @@ initCallback = function(data){
             if (roomState) roomState.finish();
             roomState = StateGameEnd(data.payload);
         }else logMsg('Undefined state: ' + data.payload.state);
+        
+        if (signedIn) chatDiv.classList.remove('d-none');
         
         chatBody.innerHTML += data.payload.messages;
         chatBody.scrollTop = chatBody.scrollHeight - chatBody.clientHeight;
