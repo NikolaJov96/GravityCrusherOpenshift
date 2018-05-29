@@ -13,13 +13,24 @@ module.exports = function(socket){ return function(data){
             targetRoom = serverState.gameRooms[i];
     
     if (targetRoom){
-        if (targetRoom.joinName === socket.user.name){
-            targetRoom.join = socket.user;
-            socket.emit('selectGameRoomResponse', { status: 'Success' });
-        } else if (targetRoom.visible && data.action === 'watch') {
-            targetRoom.join = socket.user; /// change!
-            socket.emit('selectGameRoomResponse', { status: 'Success' });
-        } else socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });  // another player is bound to join
+        if (data.action === 'watch'){
+            if (targetRoom.joinName === socket.user.name){
+                socket.emit('selectGameRoomResponse', { status: 'MustPlay' });
+            } else if (targetRoom.roomPublic) {
+                socket.emit('selectGameRoomResponse', { status: 'Success' });
+            } else {
+                socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
+            }
+        } else if (data.action === 'play') {
+            if (targetRoom.joinName === socket.user.name || targetRoom.gamePublic){
+                targetRoom.join = socket.user;
+                socket.emit('selectGameRoomResponse', { status: 'Success' });
+            } else {
+                socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });
+            }
+        } else {
+            socket.emit('selectGameRoomResponse', { status: 'BadAction' });
+        }
     } 
     else socket.emit('selectGameRoomResponse', { status: 'InvalidRoom' });
 }};

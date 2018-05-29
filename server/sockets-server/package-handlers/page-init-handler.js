@@ -21,8 +21,8 @@ module.exports = function(socket){ return function(data) {
                     console.log('    page: Game, approved');
                     break;
                 }
+                // allow user to watch and bound it to the room until socket connection break
             }
-            console.log('    page: Game, no game assigneg to the user');
         } else if (data.page === 'GameRooms'){
             var room = null;
             for (var i in serverState.gameRooms){

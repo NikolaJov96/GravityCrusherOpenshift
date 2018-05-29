@@ -8,26 +8,44 @@ module.exports = function(socket){ return function(data){
     console.log('Create room req: Data: ');
     console.log(data);
 
-    if (data.opponent !== socket.user.name){
+    if (data.opponent === socket.user.name){
+        socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+    }
+    if (!data.gamePublic){
         db.checkIfUserExists(data.opponent, function(socket, data) { return function(status) {
-                if (status == 'UsernameNotExists')
-                    socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
-                else {
-                    var newRoom = require('../game-room.js')(data.name, socket.user, data.opponent, data.gameMap, true);
-                    serverState.gameRooms.push(newRoom);
-                    for (var user in serverState.users){
-                        if (serverState.users[user].page === 'GameRooms'){
-                            serverState.users[user].socket.emit('gameRoomsUpdate', {
-                                rooms: require('../rooms-to-display.js')(serverState.users[user])
-                            });
-                        }
+            if (status == 'UsernameNotExists'){
+                socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+            } else {
+                var newRoom = require('../game-room.js')(data.name, socket.user, data.gamePublic,
+                                                             data.opponent, data.gameMap, data.roomPublic, true);
+                serverState.gameRooms.push(newRoom);
+                for (var user in serverState.users){
+                    if (serverState.users[user].page === 'GameRooms'){
+                        serverState.users[user].socket.emit('gameRoomsUpdate', {
+                            rooms: require('../rooms-to-display.js')(serverState.users[user])
+                        });
                     }
-
-                    // TODO: update game room pages with the new game room
-
-                    socket.emit('createGameRoomResponse', { status: 'Success' });
                 }
-            };
-        }(socket, data));
-    } else socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
+                
+                // TODO: update game room pages with the new game room
+                
+                socket.emit('createGameRoomResponse', { status: 'Success' });
+            }
+        }; }(socket, data));
+    } else {
+        var newRoom = require('../game-room.js')(data.name, socket.user, data.gamePublic,
+                                                 data.opponent, data.gameMap, data.roomPublic, true);
+        serverState.gameRooms.push(newRoom);
+        for (var user in serverState.users){
+            if (serverState.users[user].page === 'GameRooms'){
+                serverState.users[user].socket.emit('gameRoomsUpdate', {
+                    rooms: require('../rooms-to-display.js')(serverState.users[user])
+                });
+            }
+        }
+
+        // TODO: update game room pages with the new game room
+
+        socket.emit('createGameRoomResponse', { status: 'Success' });
+    }
 }};

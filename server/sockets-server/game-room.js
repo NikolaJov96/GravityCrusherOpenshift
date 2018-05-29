@@ -4,14 +4,16 @@
 
 var RoomStateLoading = require('./room-state-loading.js');
 
-module.exports = function(name, host, joinName, map, visible){
+module.exports = function(name, host, gamePublic, joinName, map, roomPublic, chatEnabled){
     var self = {
         name: name,
         host: host,
+        gamePublic: gamePublic,
         joinName: joinName,
         map: map,
+        roomPublic: roomPublic,
+        chatEnabled: chatEnabled,
         join: null,
-        visible: visible,
         messages: [],
         newMessages: [],
         hostCommand: {},
