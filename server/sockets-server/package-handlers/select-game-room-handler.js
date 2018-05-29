@@ -13,19 +13,18 @@ module.exports = function(socket){ return function(data){
             targetRoom = serverState.gameRooms[i];
     
     if (targetRoom){
+        var i = targetRoom.spectators.length;
+        while (i--){
+            if (targetRoom.spectators[i].name === socket.user.name){
+                targetRoom.spectators.splice(i, 1);
+            }
+        }
+        
         if (data.action === 'watch'){
             if (targetRoom.joinName === socket.user.name){
                 socket.emit('selectGameRoomResponse', { status: 'MustPlay' });
             } else if (targetRoom.roomPublic) {
-                var isSpec = false;
-                for (i in targetRoom.spectators){
-                    if (targetRoom.spectators[i].name === socket.user.name){
-                        isSpec = true;
-                    }
-                }
-                if (!isSpec){
-                    targetRoom.spectators.push(socket.user);
-                }
+                targetRoom.spectators.push(socket.user);
                 socket.emit('selectGameRoomResponse', { status: 'Success' });
             } else {
                 socket.emit('selectGameRoomResponse', { status: 'JoinDenied' });

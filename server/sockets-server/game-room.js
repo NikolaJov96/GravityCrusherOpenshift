@@ -24,14 +24,6 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
     self.state = RoomStateLoading(self);
 
     self.step = function(){
-        
-        var i = self.spectators.length;
-        while (i--){
-            if (self.spectators[i].page !== 'Game'){
-                self.spectators.splice(i, 1);
-            }
-        }
-        
         var ret = self.state.step();
         if (ret.action === 'nextState'){
             self.state = ret.nextState(self);
@@ -55,7 +47,8 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
             if (self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
             if (self.join && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
             for (i in self.spectators){
-                if (self.spectators[i].page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
+                if (self.spectators[i].page === 'Game') 
+                    self.spectators[i].socket.emit('broadcastResponse', { text: text });
             }
         }
 
