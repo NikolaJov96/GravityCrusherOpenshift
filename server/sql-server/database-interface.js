@@ -26,6 +26,7 @@ var database = function() {
     var insertStatisticsModule = require('./db-interface-impl/insert-statistics-for-player');
     var bannUserModule = require('./db-interface-impl/bann-user');
     var removeOldBannsModule = require('./db-interface-impl/remove-old-banns');
+    var removeUnactiveTokensModule = require('./db-interface-impl/delete-unactive-tokens.js');
 
     var mysql = require('mysql');
 
@@ -157,6 +158,10 @@ var database = function() {
         removeOldBannsModule(methods.connection, callback);
     }
 
+    methods.removeOldTokens = function(callback) {
+
+        removeUnactiveTokensModule(methods.connection, callback);
+    }
 
     //-----------------------------------------------------------------------------------------------------------------
 

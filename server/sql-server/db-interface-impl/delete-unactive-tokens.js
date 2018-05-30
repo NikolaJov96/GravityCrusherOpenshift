@@ -6,9 +6,9 @@ var queries = require('./queries');
 
 const RESULT = 0;
 
-var deleteBansCallback = function(info) { return function(error, rows, fields) {
+var deleteTokenCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
-        console.log("error: query which deletes from user_banned failed!\n");
+        console.log("error: query which deletes from token failed!\n");
         console.log(error);
     }
     else {
@@ -16,7 +16,7 @@ var deleteBansCallback = function(info) { return function(error, rows, fields) {
     }
 }}
 
-var deleteOldBannsModule = function(connection, callback) {
+var deleteOldTokensModule = function(connection, callback) {
 
     var date = new Date();
 
@@ -25,7 +25,7 @@ var deleteOldBannsModule = function(connection, callback) {
         callback: callback
     }
 
-    info.connection.query(queries.deleteOldBanns, [date], deleteBansCallback(info));
+    info.connection.query(queries.deleteOldTokens, [date], deleteTokenCallback(info));
 }
 
-module.exports = deleteOldBannsModule;
+module.exports = deleteOldTokensModule;

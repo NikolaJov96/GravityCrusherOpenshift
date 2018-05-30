@@ -564,6 +564,18 @@ tests = {
             };
         }
         db.removeOldBanns(callbackTest('Success'));
+    },
+    removeOldTokens: function() {
+        var fun = 'bann user';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                };
+            };
+        }
+        db.removeOldTokens(callbackTest('Success'));
     }
 
 };
@@ -574,4 +586,4 @@ tests = {
 // }
 
 // test specific
-tests.removeOldBannsTest();
+tests.removeOldTokens();

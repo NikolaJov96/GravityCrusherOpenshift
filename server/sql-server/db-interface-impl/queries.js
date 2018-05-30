@@ -91,6 +91,8 @@ module.exports = {
     //input user_id
     deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?",
 
+    deleteOldTokens: "DELETE FROM token WHERE ? > token_create_date",
+
     //tables:statistics, user, user_disabled---------------------------------------------------------------------------
     //input username
     selectUsersStatistics: `SELECT games_played_count, games_won_count,

@@ -25,7 +25,7 @@ var registrationMailTextFormat =
 
     You are just one step away from successful registration. Please
     click on the link below to complete the registration process:
-    %s://%s/sign-in.html?cc=%s
+    %s://%s/sign-in?cc=%s
 
     Please, do not reply to this e-mail. This is an automated message.
     Have a nice day.
@@ -80,4 +80,3 @@ module.exports = function(socket){ return function(data){
         }
     );
 };};
-
