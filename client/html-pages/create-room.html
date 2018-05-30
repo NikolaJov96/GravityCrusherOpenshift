@@ -108,13 +108,24 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="material-icons">lock_outline</i>
+                                                    <i id="gameReachIcon" class="material-icons">lock_open</i>
                                                 </span>
                                             </div>
-                                                <select id="gameReach" class="form-control" id="PublicOrPrivate">
+                                            <select id="gameReach" class="form-control">
                                                 <option>Public Game</option>
                                                 <option>Private Game</option>
                                             </select>
+                                        </div>
+                                    </div>
+
+                                    <div id="opponentDiv" class="form-group d-none">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                            </div>
+                                            <input id="inputPlayer2Name" type="text" class="form-control" placeholder="Player 2 Name...">
                                         </div>
                                     </div>
 
@@ -139,21 +150,10 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="material-icons">face</i>
+                                                    <i id="roomReachIcon" class="material-icons">lock_open</i>
                                                 </span>
                                             </div>
-                                            <input id="inputPlayer2Name" type="text" class="form-control" placeholder="Player 2 Name...">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="material-icons">lock_open</i>
-                                                </span>
-                                            </div>
-                                                <select id="roomReach" class="form-control" id="PublicOrPrivate">
+                                                <select id="roomReach" class="form-control">
                                                 <option>Public Room</option>
                                                 <option>Private Room</option>
                                             </select>

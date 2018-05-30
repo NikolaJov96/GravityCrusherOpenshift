@@ -3,11 +3,16 @@
 // Summary: Callbacks initialization for 'create-room' page
 
 var roomName = document.getElementById('roomName');
+var gameReachIcon = document.getElementById('gameReachIcon');
 var gameReach = document.getElementById('gameReach');
+var opponentDiv = document.getElementById('opponentDiv');
 var opponent = document.getElementById('inputPlayer2Name');
 var map = document.getElementById('map');
+var roomReachIcon = document.getElementById('roomReachIcon');
 var roomReach = document.getElementById('roomReach');
 var submitBtn = document.getElementById('submitBtn');
+
+gameReach.value = 'Public Game';
 
 initCallback = function(data){
     if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
@@ -41,6 +46,27 @@ submitBtn.onclick = function(){
     }
     return false;
 };
+
+// toggle opponent input and lock icon
+gameReach.onchange = function(){
+    if (gameReach.value === 'Public Game'){
+        opponentDiv.classList.add('d-none');
+        gameReachIcon.innerHTML = 'lock_open';
+    }else{
+        opponentDiv.classList.remove('bmd-form-group');
+        opponentDiv.classList.remove('d-none');
+        gameReachIcon.innerHTML = 'lock_outline';
+    }
+}
+
+// toggle lock icon
+roomReach.onchange = function(){
+    if (roomReach.value === 'Public Room'){
+        roomReachIcon.innerHTML = 'lock_open';
+    }else{
+        roomReachIcon.innerHTML = 'lock_outline';
+    }
+}
 
 socket.on('createGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'createGameRoomResponse', data);
