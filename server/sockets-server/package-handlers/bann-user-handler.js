@@ -7,14 +7,14 @@ var db = require('../../sql-server/database-interface.js');
 //TODO: different bann periods
 
 const milisInDay = 86400000;
-const dayToBann = 7;
+const DAYS_TO_BANN = 7;
 
 module.exports = function(socket){ return function(data){
     console.log('Bann user req: Data: ');
     console.log(data);
 
     var bannToDate = new Date();
-    bannToDate.setDate(bannToDate.getDate() + dayToBann);
+    bannToDate.setDate(bannToDate.getDate() + DAYS_TO_BANN);
     db.bannUser(data.opponent, function(socket, data) { return function(status, bannDate) {
             socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
         }

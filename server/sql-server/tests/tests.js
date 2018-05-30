@@ -553,7 +553,18 @@ tests = {
         db.insertStatisticsForPlayer('Milica', 'Won', callbackTest('Success'));
         db.insertStatisticsForPlayer('Jelena', 'Lost', callbackTest('Success'));
     },
-
+    removeOldBannsTest: function() {
+        var fun = 'bann user';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                };
+            };
+        }
+        db.removeOldBanns(callbackTest('Success'));
+    }
 
 };
 
@@ -563,4 +574,4 @@ tests = {
 // }
 
 // test specific
-tests.verifyWithEmail();
+tests.removeOldBannsTest();

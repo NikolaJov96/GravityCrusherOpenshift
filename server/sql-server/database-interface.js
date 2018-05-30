@@ -25,7 +25,7 @@ var database = function() {
     var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
     var insertStatisticsModule = require('./db-interface-impl/insert-statistics-for-player');
     var bannUserModule = require('./db-interface-impl/bann-user');
-
+    var removeOldBannsModule = require('./db-interface-impl/remove-old-banns');
 
     var mysql = require('mysql');
 
@@ -151,6 +151,12 @@ var database = function() {
 
         insertStatisticsModule(methods.connection, username, outcome, callback);
     }
+
+    methods.removeOldBanns = function(callback) {
+
+        removeOldBannsModule(methods.connection, callback);
+    }
+
 
     //-----------------------------------------------------------------------------------------------------------------
 

@@ -27,7 +27,8 @@ module.exports = {
     seachInUserNotCnfirmed : "SELECT * FROM user_not_confirmed WHERE user_id = ?",
 
     //input username, confirm_code
-    insertNotConfirmedUser : "INSERT INTO user_not_confirmed(user_id, confirm_code) VALUES ((SELECT id FROM user WHERE username = ?), ?)",
+    insertNotConfirmedUser : `INSERT INTO user_not_confirmed(user_id, confirm_code)
+                              VALUES ((SELECT id FROM user WHERE username = ?), ?)`,
 
     //input id
     deleteFromUserNotConfirmed: "DELETE FROM user_not_confirmed WHERE user_id = ?",
@@ -55,6 +56,8 @@ module.exports = {
 
     //input id, bann date
     bannUser : "INSERT INTO user_banned(user_id, bann_date) VALUES (?, ?)",
+
+    deleteOldBanns: "DELETE FROM user_banned WHERE ? > bann_date",
 
     //tables: USER_DISABLED -------------------------------------------------------------------------------------------
     //input id
