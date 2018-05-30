@@ -3,6 +3,7 @@
 // Summary: Class representing game room in game state
 
 var RoomStateGameEnd = require('./room-state-game-end.js');
+var db = require('../sql-server/database-interface.js');
 
 const width = 1280;
 const height = 760;
@@ -95,7 +96,8 @@ module.exports = function(gameRoom){
         var distSq = (self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
            (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y);
         if (distSq < 300){
-            // emit statistics update
+            db.insertStatisticsForPlayer(self.room.host.name, "Won", null);
+            db.insertStatisticsForPlayer(self.room.join.name, "Lost", null);
             
             ret.action = 'nextState';
             ret.nextState = RoomStateGameEnd;
