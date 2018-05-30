@@ -23,6 +23,7 @@ submitBtn.onclick = function(){
         socket.emit('signIn', signInPkg);
         logMsg('SignIn requested.');
     }
+    return false;
 };
 
 socket.on('signInResponse', function(data){
@@ -32,7 +33,7 @@ socket.on('signInResponse', function(data){
         if (!('token' in data)) attrMissing('token', 'signInResponse', data);
         setCookie('token', data.token, 10);
         logMsg('On signInResponse - success');
-        window.location = '/';
+        window.location = 'index';
     }else if (data.status === 'UserNotRegistered'){
         logMsg('On signInResponse - account not registered');
         pass.value = '';
@@ -43,8 +44,11 @@ socket.on('signInResponse', function(data){
         pass.value = '';
         pass.focus();
     }else if (data.status === 'UserBanned'){
-        logMsg('On signInResponse - user is banned');
-        pass.value = '';
-        pass.focus();
+        if (!('bann' in data)) attrMissing('bann', 'signInResponse', data);
+        else{
+            logMsg('On signInResponse - user is banned until ' + data.bann);
+            pass.value = '';
+            pass.focus();
+        }
     }else logMsg('On signInResponse - unknown error: ' + data.status);
 });

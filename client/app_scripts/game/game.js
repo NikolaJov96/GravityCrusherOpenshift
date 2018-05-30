@@ -78,6 +78,7 @@ chatBtn.onclick = function(){
         chatText.value = '';
         chatText.focus();
     }
+    return false;
 };
 
 socket.on('broadcastResponse', function(data){

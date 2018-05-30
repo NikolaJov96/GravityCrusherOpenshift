@@ -34,6 +34,7 @@ submitBtn.onclick = function(){
         socket.emit('passwordReset', passwordResetPkg);
         logMsg('Password reset requested with requestCode: ' + requestCode);
     }
+    return false;
 };
 
 socket.on('passwordResetResponse', function(data){

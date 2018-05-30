@@ -22,6 +22,7 @@ submitBtn.onclick = function(){
         socket.emit('updateAccount', updateAccountPkg);
         logMsg('Username update requested.');
     }
+    return false;
 };
 
 socket.on('updateAccountResponse', function(data){

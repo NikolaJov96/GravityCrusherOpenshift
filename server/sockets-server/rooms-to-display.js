@@ -11,19 +11,21 @@ module.exports = function(user){
                 name: serverState.gameRooms[i].name,
                 host: serverState.gameRooms[i].host.name,
                 map: serverState.gameRooms[i].map,
-                canPlay: (serverState.gameRooms[i].join ? false : true)
+                canPlay: (serverState.gameRooms[i].join ? false : true),
+                canWatch: false
             });
         }
     }
     // add other rooms
     for (var i in serverState.gameRooms){
-        if (serverState.gameRooms[i].roomPublic && 
-            serverState.gameRooms[i].joinName !== user.name){
+        if ((serverState.gameRooms[i].roomPublic && serverState.gameRooms[i].joinName !== user.name) ||
+            (serverState.gameRooms[i].gamePublic && !serverState.gameRooms[i].join)){
             rooms.push({
                 name: serverState.gameRooms[i].name,
                 host: serverState.gameRooms[i].host.name,
                 map: serverState.gameRooms[i].map,
-                canPlay: (serverState.gameRooms[i].join || !serverState.gameRooms[i].gamePublic ? false : true)
+                canPlay: ((serverState.gameRooms[i].join || !serverState.gameRooms[i].gamePublic) ? false : true),
+                canWatch: (serverState.gameRooms[i].roomPublic ? true : false)
             });
         }
     }

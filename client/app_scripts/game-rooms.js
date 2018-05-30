@@ -21,10 +21,10 @@ var drawTable = function(){
     <td scope="row">` + rooms[i].name + `</td>
     <td>` + rooms[i].host + `</td>
     <td>` + rooms[i].map + `</td>
-    <td><button onclick="choseRoom('` + rooms[i].name + 
-        `', 'watch');" type="button" class="btn btn-success">Watch</button></td>
-    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-danger"` +
-        (rooms[i].canPlay ? '' : ' disabled') + `>Play</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'watch');" type="button" class="btn btn-success"` +
+        (rooms[i].canWatch ? '' : ' disabled') + `>Watch</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');"  type="button" class="btn btn-danger" ` +
+        (rooms[i].canPlay  ? '' : ' disabled') + `>Play</button></td>
     <td>Enabled</td>
 </tr>
 `;
@@ -59,6 +59,7 @@ if (initCallbackData) initCallback(initCallbackData);
 roomName.onchange = drawTable;
 
 socket.on('gameRoomsUpdate', function(data){
+    logMsg('Game rooms update.');
     if (!('rooms' in data)) attrMissing('rooms', 'gameRoomsUpdate', data);
     else{
         //noRooms.style.display = 'none';

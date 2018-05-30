@@ -95,6 +95,8 @@ module.exports = function(gameRoom){
         var distSq = (self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
            (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y);
         if (distSq < 300){
+            // emit statistics update
+            
             ret.action = 'nextState';
             ret.nextState = RoomStateGameEnd;
             console.log('Room ' + self.room.name + ' game state finished.');

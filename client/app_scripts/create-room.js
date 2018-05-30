@@ -39,6 +39,7 @@ submitBtn.onclick = function(){
         socket.emit('createGameRoom', createGameRoomPkg);
         logMsg('Game room creation requested.');
     }
+    return false;
 };
 
 socket.on('createGameRoomResponse', function(data){
