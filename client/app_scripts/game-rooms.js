@@ -15,16 +15,16 @@ var drawTable = function(){
         if (rooms[i].name.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
            rooms[i].host.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0 &&
            rooms[i].map.toLowerCase().indexOf(roomName.value.toLowerCase()) < 0) continue;
-        innerTable += 
+        innerTable +=
 `
 <tr>
     <td scope="row">` + rooms[i].name + `</td>
     <td>` + rooms[i].host + `</td>
     <td>` + rooms[i].map + `</td>
-    <td><button onclick="choseRoom('` + rooms[i].name + 
-        `', 'watch');" type="button" class="btn btn-secondary">Watch</button></td>
-    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');" type="button" class="btn btn-primary"` +
-        (rooms[i].canPlay ? '' : ' disabled') + `>Play</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'watch');" type="button" class="btn btn-success"` +
+        (rooms[i].canWatch ? '' : ' disabled') + `>Watch</button></td>
+    <td><button onclick="choseRoom('` + rooms[i].name + `', 'play');"  type="button" class="btn btn-danger" ` +
+        (rooms[i].canPlay  ? '' : ' disabled') + `>Play</button></td>
     <td>Enabled</td>
 </tr>
 `;
@@ -44,7 +44,7 @@ initCallback = function(data){
     else if (!('redirect' in data.payload)) attrMissing('redirect', 'initCallback.playload', data.payload);
     else{
         if (data.payload.redirect){
-            window.location = '/game';
+            window.location = 'game';
         }else{
             if (!('rooms' in data.payload)) attrMissing('rooms', 'initCallback.playload', data.payload);
             else{
@@ -59,6 +59,7 @@ if (initCallbackData) initCallback(initCallbackData);
 roomName.onchange = drawTable;
 
 socket.on('gameRoomsUpdate', function(data){
+    logMsg('Game rooms update.');
     if (!('rooms' in data)) attrMissing('rooms', 'gameRoomsUpdate', data);
     else{
         //noRooms.style.display = 'none';
@@ -104,5 +105,6 @@ socket.on('selectGameRoomResponse', function(data){
     else if (data.status === 'PlayerSlotTaken') logMsg('On selectGameRoomResponse - player slot taken');
     else if (data.status === 'InvalidRoom') logMsg('On selectGameRoomResponse - invalid room');
     else if (data.status === 'JoinDenied') logMsg('On selectGameRoomResponse - another player is required to join');
+    else if (data.status === 'PlaceTaken') logMsg('On selectGameRoomResponse - another player took the place');
     else logMsg('On selectGameRoomResponse - unknown error: ' + data.status);
 });

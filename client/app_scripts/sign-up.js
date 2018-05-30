@@ -39,6 +39,7 @@ submitBtn.onclick = function(){
         socket.emit('signUp', signUpPkg);
         logMsg('SignUp requested.');
     }
+    return false;
 };
 
 socket.on('signUpResponse', function(data){

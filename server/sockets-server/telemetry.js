@@ -26,7 +26,7 @@ module.exports = function(interval, frameTime, verbose){
             };
             self.history.push(interval);
             if (self.verbose){
-                console.log('Telemetry interval: ' + self.teleIterations);
+                console.log('Telemetry interval: ' + parseFloat(self.teleIterations).toFixed(2));
                 console.log(interval);
             }
             self.counter = 0;

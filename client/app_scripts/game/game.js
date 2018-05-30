@@ -2,9 +2,10 @@
 
 // Summary: Callbacks initialization for 'game' page
 
+var chatBody = document.getElementById('chatBody');
 var chatBtn = document.getElementById('chatBtn');
 var chatText = document.getElementById('chatText');
-var chatBody = document.getElementById('chatBody');
+var chatDiv = document.getElementById('chatDiv');
 
 document.onkeydown = function(event){
     if (roomState) roomState.onKeyDown(event);
@@ -19,6 +20,9 @@ document.onkeypress = function(event){
 };
 
 initCallback = function(data){
+    if ('payload' in data && data.payload === 'redirect'){
+        window.location = 'index';
+    }
     if (!('payload' in data)) attrMissing('payload', 'initCallback', data);
     else if (!('state' in data.payload)) attrMissing('state', 'initCallback.playload', data.payload);
     else if (!('messages' in data.payload)) attrMissing('messages', 'initCallback.playload', data.payload);
@@ -36,6 +40,8 @@ initCallback = function(data){
             if (roomState) roomState.finish();
             roomState = StateGameEnd(data.payload);
         }else logMsg('Undefined state: ' + data.payload.state);
+        
+        if (signedIn) chatDiv.classList.remove('d-none');
         
         chatBody.innerHTML += data.payload.messages;
         chatBody.scrollTop = chatBody.scrollHeight - chatBody.clientHeight;
@@ -72,6 +78,7 @@ chatBtn.onclick = function(){
         chatText.value = '';
         chatText.focus();
     }
+    return false;
 };
 
 socket.on('broadcastResponse', function(data){

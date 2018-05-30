@@ -4,6 +4,7 @@
 
 var table = document.getElementById('statTable');
 var dropDown = document.getElementById('dropDown');
+var findMeDiv = document.getElementById('findMe');
 
 var columns = [];
 var selectedColumn = '';
@@ -20,7 +21,10 @@ var drawTable = function(rows){
     for (var i in rows){
         innerTable += '<tr>';
         for (var j in columns){
-            innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>' + rows[i][columns[j]] + '</td>';
+            innerTable += '<td ' + (i === 0 ? 'scope="row"' : '') + '>';
+            if (typeof rows[i][columns[j]] === 'string') innerTable += rows[i][columns[j]];
+            else innerTable += ( rows[i][columns[j]] % 1 == 0 ? rows[i][columns[j]] : parseFloat(rows[i][columns[j]]).toFixed(3) );
+            innerTable += '</td>';
         }
         innerTable += '</tr>';
     }
@@ -35,6 +39,7 @@ initCallback = function(data){
     else if (!('data' in data.payload)) attrMissing('data', 'initCallback.payload', data.payload);
     else if (!('maxRow' in data.payload)) attrMissing('maxRow', 'initCallback.payload', data.payload);
     else{
+        if (signedIn) findMeDiv.classList.remove('d-none');
         columns = data.payload.metrics;
         selectedColumn = data.payload.default;
         maxRow = data.payload.maxRow;

@@ -18,6 +18,7 @@ deactivateBtn.onclick = function(){
     };
     socket.emit('signOut', signOutPkg);
     logMsg('Sign-out and account deactivation requested.');
+    return false;
 };
 
 // socket.on('signOutResponse', callback) already defined in 'universal', which is included in all pages

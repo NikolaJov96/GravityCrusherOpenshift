@@ -43,8 +43,24 @@ setInterval(function(){
     var i = serverState.gameRooms.length;
     while (i--){
         var done = serverState.gameRooms[i].step();
-        if (done) serverState.gameRooms.splice(i, 1);
+        if (done){
+            serverState.gameRooms.splice(i, 1);
+            for (var user in serverState.users){
+                if (serverState.users[user].page === 'GameRooms'){
+                    serverState.users[user].socket.emit('gameRoomsUpdate', {
+                        rooms: require('./rooms-to-display.js')(serverState.users[user])
+                    });
+                }
+            }
+        }
     }
     
     telemetry.endIterationn();
 }, frameTime);
+
+setInterval(function(){
+    // check accounts waiting to be activated for timeout
+    // check banned users for ban timeout
+    // check token timeouts
+    // remove long inactive temporary accounts
+}, 1000 * 60 * 60);  // run every hour

@@ -56,6 +56,11 @@ module.exports = function(gameRoom){
         if (self.room.join && self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
+        for (i in self.room.spectators){
+            if (self.room.spectators[i].page === 'Game'){
+                self.room.spectators[i].socket.emit('gameState', gameState);
+            }
+        }
 
         if (self.room.join && self.room.join.page === 'Game' && self.room.host.page === 'Game') self.activated = true;
         if (self.activated){

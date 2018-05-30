@@ -61,6 +61,8 @@ var username = '';
 var debugMode = true;
 var initCallback = null;
 var initCallbackData = null;
+var universalCallback = null;
+var callUniversalCallback = false;
 
 // request socket connection
 var socket = io('localhost:8001');
@@ -121,14 +123,27 @@ socket.on('pageInitResponse', function(data){
     logMsg('Sign in status: ' + data.signedIn);
     logMsg('Username: ' + data.username);
     if (!signedIn){
-        setCookie('token', '', 0);
-        logMsg('Login denied, token deleted.');
+        if (data.token){
+            setCookie('token', data.token, 10);
+            logMsg('Temp access gained.');
+        }else{
+            setCookie('token', '', 0);
+            logMsg('Login denied, token deleted.');
+        }
+    }else{
+        // extend token time
+        setCookie('token', getCookie('token'), 10);
     }
     if (initCallback){
         logMsg('Calling init callback.');
         initCallback(data);
-    }else{
-        logMsg('Caching init callback data.');
+    }else{ 
+        logMsg('Caching init callback data.'); 
         initCallbackData = data;
+    }
+    if (universalCallback){
+        universalCallback();
+    }else{
+        callUniversalCallback = true;
     }
 });

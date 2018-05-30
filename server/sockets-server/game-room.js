@@ -4,13 +4,17 @@
 
 var RoomStateLoading = require('./room-state-loading.js');
 
-module.exports = function(name, host, joinName, map){
+module.exports = function(name, host, gamePublic, joinName, map, roomPublic, chatEnabled){
     var self = {
         name: name,
         host: host,
+        gamePublic: gamePublic,
         joinName: joinName,
         map: map,
+        roomPublic: roomPublic,
+        chatEnabled: chatEnabled,
         join: null,
+        spectators: [],
         messages: [],
         newMessages: [],
         hostCommand: {},
@@ -27,6 +31,12 @@ module.exports = function(name, host, joinName, map){
                 self.host.socket.emit('initRoomState', self.state.initResponse(self.host));
             if (self.join.socket && self.join.page === 'Game')
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
+            for (i in self.spectators){
+                if (self.spectators[i].page === 'Game'){
+                    // chage to spectator user
+                    self.spectators[i].socket.emit('initRoomState', self.state.initResponse(self.join));
+                }
+            }
         }
         else if (ret.action === 'gameFinished') return true;  // remove game room
 
@@ -42,6 +52,10 @@ module.exports = function(name, host, joinName, map){
         if (text.length > 0){
             if (self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
             if (self.join && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
+            for (i in self.spectators){
+                if (self.spectators[i].page === 'Game') 
+                    self.spectators[i].socket.emit('broadcastResponse', { text: text });
+            }
         }
 
         return false;  // game room is stil active

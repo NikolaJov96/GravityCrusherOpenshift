@@ -24,8 +24,7 @@ submitBtn.onclick = function(){
         var url = new URL(window.location.href);
         var requestCode = url.searchParams.get('rc');
         if (!requestCode){
-            logMsg('No HTTP GET parameter \'rc\'');
-            return;
+            requestCode = '';
         }
         
         var passwordResetPkg = {
@@ -35,6 +34,7 @@ submitBtn.onclick = function(){
         socket.emit('passwordReset', passwordResetPkg);
         logMsg('Password reset requested with requestCode: ' + requestCode);
     }
+    return false;
 };
 
 socket.on('passwordResetResponse', function(data){
@@ -43,7 +43,10 @@ socket.on('passwordResetResponse', function(data){
     if (data.status === 'Success'){
         logMsg('On passwordResetResponse - success');
         setTimeout(function(){ window.location = '/sign-in'; }, 2000);
-    }
-    else logMsg('On passwordResetResponse - unknown error: ' + data.status);
+    }else if (data.status === 'RequestCodeNoMatch'){
+        logMsg('On passwordResetResponse - request code not matched');
+        newPass1.value = '';
+        newPass2.value = '';
+    }else logMsg('On passwordResetResponse - unknown error: ' + data.status);
 });
 

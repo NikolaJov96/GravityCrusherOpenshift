@@ -33,10 +33,10 @@ module.exports = function(socket){ return function(data){
             else {
                 var hash = hashing.calculateHash(data.password, salt, appConfig.passwordHashAlgorithm);
                 method.verifyUser(data.account, hash,
-                    function(status){
+                    function(status, bann){
                         if (status !== 'Success'){
                             console.log('    STATUS:' + status);
-                            socket.emit('signInResponse', {'status':status});
+                            socket.emit('signInResponse', {'status':status, 'bann':bann});
                         }
                         else {
                             var token = uuidv1(); // generates an unique string

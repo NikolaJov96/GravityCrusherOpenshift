@@ -32,6 +32,7 @@ submitBtn.onclick = function(){
         socket.emit('updateAccount', updateAccountPkg);
         logMsg('Password update requested.');
     }
+    return false;
 };
 
 socket.on('updateAccountResponse', function(data){

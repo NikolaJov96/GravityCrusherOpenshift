@@ -3,7 +3,12 @@
 // Summary: Callbacks initialization needed for all client pages
 
 // sign out button handler
-var signoutBtn = document.getElementById('signoutBtn');
+var signinBtn = document.getElementById('signoutBtn');
+
+var signupLi = document.getElementById('li-sign-up');
+var signinLi = document.getElementById('li-sign-in');
+var signoutLi = document.getElementById('li-sign-out');
+var profileLi = document.getElementById('li-profile');
 
 signoutBtn.onclick = function(){
     var signOutPkg = {
@@ -25,3 +30,14 @@ socket.on('signOutResponse', function(data){
     }else if (data.status === 'TokenNoMatch') logMsg('On signOutResponse - invalid token');
     else logMsg('On signOutResponse - unknown error: ' + data.status);
 });
+
+// show signin and signup, or sigout and profile links
+universalCallback = function(){
+    if (signedIn){
+        signoutLi.classList.remove('d-none');
+        profileLi.classList.remove('d-none');
+        signupLi.classList.add('d-none');
+        signinLi.classList.add('d-none');
+    }
+};
+if (callUniversalCallback) universalCallback();

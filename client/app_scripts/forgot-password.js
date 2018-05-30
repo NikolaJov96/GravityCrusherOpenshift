@@ -19,6 +19,7 @@ submitBtn.onclick = function(){
         socket.emit('passwordRecovery', passwordRecoveryPkg);
         logMsg('Password recovery requested.');
     }
+    return false;
 };
 
 socket.on('passwordRecoveryResponse', function(data){
