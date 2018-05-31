@@ -3,7 +3,7 @@
 // Summary: function hadling chat messages inside the rooms
 
 module.exports = function(socket){ return function(data){
-    console.log('Send message req: Text: ' + data.text);
+    logMsg('Send message req: Text: ' + data.text);
     if (socket.user.isGuest) return;
     
     var room = null;

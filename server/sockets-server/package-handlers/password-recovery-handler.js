@@ -28,14 +28,14 @@ var passwordRecoveryMailTextFormat =
     `;
 
 module.exports = function(socket){ return function(data){
-    console.log("Password recovery req: EMAIL:" + data.email);
+    logMsg("Password recovery req: EMAIL:" + data.email);
 
     var requestCode = uuidv1();
     db.createPasswordRecoveryRequest(data.email, requestCode,
         function(status, username){
-            console.log('    STATUS: ' + status);
+            logMsg('    STATUS: ' + status);
             if (status === 'Success'){
-                console.log('Attempting to send a password recovery e-mail to ' + data.email + '...');
+                logMsg('Attempting to send a password recovery e-mail to ' + data.email + '...');
 
                 passwordRecoveryMailOptions.to = data.email;
                 passwordRecoveryMailOptions.text =
@@ -47,9 +47,9 @@ module.exports = function(socket){ return function(data){
                 transporter.sendMail(passwordRecoveryMailOptions,
                     function(error, info){
                         if (error){
-                            console.log(error);
+                            logMsg(error);
                         } else {
-                            console.log('Email sent to: ' + data.email);
+                            logMsg('Email sent to: ' + data.email);
                         }
                     }
                 );

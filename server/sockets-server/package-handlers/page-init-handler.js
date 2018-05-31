@@ -19,7 +19,7 @@ module.exports = function(socket){ return function(data) {
                 if (serverState.gameRooms[i].containsUser(user)){
                     response.payload = serverState.gameRooms[i].state.initResponse(user);
                     response.payload.messages = serverState.gameRooms[i].getMessages();
-                    console.log('    page: Game, play');
+                    logMsg('    page: Game, play');
                     break;
                 } else {
                     var specFound = false;
@@ -32,7 +32,7 @@ module.exports = function(socket){ return function(data) {
                     if (specFound){
                         response.payload = serverState.gameRooms[i].state.initResponse(user);
                         response.payload.messages = serverState.gameRooms[i].getMessages();
-                        console.log('    page: Game, spectate');
+                        logMsg('    page: Game, spectate');
                     }
                 }
                 // allow user to watch and bound it to the room until socket connection break
@@ -46,10 +46,10 @@ module.exports = function(socket){ return function(data) {
                 }
             }
             if (room){
-                console.log('    page: GameRooms, redirect to the game');
+                logMsg('    page: GameRooms, redirect to the game');
                 response.payload = { redirect: true };
             } else {
-                console.log('    page: GameRooms');
+                logMsg('    page: GameRooms');
                 response.payload = { redirect: false, rooms: require('../rooms-to-display.js')(user) };
             }
         } else if (data.page === 'CreateRoom'){
@@ -61,7 +61,7 @@ module.exports = function(socket){ return function(data) {
                 }
             }
             if (room){
-                console.log('    page: CreateRoom, redirect to the game');
+                logMsg('    page: CreateRoom, redirect to the game');
                 response.payload = { redirect: true };
             } else {
                 response.payload = { redirect: false };
@@ -75,7 +75,7 @@ module.exports = function(socket){ return function(data) {
                         data: table,
                         maxRow: maxRow
                     };
-                    console.log('    page: Statistics');
+                    logMsg('    page: Statistics');
                     socket.emit('pageInitResponse', response);
                 });
             return;
@@ -83,13 +83,13 @@ module.exports = function(socket){ return function(data) {
         user.socket.emit('pageInitResponse', response);
     };
     
-    console.log('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
+    logMsg('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
 
     var response = {
         'status': null,
         'signedIn': false,
         'username': null,
-        'debugMode': true,
+        'debugMode': debugMode,
     };
 
     if (!('token' in data) || data.token === ''){
@@ -97,10 +97,10 @@ module.exports = function(socket){ return function(data) {
         user = genTempUser(socket, data.page);
         response.token = user.name;
         response.status = 'Success';
-        console.log('Init handler, new temp user, token: ' + user.name);
+        logMsg('Init handler, new temp user, token: ' + user.name);
         genPayload(data, user, response);
     } else {
-        console.log('token: ' + data.token)
+        logMsg('token: ' + data.token)
         if (serverState.tokenCache.containsKey(data.token)){
             serverState.tokenCache.updateSocket(data.token, socket);
             serverState.tokenCache.lookupUser(data.token).page = data.page;
@@ -112,7 +112,7 @@ module.exports = function(socket){ return function(data) {
             } else {
                 response.token = data.token;
             }
-            console.log('Init handler, cache token match, user ' + user.name);
+            logMsg('Init handler, cache token match, user ' + user.name);
             genPayload(data, user, response);
         } else {
             db.getUsernameByToken(data.token,
@@ -123,13 +123,13 @@ module.exports = function(socket){ return function(data) {
                         response.username = username;
                         response.signedIn = true;
                         user = serverState.addUser(data.token, username, socket, data.page, false);
-                        console.log('Init handler, db token match, user ' + user.name);
+                        logMsg('Init handler, db token match, user ' + user.name);
                     } else {
                         // gen temp guest user
                         user = genTempUser(socket, data.page);
                         response.status = 'Success';
                         response.token = user.name;
-                        console.log('Init handler, new temp user, token: ' + user.name);
+                        logMsg('Init handler, new temp user, token: ' + user.name);
                     }
                     genPayload(data, user, response);
                 }

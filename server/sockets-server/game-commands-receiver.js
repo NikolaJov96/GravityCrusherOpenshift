@@ -4,8 +4,8 @@
 
 module.exports = function(socket){ return function(data){
     // to frequent to print each time
-    // console.log('Game commands handler: Data: ');
-    // console.log(data);
+    // logMsg('Game commands handler: Data: ');
+    // logMsg(data);
 
     for (var i in serverState.gameRooms) {
         if (socket.user.name === serverState.gameRooms[i].host.name) {

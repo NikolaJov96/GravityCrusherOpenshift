@@ -43,7 +43,7 @@ function generateConfirmationCode(){
 };
 
 module.exports = function(socket){ return function(data){
-    console.log('Registration req: USERNAME:' + data.username +' EMAIL:' + data.email);
+    logMsg('Registration req: USERNAME:' + data.username +' EMAIL:' + data.email);
 
     var saltedHash = hashing.saltAndCalculateHash(data.password, appConfig.passwordHashAlgorithm);
     var confirmationCode = generateConfirmationCode();
@@ -56,7 +56,7 @@ module.exports = function(socket){ return function(data){
         // callback function
         function(status, email, username, confirmationCode){
             if (status === 'Success') {
-                console.log('Attempting to send a registration e-mail to ' + email + '...');
+                logMsg('Attempting to send a registration e-mail to ' + email + '...');
 
                 registrationMailOptions.to = email;
                 registrationMailOptions.text =
@@ -68,14 +68,14 @@ module.exports = function(socket){ return function(data){
 
                 transporter.sendMail(registrationMailOptions, function(error, info){
                     if (error){
-                        console.log(error);
+                        logMsg(error);
                     } else {
-                        console.log('Email sent to: ' + email);
+                        logMsg('Email sent to: ' + email);
                     }
                 });
             }
 
-            console.log('    STATUS:' + status);
+            logMsg('    STATUS:' + status);
             socket.emit('signUpResponse', {'status': status});
         }
     );

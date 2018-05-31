@@ -10,8 +10,8 @@ const milisInDay = 86400000;
 const DAYS_TO_BANN = 7;
 
 module.exports = function(socket){ return function(data){
-    console.log('Bann user req: Data: ');
-    console.log(data);
+    logMsg('Bann user req: Data: ');
+    logMsg(data);
 
     var bannToDate = new Date();
     bannToDate.setDate(bannToDate.getDate() + DAYS_TO_BANN);

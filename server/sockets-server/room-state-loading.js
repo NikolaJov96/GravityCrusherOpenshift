@@ -13,7 +13,7 @@ module.exports = function(gameRoom){
         joinReady: false
     };
 
-    console.log('Room ' + self.room.name + ' is in loading state.');
+    logMsg('Room ' + self.room.name + ' is in loading state.');
 
     self.initResponse = function(user){
         return {
@@ -34,12 +34,10 @@ module.exports = function(gameRoom){
 
         if (self.room.hostCommand){
             var comm = self.room.hostCommand;
-            // console.log(comm);
             if ('ready' in comm) self.hostReady = comm.ready;
         }
         if (self.room.joinCommand){
             var comm = self.room.joinCommand;
-            // console.log(comm);
             if ('ready' in comm) self.joinReady = comm.ready;
         }
 
@@ -67,13 +65,13 @@ module.exports = function(gameRoom){
             if (--self.counter === 0){
                 ret.action = 'nextState';
                 ret.nextState = RoomStateGame;
-                console.log('Room ' + self.room.name + ' finished loading state.');
+                logMsg('Room ' + self.room.name + ' finished loading state.');
             }
         }
         if (self.hostReady && self.joinReady){
             ret.action = 'nextState';
             ret.nextState = RoomStateGame;
-            console.log('Room ' + self.room.name + ' players ready.');
+            logMsg('Room ' + self.room.name + ' players ready.');
         }
 
         return ret;

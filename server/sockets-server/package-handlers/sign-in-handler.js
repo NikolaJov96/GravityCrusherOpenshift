@@ -8,7 +8,7 @@ var hashing = require('../hashing.js');
 var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data){
-    console.log('Sign in req: ACCOUNT:' + data.account);
+    logMsg('Sign in req: ACCOUNT:' + data.account);
 
     var method = {};
     // if user tried to sign in using email
@@ -27,7 +27,7 @@ module.exports = function(socket){ return function(data){
     method.getSalt(data.account,
         function(status, salt){
             if (status !== 'Success'){
-                console.log('    STATUS:' + status);
+                logMsg('    STATUS:' + status);
                 socket.emit('signInResponse', {'status':status});
             }
             else {
@@ -35,7 +35,7 @@ module.exports = function(socket){ return function(data){
                 method.verifyUser(data.account, hash,
                     function(status, bann){
                         if (status !== 'Success'){
-                            console.log('    STATUS:' + status);
+                            logMsg('    STATUS:' + status);
                             socket.emit('signInResponse', {'status':status, 'bann':bann});
                         }
                         else {
@@ -43,7 +43,7 @@ module.exports = function(socket){ return function(data){
                             method.assignToken(data.account, token,
                                 function(status, reactivated){
                                     if (status !== 'Success'){
-                                        console.log('    STATUS:' + status);
+                                        logMsg('    STATUS:' + status);
                                         socket.emit('signInResponse', {'status':status});
                                     }
                                     else {
@@ -54,11 +54,11 @@ module.exports = function(socket){ return function(data){
                                         method.verifyRegistration(data.account, confirmCode,
                                             function(status){
                                                 if (status !== 'Success'){
-                                                    console.log('    STATUS:' + status);
+                                                    logMsg('    STATUS:' + status);
                                                     socket.emit('signInResponse', {'status':status});
                                                 }
                                                 else {
-                                                    console.log('    STATUS:' + status + ' TOKEN:' + token);
+                                                    logMsg('    STATUS:' + status + ' TOKEN:' + token);
                                                     socket.emit('signInResponse',
                                                         {
                                                         'status':status,

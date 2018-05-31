@@ -3,7 +3,7 @@
 // Summary: This file contains handler neccesary joining the game room
 
 module.exports = function(socket){ return function(data){
-    console.log('Select room req: Name: ' + data.roomName + ' action: ' + data.action);
+    logMsg('Select room req: Name: ' + data.roomName + ' action: ' + data.action);
     
     var targetRoom = null;
     for (i in serverState.gameRooms) 

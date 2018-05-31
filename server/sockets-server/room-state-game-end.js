@@ -7,7 +7,7 @@ module.exports = function(gameRoom){
         room: gameRoom
     };
 
-    console.log('Room ' + self.room.name + ' is in game-end state.');
+    logMsg('Room ' + self.room.name + ' is in game-end state.');
 
     self.initResponse = function(user){ 
         return {
@@ -26,7 +26,7 @@ module.exports = function(gameRoom){
         
         if (self.room.host.page !== 'Game' && self.room.join.page !== 'Game'){
             ret.action = 'gameFinished';
-            console.log('Room ' + self.room.name + ' is finished.');
+            logMsg('Room ' + self.room.name + ' is finished.');
         }
         
         return ret;

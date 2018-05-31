@@ -12,11 +12,18 @@ serv.listen(appConfig.socketsServerPort);
 var requestPackages = require('./request-packages.js');
 
 const frameTime = 40;  // run every 40ms (25fps)
+// global state object
 serverState = require('./state-object.js')(frameTime);
+
+// global log function
+debugMode = true;
+logMsg = function(msg){
+    if (debugMode) console.log(msg);
+}
 
 // on new connection
 io.on('connection', function(socket){
-    console.log('New socket connected.');
+    logMsg('New socket connected.');
     socket.user = null;
 
     for (var i in requestPackages){

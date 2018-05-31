@@ -28,7 +28,7 @@ module.exports = function(gameRoom){
         self.players[i].arrRight = false;
     }
     
-    console.log('Room ' + self.room.name + ' is in game state.');
+    logMsg('Room ' + self.room.name + ' is in game state.');
 
     self.initResponse = function(user){
         return {
@@ -101,7 +101,7 @@ module.exports = function(gameRoom){
             
             ret.action = 'nextState';
             ret.nextState = RoomStateGameEnd;
-            console.log('Room ' + self.room.name + ' game state finished.');
+            logMsg('Room ' + self.room.name + ' game state finished.');
         }
         
         return ret;

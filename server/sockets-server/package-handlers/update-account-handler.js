@@ -7,14 +7,14 @@ var appConfig = require('../../../app-config.js');
 var db = require('../../sql-server/database-interface.js');
 
 function handlePasswordChangeRequest(data, socket){
-    console.log('Password change req: USERNAME:' + data.oldUsername +
-            ' PASSWORD' + data.oldPassword + ' NEW PASSWORD:' + data.newPassword);
+    logMsg('Password change req: USERNAME:' + data.oldUsername +
+           ' PASSWORD' + data.oldPassword + ' NEW PASSWORD:' + data.newPassword);
 
     db.getSaltByUsername(data.oldUsername,
         // callback function
         function(status, salt){
             if (status !== 'Success'){
-                console.log('    STATUS:' + status);
+                logMsg('    STATUS:' + status);
                 socket.emit('updateAccountResponse', {'status': status});
             }
             else {
@@ -23,7 +23,7 @@ function handlePasswordChangeRequest(data, socket){
                 db.changePassword(data.oldUsername, oldHash, newSaltedHash.hash, newSaltedHash.salt,
                     // callback function
                     function(status){
-                        console.log('    STATUS:' + status);
+                        logMsg('    STATUS:' + status);
                         socket.emit('updateAccountResponse', {'status': status});
                     }
                 );
@@ -33,13 +33,13 @@ function handlePasswordChangeRequest(data, socket){
 };
 
 function handleUsernameChangeRequest(data, socket){
-    console.log('Username change req: USERNAME:' + data.oldUsername + ' NEW USERNAME:' + data.newUsername);
+    logMsg('Username change req: USERNAME:' + data.oldUsername + ' NEW USERNAME:' + data.newUsername);
 
     db.changeUsername(data.oldUsername, data.newUsername,
         function(status){
             if (status == 'Success') serverState.renameUser(socket, data.newUsername);
         
-            console.log('    STATUS:' + status);
+            logMsg('    STATUS:' + status);
             socket.emit('updateAccountResponse', {'status': status});
         }
     );

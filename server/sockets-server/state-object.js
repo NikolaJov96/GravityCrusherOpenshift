@@ -55,7 +55,7 @@ var StateObject = function(frameTime){
             socket.user.name = newUsername;
             self.users[socket.user.name] = user;
         }else{
-            console.log('No user connected to the scoket!');
+            logMsg('No user connected to the scoket!');
         }
     };
 
@@ -63,8 +63,8 @@ var StateObject = function(frameTime){
         var user = self.tokenCache.lookupUser(token);
         delete self.users[user.name];
         for (delToken in tokensToDelete){
-            console.log('delToken: ' + delToken);
-            console.log(tokensToDelete);
+            logMsg('delToken: ' + delToken);
+            logMsg(tokensToDelete);
             serverState.tokenCache.invalidateToken(tokensToDelete[delToken]);
         }
     };
