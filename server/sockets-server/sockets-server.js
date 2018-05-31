@@ -65,9 +65,12 @@ setInterval(function(){
     telemetry.endIterationn();
 }, frameTime);
 
+var db = require('../../sql-server/database-interface.js');
+
 setInterval(function(){
     // check accounts waiting to be activated for timeout
     // check banned users for ban timeout
+    db.removeOldBanns(null);
     // check token timeouts
     // remove long inactive temporary accounts
 }, 1000 * 60 * 60);  // run every hour
