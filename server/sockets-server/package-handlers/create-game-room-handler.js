@@ -25,7 +25,7 @@ module.exports = function(socket){ return function(data){
                 socket.emit('createGameRoomResponse', { status: 'InvalidOpponent' });
             } else {
                 var newRoom = require('../game-room.js')(data.name, socket.user, data.gamePublic,
-                                                             data.opponent, data.gameMap, data.roomPublic, true);
+                                                         data.opponent, data.gameMap, data.roomPublic, true);
                 serverState.gameRooms.push(newRoom);
                 for (var user in serverState.users){
                     if (serverState.users[user].page === 'GameRooms'){
@@ -35,14 +35,12 @@ module.exports = function(socket){ return function(data){
                     }
                 }
                 
-                // TODO: update game room pages with the new game room
-                
                 socket.emit('createGameRoomResponse', { status: 'Success' });
             }
         }; }(socket, data));
     } else {
         var newRoom = require('../game-room.js')(data.name, socket.user, data.gamePublic,
-                                                 data.opponent, data.gameMap, data.roomPublic, true);
+                                                 '', data.gameMap, data.roomPublic, true);
         serverState.gameRooms.push(newRoom);
         for (var user in serverState.users){
             if (serverState.users[user].page === 'GameRooms'){
@@ -51,8 +49,6 @@ module.exports = function(socket){ return function(data){
                 });
             }
         }
-
-        // TODO: update game room pages with the new game room
 
         socket.emit('createGameRoomResponse', { status: 'Success' });
     }

@@ -10,15 +10,21 @@ module.exports = function(gameRoom){
     logMsg('Room ' + self.room.name + ' is in game-end state.');
 
     self.initResponse = function(user){ 
-        return {
+        var ret = {
             state: 'game-end',
-            roll: ((user.name === self.room.host.name) ? 'host' : 'join'),
+            role: 'spec',
             host: self.room.host.name,
             hostActive: (self.room.host.page === 'Game' ? true : false),
             join: (self.room.joinName),
             joinActive: (self.room.join.page === 'Game' ? true : false),
             winner: self.room.winner
         };
+        if (user.name === self.room.host.name){
+            ret.role = 'host';
+        } else if (user.name === self.room.joinName){
+            ret.role = 'join';
+        }
+        return ret;
     };
 
     self.step = function(){

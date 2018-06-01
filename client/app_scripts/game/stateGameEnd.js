@@ -13,6 +13,12 @@ StateGameEnd = function(data){
     // init ship shape
     self.createObject('ship', 'ship', 'ship');
     
+    // UI update
+    surrenderBtn.innerHTML = 'Return to web site';
+    surrenderBtn.onclick = function(){
+        window.location = 'index';
+    };
+    
     // init projection and view matrices used throughout this roomState
     mat4.ortho(self.projMatrix, -screen.w / 2.0, screen.w / 2.0, 
                screen.h / 2.0, -screen.h / 2.0, 0, 1000);

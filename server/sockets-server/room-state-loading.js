@@ -16,9 +16,9 @@ module.exports = function(gameRoom){
     logMsg('Room ' + self.room.name + ' is in loading state.');
 
     self.initResponse = function(user){
-        return {
+        var ret = {
             state: 'loading',
-            role: ((user.name === self.room.host.name) ? 'host' : 'join'),
+            role: 'spec',
             host: self.room.host.name,
             hostActive: (self.room.host.page === 'Game' ? true : false),
             hostReady: self.hostReady,
@@ -27,6 +27,12 @@ module.exports = function(gameRoom){
             joinReady: self.joinReady,
             counter: self.counter * serverState.frameTime / 1000
         };
+        if (user.name === self.room.host.name){
+            ret.role = 'host';
+        } else if (user.name === self.room.joinName){
+            ret.role = 'join';
+        }
+        return ret;
     };
 
     self.step = function(){

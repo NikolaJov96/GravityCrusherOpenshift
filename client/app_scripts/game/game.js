@@ -6,6 +6,7 @@ var chatBody = document.getElementById('chatBody');
 var chatBtn = document.getElementById('chatBtn');
 var chatText = document.getElementById('chatText');
 var chatDiv = document.getElementById('chatDiv');
+var surrenderBtn = document.getElementById('surrenderBtn');
 
 document.onkeydown = function(event){
     if (roomState) roomState.onKeyDown(event);
@@ -45,6 +46,8 @@ initCallback = function(data){
         
         chatBody.innerHTML += data.payload.messages;
         chatBody.scrollTop = chatBody.scrollHeight - chatBody.clientHeight;
+        
+        logMsg('Role: ' + data.payload.role);
     }
 };
 if (initCallbackData) initCallback(initCallbackData);
@@ -79,6 +82,10 @@ chatBtn.onclick = function(){
         chatText.focus();
     }
     return false;
+};
+
+surrenderBtn.onclick = function(){
+    window.location = 'index';
 };
 
 socket.on('broadcastResponse', function(data){

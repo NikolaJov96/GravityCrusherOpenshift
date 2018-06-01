@@ -20,6 +20,7 @@ StateGame = function(data){
     }
     self.starPos = [data.starData[0].x, data.starData[0].y, -100.0];
     self.pressed = [false, false, false, false];
+    self.surrender = false;
     /*self.translation = [screen.w * 0.35, screen.h * 0.35, 0.0];
     self.rotation = Math.random() * 2 * Math.PI;
     self.roll = 0.0;*/
@@ -30,6 +31,14 @@ StateGame = function(data){
     self.createObject('exhaust', 'exhaust', 'exhaust');
     // init star shape
     self.createObject('star', 'spaceBody', 'star');
+    
+    // UI update
+    if (self.role !== 'spec'){
+        surrenderBtn.innerHTML = 'surrender';
+        surrenderBtn.onclick = function(){
+            self.surrender = true;
+        };
+    }
     
     // init projection and view matrices used throughout this roomState
     mat4.ortho(self.projMatrix, -screen.w / 2.0, screen.w / 2.0, 
@@ -62,13 +71,13 @@ StateGame = function(data){
         }
     };
     
-    
     self.step = function(){
         socket.emit('gameCommand', {
             arrUp: self.pressed[0],
             arrDown: self.pressed[1],
             arrLeft: self.pressed[2],
-            arrRight: self.pressed[3]
+            arrRight: self.pressed[3],
+            surrender: self.surrender
         });
     };
     

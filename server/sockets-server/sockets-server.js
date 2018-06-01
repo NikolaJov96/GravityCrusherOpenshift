@@ -65,7 +65,7 @@ setInterval(function(){
     telemetry.endIterationn();
 }, frameTime);
 
-var db = require('../../sql-server/database-interface.js');
+var db = require('../sql-server/database-interface.js');
 
 setInterval(function(){
     // check accounts waiting to be activated for timeout
