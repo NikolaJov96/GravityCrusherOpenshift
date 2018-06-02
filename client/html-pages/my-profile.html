@@ -25,7 +25,7 @@
     <!-- iframe removal -->
 </head>
 
-<body class="profile-page" style="background-image: url('../img/space.jpg');">
+<body class="profile-page" style="background-image: url('../img/space.jpg'); background-size: cover; background-position: top center;">
     <nav class="navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
@@ -55,7 +55,6 @@
                             Statistics
                         </a>
                     </li>
-
                     <li id="li-sign-up" class="nav-item">
                         <a class="nav-link" href="sign-up">
                             <button type="button" class="btn btn-danger">Sign Up</button>
@@ -66,25 +65,23 @@
                             <button type="button" class="btn btn-danger">Sign In</button>
                         </a>
                     </li>
-
                     <li id="li-sign-out" class="d-none nav-item">
                         <a class="nav-link">
                             <button id="signoutBtn" type="button" class="btn btn-danger">Sign Out</button>
                         </a>
                     </li>
-
                     <li id="li-profile" class="d-none nav-item">
                         <a class="nav-link" href="my-profile">
                             <img src="../img/medium-griffin.jpg" style="height: 60px; width: 60px; margin-top: -10px; margin-bottom: -10px">
                         </a>
                     </li>
-
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="page-header" data-parallax="true" style="background-image: url('../img/space.jpg');"></div>
-    <div class="offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+<!--    <div class="page-header" data-parallax="true" style="background-image: url('../img/space.jpg'); background-size: cover; background-position: top center;"></div>-->
+    
+    <div class="offset-md-2 col-md-8 offset-lg-3 col-lg-6" style="margin-top: 300px">
         <div class="main main-raised">
             <div class="profile-content">
                 <div class="container">
@@ -96,18 +93,17 @@
                                 </div>
                                 <div class="name">
                                     <h3 id="username" class="title"></h3>
-                                    <h5 style="color: red">Premium Account</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="description text-center">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <h5>Your account settings:</h5>
                     </div>
                     <div class="row" style="display: flex; justify-content: center;">
-                            <a href="/"><button id="deactivateBtn" type="button" class="btn btn-danger mr-sm-2" type="button">Deactive Profile</button></a>
-                            <a href="change-password"><button type="button" class="btn btn-danger mr-sm-2" type="button">Change Password</button></a>
-                            <a href="change-username"><button type="button" class="btn btn-danger" type="button">Change Username</button></a>
+                        <a href="/"><button id="deactivateBtn" type="button" class="btn btn-danger mr-sm-2" type="button">Deactive Profile</button></a>
+                        <a href="change-password"><button type="button" class="btn btn-danger mr-sm-2" type="button">Change Password</button></a>
+                        <a href="change-username"><button type="button" class="btn btn-danger" type="button">Change Username</button></a>
                     </div>
                 </div>
             </div>

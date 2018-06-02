@@ -18,6 +18,15 @@ StateLoading = function(data){
     // init ship shape
     self.createObject('ship', 'ship', 'ship');
     
+    // UI update
+    if (self.role === 'host'){
+        surrenderBtn.innerHTML = 'close room';
+        surrenderBtn.onclick = function(){
+            socket.emit('gameCommand', { close: true });
+            return true;
+        };
+    }
+    
     // init projection and view matrices used throughout this roomState
     mat4.ortho(self.projMatrix, -screen.w / 2.0, screen.w / 2.0, 
                screen.h / 2.0, -screen.h / 2.0, 0, 1000);
@@ -28,7 +37,9 @@ StateLoading = function(data){
     self.directedColor = new Float32Array([0.5, 0.5, 0.5]);
     
     self.handleStatePackage = function(data){
-        if (!('hostActive' in data)) attrMissing('hostActive', 'gameState', data);
+        if ('redirect' in data) window.location = 'index';
+            
+        else if (!('hostActive' in data)) attrMissing('hostActive', 'gameState', data);
         else if (!('hostReady' in data)) attrMissing('hostReady', 'gameState', data);
         else if (!('joinActive' in data)) attrMissing('joinActive', 'gameState', data);
         else if (!('joinReady' in data)) attrMissing('joinReady', 'gameState', data);
@@ -38,6 +49,14 @@ StateLoading = function(data){
             self.joinActive = data.joinActive;
             self.joinReady = data.joinReady;
             self.counter = data.counter;
+            
+            if (self.joinActive){
+                surrenderBtn.innerHTML = 'surrender';
+                surrenderBtn.onclick = function(){
+                    socket.emit('gameCommand', { surrender: true });
+                    return true;
+                };
+            }
         }
     };
     

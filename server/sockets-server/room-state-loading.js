@@ -79,6 +79,18 @@ module.exports = function(gameRoom){
             ret.nextState = RoomStateGame;
             logMsg('Room ' + self.room.name + ' players ready.');
         }
+        if (self.room.hostCommand){
+            if (('close' in self.room.hostCommand) && !self.room.join){
+                self.room.host.socket.emit('gameState', { redirect:true });
+                for (i in self.room.spectators){
+                    if (self.room.spectators[i].page === 'Game'){
+                        self.room.spectators[i].socket.emit('gameState', { redirect:true });
+                    }
+                }
+                ret.action = 'gameFinished';
+                logMsg('Room ' + self.room.name + ' closed.');
+            }
+        }
 
         return ret;
     };
