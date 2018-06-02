@@ -6,6 +6,7 @@ var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data){
     logMsg('Sign out req: TOKEN:' + data.token);
+    socket.user.interaction = true;
 
     if (data.disable){
         db.deactivateAccount(data.token, function(status, userSessionTokens){

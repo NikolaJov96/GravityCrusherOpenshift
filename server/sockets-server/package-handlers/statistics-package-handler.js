@@ -20,6 +20,7 @@ var callbackFunction = function(socket, data) { return function(status, table, m
 module.exports = function(socket){ return function(data){
     logMsg('Get statistics: Data: ');
     logMsg(data);
+    socket.user.interaction = true;
 
     if (data.mode === 'user')
         db.getStatisticsForUser(data.metric, data.rowCount, data.username, callbackFunction(socket, data));

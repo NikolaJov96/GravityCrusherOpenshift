@@ -7,6 +7,7 @@ var db = require('../../sql-server/database-interface.js');
 module.exports = function(socket){ return function(data){
     logMsg('Create room req: Data: ');
     logMsg(data);
+    socket.user.interaction = true;
     
     var locked = false;
     for (i in serverState.gameRooms){

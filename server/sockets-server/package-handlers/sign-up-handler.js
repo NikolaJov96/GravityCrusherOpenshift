@@ -44,6 +44,7 @@ function generateConfirmationCode(){
 
 module.exports = function(socket){ return function(data){
     logMsg('Registration req: USERNAME:' + data.username +' EMAIL:' + data.email);
+    socket.user.interaction = true;
 
     var saltedHash = hashing.saltAndCalculateHash(data.password, appConfig.passwordHashAlgorithm);
     var confirmationCode = generateConfirmationCode();

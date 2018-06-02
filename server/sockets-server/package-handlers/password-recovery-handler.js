@@ -29,6 +29,7 @@ var passwordRecoveryMailTextFormat =
 
 module.exports = function(socket){ return function(data){
     logMsg("Password recovery req: EMAIL:" + data.email);
+    socket.user.interaction = true;
 
     var requestCode = uuidv1();
     db.createPasswordRecoveryRequest(data.email, requestCode,
