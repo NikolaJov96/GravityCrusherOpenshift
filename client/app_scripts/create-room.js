@@ -11,6 +11,7 @@ var map = document.getElementById('map');
 var roomReachIcon = document.getElementById('roomReachIcon');
 var roomReach = document.getElementById('roomReach');
 var submitBtn = document.getElementById('submitBtn');
+var errorLabel = document.getElementById('errorLabel');
 
 gameReach.value = 'Public Game';
 
@@ -27,12 +28,17 @@ if (initCallbackData) initCallback(initCallbackData);
 
 // send create room request
 submitBtn.onclick = function(){
+    errorLabel.innerHTML = '';
     if (!socket.connected){ logMsg('Server not yet connected.'); return; }
     
-    if (roomName.value.length === 0){ logMsg('Room name field empti.'); roomName.focus(); }
-    else if (opponent.value.length === 0 && gameReach.value === 'Private Game'){
+    if (roomName.value.length === 0){
+        errorLabel.innerHTML = 'Chose the name of the room';
+        logMsg('Room name field empti.');
+        roomName.focus();
+    }else if (opponent.value.length === 0 && gameReach.value === 'Private Game'){
+        errorLabel.innerHTML = 'Chose your opponent';
         logMsg('Opponent name field empti.'); opponent.focus();
-    } else {
+    }else{
         var createGameRoomPkg = {
             name:roomName.value,
             gamePublic:(gameReach.value === 'Public Game' ? true : false),
@@ -71,12 +77,18 @@ roomReach.onchange = function(){
 socket.on('createGameRoomResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'createGameRoomResponse', data);
     
-    if (data.status === 'Success'){ logMsg('On createGameRoomResponse - success'); window.location = 'game'; }
-    else if (data.status === 'InvalidOpponent'){
+    if (data.status === 'Success'){
+        errorLabel.style.color = 'green';
+        errorLabel.innerHTML = 'Success';
+        logMsg('On createGameRoomResponse - success'); 
+        window.location = 'game'; 
+    }else if (data.status === 'InvalidOpponent'){
+        errorLabel.innerHTML = 'Invalid opponent';
         logMsg('On createGameRoomResponse - invalid opponent');
         opponent.select();
         opponent.focus();
-    }else if (data.status === 'AlreadyInGame') {
+    }else if (data.status === 'AlreadyInGame'){
+        errorLabel.innerHTML = 'Already in the game';
         logMsg('On createGameRoomResponse - user is already in the game');
     }else logMsg('On createGameRoomResponse - unknown error: ' + data.status);
 });
