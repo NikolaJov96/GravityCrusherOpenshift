@@ -26,7 +26,11 @@
 </head>
 
 <body class="signup-page ">
-    <nav class="navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+    <div id="overlay" style="white-space: nowrap; position:fixed; top:0; left:0; background:rgba(0.0,10.0,40.0,1.0); z-index:5; width:100%; height:100%; text-align: center;">
+        <span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+        <img src="../img/loading.gif" style="width: 30%; vertical-align: middle;" />
+    </div>
+    <nav class="d-none navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href="/">
@@ -159,9 +163,10 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <p class="text-center" id="errorLabel" style="color: red"></p>
                                     <div class="row">
                                         <div class="text-center offset-2">
-                                            <button id="submitBtn" class="btn btn-success btn-round">Submit</button>
+                                            <button id="submitBtn" class="btn btn-success btn-round">Begin!</button>
                                         </div>
                                         <div class="text-center offset-2 offset-lg-3">
                                             <button class="btn btn-round btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Some help" data-content="Public games can be joined by any player, whereas private ones can only be joined by the player with typed in name.

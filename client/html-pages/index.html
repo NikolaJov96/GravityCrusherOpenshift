@@ -25,8 +25,12 @@
     <!-- iframe removal -->
 </head>
 
-<body class="landing-page " style=" background-image: url('../img/space-2.jpg'); ">
-    <nav class="navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+<body class="landing-page " style=" background-image: url('../img/space-2.jpg'); background-size: cover; background-position: top center;">
+    <div id="overlay" style="white-space: nowrap; position:fixed; top:0; left:0; background:rgba(0.0,10.0,40.0,1.0); z-index:5; width:100%; height:100%; text-align: center;">
+        <span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+        <img src="../img/loading.gif" style="width: 30%; vertical-align: middle;" />
+    </div>
+    <nav class="d-none navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href="/">
@@ -83,13 +87,12 @@
             </div>
         </div>
     </nav>
-    <div class="page-header" style=" background-image: url('../img/space.jpg');
-        min-height: 720px; ">
+    <div class="page-header" style="min-height: 720px; ">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h1 class="title">Begin your space adventure!</h1>
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4>
+                    <h4>Compete with other players!</h4>
                     <br>
                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-danger btn-raised btn-lg" style="margin-bottom: 10%">
                         <i class="fa fa-play"></i> Watch video
@@ -104,7 +107,7 @@
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
                         <h2 class="title" style="color: white;">Game Description</h2>
-                        <h5 class="description" style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </h5>
+                        <h5 class="description" style="color: white;">Hit the opponent player while accounting for change in the bullet path by the gravity of star and planets.</h5>
                     </div>
                 </div>
                 <div class="features">
@@ -115,7 +118,7 @@
                                     <i class="material-icons">chat</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">Signing Up</h4>
-                                <p style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <p style="color: white;">You can play even if you are not registered, but if you register you can rank on the leaderboards and chat with other players.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -124,7 +127,7 @@
                                     <i class="material-icons">videogame_asset</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">In-game Controls</h4>
-                                <p style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <p style="color: white;">Uese ? and ? to move your ship and ? to shoot bullets.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -133,7 +136,7 @@
                                     <i class="material-icons">verified_user</i>
                                 </div>
                                 <h4 class="info-title" style="color: white;">Game Goals</h4>
-                                <p style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                <p style="color: white;">The goal of the game is to hit the opponent and score points which will earn you the victory.</p>
                             </div>
                         </div>
                     </div>
@@ -154,7 +157,7 @@
                                         <small class="card-description" style="color: white;">Designer</small>
                                     </h4>
                                     <div class="card-body">
-                                        <p class="card-description" style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p class="card-description" style="color: white;">Third year student of the softwre engineering at the university of Belgrade.</p>
                                     </div>
                                     <div class="card-footer justify-content-center">
                                         <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square" style="color: white;"></i></a>
@@ -174,7 +177,7 @@
                                         <small class="card-description" style="color: white;">Programmer</small>
                                     </h4>
                                     <div class="card-body">
-                                        <p class="card-description" style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                        <p class="card-description" style="color: white;">Third year student of the softwre engineering at the university of Belgrade.</p>
                                     </div>
                                     <div class="card-footer justify-content-center">
                                         <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square" style="color: white;"></i></a>
@@ -194,7 +197,7 @@
                                         <small class="card-description" style="color: white;">Programmer</small>
                                     </h4>
                                     <div class="card-body">
-                                        <p class="card-description" style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                        <p class="card-description" style="color: white;">Third year student of the softwre engineering at the university of Belgrade.</p>
                                     </div>
                                     <div class="card-footer justify-content-center">
                                          <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square" style="color: white;"></i></a>
@@ -214,7 +217,7 @@
                                         <small class="card-description" style="color: white;">Programmer</small>
                                     </h4>
                                     <div class="card-body">
-                                        <p class="card-description" style="color: white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                        <p class="card-description" style="color: white;">Third year student of the softwre engineering at the university of Belgrade.</p>
                                     </div>
                                     <div class="card-footer justify-content-center">
                                         <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square" style="color: white;"></i></a>

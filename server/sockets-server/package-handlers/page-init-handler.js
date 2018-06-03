@@ -84,6 +84,7 @@ module.exports = function(socket){ return function(data) {
     };
     
     logMsg('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
+    if (socket.user) socket.user.interaction = true;
 
     var response = {
         'status': null,

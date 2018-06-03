@@ -46,14 +46,15 @@ function handleUsernameChangeRequest(data, socket){
 };
 
 module.exports = function(socket){ return function(data){
-        if ('newPassword' in data){
-            handlePasswordChangeRequest(data, socket);
-        }
-        else if ('newUsername' in data){
-            handleUsernameChangeRequest(data, socket);
-        }
-        else {
-            // emit error
-        }
+    socket.user.interaction = true;
+    if ('newPassword' in data){
+        handlePasswordChangeRequest(data, socket);
+    }
+    else if ('newUsername' in data){
+        handleUsernameChangeRequest(data, socket);
+    }
+    else {
+        // emit error
+    }
 };};
 

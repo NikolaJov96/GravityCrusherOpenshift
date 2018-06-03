@@ -4,6 +4,7 @@
 
 module.exports = function(socket){ return function(data){
     logMsg('Select room req: Name: ' + data.roomName + ' action: ' + data.action);
+    socket.user.interaction = true;
     
     var targetRoom = null;
     for (i in serverState.gameRooms) 

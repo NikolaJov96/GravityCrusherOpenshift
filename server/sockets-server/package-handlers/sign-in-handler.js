@@ -9,6 +9,7 @@ var db = require('../../sql-server/database-interface.js');
 
 module.exports = function(socket){ return function(data){
     logMsg('Sign in req: ACCOUNT:' + data.account);
+    socket.user.interaction = true;
 
     var method = {};
     // if user tried to sign in using email

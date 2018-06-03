@@ -65,9 +65,24 @@ setInterval(function(){
     telemetry.endIterationn();
 }, frameTime);
 
+var db = require('../sql-server/database-interface.js');
+
 setInterval(function(){
     // check accounts waiting to be activated for timeout
     // check banned users for ban timeout
+    db.removeOldBanns(null);
     // check token timeouts
-    // remove long inactive temporary accounts
+    // same as banns
+    // remove long inactive accounts from memory
+    for (var name in serverState.users){
+        if (!serverState.users[name].socket){
+            if (serverState.users[name].interaction){
+                serverState.users[name].interaction = false;
+            } else {
+                serverState.tokenCache.removeToken(name);
+                delete serverState.users[name];
+                logMsg('User ' + name + ' removed from memory.');
+            }
+        }
+    }
 }, 1000 * 60 * 60);  // run every hour

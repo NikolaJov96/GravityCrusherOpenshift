@@ -4,6 +4,7 @@
 
 module.exports = function(socket){ return function(data){
     logMsg('Send message req: Text: ' + data.text);
+    socket.user.interaction = true;
     if (socket.user.isGuest) return;
     
     var room = null;

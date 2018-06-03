@@ -7,7 +7,8 @@ var User = function(name, socket, page, isGuest){
         name: name,
         socket: socket,
         page: page,
-        isGuest: isGuest
+        isGuest: isGuest,
+        interaction: true
     };
 
     return self;
@@ -26,6 +27,11 @@ var TokenCache = function(){
         socket.user = self.cache[token];
         socket.user.socket = socket;
     };
+    self.removeToken = function(username){
+        for (token in self.cache){
+            if (self.cache[token].name === username) delete self.cache[token];
+        }
+    }
 
     return self;
 };
@@ -63,7 +69,7 @@ var StateObject = function(frameTime){
         var user = self.tokenCache.lookupUser(token);
         delete self.users[user.name];
         for (delToken in tokensToDelete){
-            logMsg('delToken: ' + delToken);
+            logMsg('delToken: ' + tokensToDelete[delToken]);
             logMsg(tokensToDelete);
             serverState.tokenCache.invalidateToken(tokensToDelete[delToken]);
         }
