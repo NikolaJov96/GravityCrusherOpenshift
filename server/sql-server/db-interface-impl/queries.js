@@ -33,6 +33,10 @@ module.exports = {
     //input id
     deleteFromUserNotConfirmed: "DELETE FROM user_not_confirmed WHERE user_id = ?",
 
+    deleteOldUnfinishedRegistrations: `DELETE FROM user
+                                       WHERE create_date < ?
+                                       AND user.id IN (SELECT user_id FROM user_not_confirmed)`,
+
     //tables: STATISTICS ----------------------------------------------------------------------------------------------
     //input id
     insertUserInStatistics: "INSERT INTO statistics(user_id) VALUES (?)",
@@ -57,6 +61,7 @@ module.exports = {
     //input id, bann date
     bannUser : "INSERT INTO user_banned(user_id, bann_date) VALUES (?, ?)",
 
+    //input this day
     deleteOldBanns: "DELETE FROM user_banned WHERE ? > bann_date",
 
     //tables: USER_DISABLED -------------------------------------------------------------------------------------------
@@ -91,10 +96,13 @@ module.exports = {
     //input user_id
     deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?",
 
+    //this day
     deleteOldTokens: "DELETE FROM token WHERE ? > token_valid_date",
 
+    //input new valid date, token code
     updaateTokenLifetime: "UPDATE Token SET token_valid_date = ? WHERE token_code = ?",
 
+    //input new valid date, user id
     updateTokensForUsername: "UPDATE Token SET token_valid_date = ? WHERE user_id = ?",
 
     //tables:statistics, user, user_disabled---------------------------------------------------------------------------
@@ -138,6 +146,16 @@ module.exports = {
     //input id
     updateStatisticsLost: `UPDATE statistics
                            SET games_played_count = games_played_count + 1
-                           WHERE user_id = ?`
+                           WHERE user_id = ?`,
 
+    //tables: GAME MAP-------------------------------------------------------------------------------------------------
+    //input nothing
+    getAllMapsNames: "SELECT name FROM game_map",
+
+    //input map name
+    checkIfMapExists: "SELECT * FROM game_map WHERE name = ?",
+
+    //tables: GAME MAP, COSMIC OBJECT----------------------------------------------------------------------------------
+    //input game map name
+    getObjectsOnMap: "SELECT * FROM cosmic_object WHERE map_id = ?"
 }

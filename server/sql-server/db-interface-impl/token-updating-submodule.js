@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: Functions and callbacks for checking if username exists
+// Summary: Functions and callbacks for updating token
 
 var queries = require('./queries');
 

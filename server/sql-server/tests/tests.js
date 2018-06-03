@@ -531,7 +531,7 @@ tests = {
         db.bannUser('Jelena', new Date('2018-07-10T17:00:00'), callbackTest('Success'));
     },
     insertStatistics: function() {
-        var fun = 'bann user';
+        var fun = 'insert into statistics';
         var callbackTest = function(exprectedStatus){
             return function(status) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
@@ -555,7 +555,7 @@ tests = {
         db.insertStatisticsForPlayer('Jelena', 'Lost', callbackTest('Success'));
     },
     removeOldBannsTest: function() {
-        var fun = 'bann user';
+        var fun = 'remove old banns';
         var callbackTest = function(exprectedStatus){
             return function(status) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
@@ -567,7 +567,7 @@ tests = {
         db.removeOldBanns(callbackTest('Success'));
     },
     removeOldTokens: function() {
-        var fun = 'bann user';
+        var fun = 'remove old tokens';
         var callbackTest = function(exprectedStatus){
             return function(status) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
@@ -577,15 +577,60 @@ tests = {
             };
         }
         db.removeOldTokens(callbackTest('Success'));
-    }
+    },
+    selectingGameMaps: function() {
+        var fun = 'select maps names';
+        var callbackTest = function(exprectedStatus){
+            return function(status, maps) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                };
+            };
+        }
 
+        db.selectGameMaps(callbackTest('Success'));
+    },
+    selectingObjectsOnMap: function() {
+        var fun = 'select objects on map';
+        var callbackTest = function(exprectedStatus){
+            return function(status, objects) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                };
+            };
+        }
+
+        db.selectObjectsOnMap('Star Wars', callbackTest('MapNotFound'));
+        db.selectObjectsOnMap('Galaksija', callbackTest('Success'));
+        db.selectObjectsOnMap('Apolo', callbackTest('Success'));
+    },
+    removeOldNotConfirms: function() {
+        var fun = 'delete old not confirmed';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                };
+            };
+        }
+        db.removeOldNotConfirmedUsers(callbackTest('Success'));
+    }
 };
 
 // test all
 // for (var test in tests){
 //     tests[test]();
 // }
-
+tests.removeOldNotConfirms();
 //tests.insertUser();
 //tests.getSaltUsername();
 //tests.changePassword();
@@ -607,3 +652,5 @@ tests = {
 //tests.insertStatistics();
 //tests.removeOldBannsTest();
 //tests.removeOldTokens();
+//tests.selectingGameMaps();
+//tests.selectingObjectsOnMap();

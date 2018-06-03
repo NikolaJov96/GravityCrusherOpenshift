@@ -46,7 +46,7 @@ const telemetry = require('./telemetry.js')(telemetryIterTime, frameTime, teleme
 
 setInterval(function(){
     telemetry.startIteration();
-    
+
     var i = serverState.gameRooms.length;
     while (i--){
         var done = serverState.gameRooms[i].step();
@@ -61,7 +61,7 @@ setInterval(function(){
             }
         }
     }
-    
+
     telemetry.endIterationn();
 }, frameTime);
 
@@ -69,10 +69,11 @@ var db = require('../sql-server/database-interface.js');
 
 setInterval(function(){
     // check accounts waiting to be activated for timeout
+    db.removeOldNotConfirmedUsers();
     // check banned users for ban timeout
     db.removeOldBanns(null);
     // check token timeouts
-    // same as banns
+    db.removeOldTokens(null);
     // remove long inactive accounts from memory
     for (var name in serverState.users){
         if (!serverState.users[name].socket){

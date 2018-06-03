@@ -27,6 +27,10 @@ var database = function() {
     var bannUserModule = require('./db-interface-impl/bann-user');
     var removeOldBannsModule = require('./db-interface-impl/remove-old-banns');
     var removeUnactiveTokensModule = require('./db-interface-impl/delete-unactive-tokens.js');
+    var selectGameMapNamesModule = require('./db-interface-impl/selecting-game-map-names.js');
+    var selectAllObjectsOnMapModule = require('./db-interface-impl/selecting-all-objects-on-map.js');
+    var removeOldNotConfirmedUsersModule = require('./db-interface-impl/remove-old-not-cofirmed-users.js');
+
 
     var mysql = require('mysql');
 
@@ -161,6 +165,21 @@ var database = function() {
     methods.removeOldTokens = function(callback) {
 
         removeUnactiveTokensModule(methods.connection, callback);
+    }
+
+    methods.selectGameMaps = function(callback) {
+
+        selectGameMapNamesModule(methods.connection, callback);
+    }
+
+    methods.selectObjectsOnMap = function(mapName, callback) {
+
+        selectAllObjectsOnMapModule(methods.connection, mapName, callback);
+    }
+
+    methods.removeOldNotConfirmedUsers = function(callback) {
+
+        removeOldNotConfirmedUsersModule(methods.connection, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

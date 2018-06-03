@@ -54,6 +54,10 @@ requestPackages = [
     {
         id:'bannUser',
         file:'./package-handlers/bann-user-handler'
+    },
+    {
+        id:'getMaps',
+        file:'./package-handlers/game-maps-handler'
     }
 ];
 
