@@ -17,6 +17,8 @@ StateLoading = function(data){
     
     // init ship shape
     self.createObject('ship', 'ship', 'ship');
+    self.createObject('shipg', 'ship', 'ship-g');
+    self.createObject('shipr', 'ship', 'ship-r');
     
     // UI update
     if (self.role === 'host'){
@@ -67,8 +69,8 @@ StateLoading = function(data){
         mat4.fromTranslation(self.tranMatrix, [screen.w * 0.25, screen.h * 0.25, 0.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
-        mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
-        self.objs.ship.draw();
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
+        self.objs.shipg.draw();
         
         // draw host ship active indicatior
         if (self.hostActive){
@@ -93,8 +95,8 @@ StateLoading = function(data){
         mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
-        mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
-        self.objs.ship.draw();
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
+        self.objs.shipr.draw();
         
         // draw join ship active indicator
         if (self.joinActive){
