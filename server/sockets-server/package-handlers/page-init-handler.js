@@ -16,7 +16,9 @@ module.exports = function(socket){ return function(data) {
         if (data.page === 'Game'){
             response.payload = "redirect";
             for (var i in serverState.gameRooms){
-                if (serverState.gameRooms[i].containsUser(user)){
+                if (serverState.gameRooms[i].containsUserBind(user)){
+                    if (serverState.gameRooms[i].joinName === user.name) serverState.gameRooms[i].join = user;
+                    else if (serverState.gameRooms[i].hostName === user.name) serverState.gameRooms[i].host = user;
                     response.payload = serverState.gameRooms[i].state.initResponse(user);
                     response.payload.messages = serverState.gameRooms[i].getMessages();
                     logMsg('    page: Game, play');
@@ -40,7 +42,7 @@ module.exports = function(socket){ return function(data) {
         } else if (data.page === 'GameRooms'){
             var room = null;
             for (var i in serverState.gameRooms){
-                if (serverState.gameRooms[i].containsUser(user)){
+                if (serverState.gameRooms[i].containsUserActive(user)){
                     room = serverState.gameRooms[i];
                     break;
                 }
@@ -55,7 +57,7 @@ module.exports = function(socket){ return function(data) {
         } else if (data.page === 'CreateRoom'){
             var room = null;
             for (var i in serverState.gameRooms){
-                if (serverState.gameRooms[i].containsUser(user)){
+                if (serverState.gameRooms[i].containsUserActive(user)){
                     room = serverState.gameRooms[i];
                     break;
                 }

@@ -34,14 +34,14 @@ module.exports = function(gameRoom){
         var ret = {
             state: 'game',
             role: 'spec',
-            host: self.room.host.name,
+            host: self.room.hostName,
             hostActive: (self.room.host.page === 'Game' ? true : false),
             join: self.room.joinName,
             joinActive: (self.room.join.page === 'Game' ? true : false),
             playerData: self.players,
             starData: self.stars
         };
-        if (user.name === self.room.host.name){
+        if (user.name === self.room.hostName){
             ret.role = 'host';
         } else if (user.name === self.room.joinName){
             ret.role = 'join';
@@ -102,19 +102,19 @@ module.exports = function(gameRoom){
         var distSq = (self.players[0].x - self.players[1].x) * (self.players[0].x - self.players[1].x) +
            (self.players[0].y - self.players[1].y) * (self.players[0].y - self.players[1].y);
         if (distSq < 300){
-            if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.host.name, "Won", null);
-            if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.join.name, "Lost", null);
+            if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
+            if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
             ret.action = 'nextState';
             logMsg('Room ' + self.room.name + ' game state finished.');
         } else {
             if ('surrender' in self.room.hostCommand && self.room.hostCommand.surrender){
-                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.host.name, "Lost", null);
-                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.join.name, "Won", null);
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Lost", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Won", null);
                 ret.action = 'nextState';
                 logMsg('Room ' + self.room.name + ' game state finished, host surrendered.');
             } else if ('surrender' in self.room.joinCommand && self.room.joinCommand.surrender){
-                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.host.name, "Won", null);
-                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.join.name, "Lost", null);
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
                 ret.action = 'nextState';
                 logMsg('Room ' + self.room.name + ' game state finished, join surrendered.');
             }

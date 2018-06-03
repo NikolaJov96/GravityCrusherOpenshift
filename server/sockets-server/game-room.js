@@ -13,6 +13,7 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         map: map,
         roomPublic: roomPublic,
         chatEnabled: chatEnabled,
+        hostName: host.name,
         join: null,
         spectators: [],
         messages: [],
@@ -50,7 +51,7 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         }
         self.newMessages = [];
         if (text.length > 0){
-            if (self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
+            if (self.host && self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
             if (self.join && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
             for (i in self.spectators){
                 if (self.spectators[i].page === 'Game') 
@@ -61,9 +62,15 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         return false;  // game room is stil active
     };
 
-    self.containsUser = function(user){
-        if (user.name === self.host.name) return true;
-        if (self.join && user.name === self.join.name) return true;
+    self.containsUserBind = function(user){
+        if (user.name === self.hostName) return true;
+        if (user.name === self.joinName) return true;
+        return false;
+    };
+    
+    self.containsUserActive = function(user){
+        if (self.host && user.name === self.hostName) return true;
+        if (self.join && user.name === self.joinName) return true;
         return false;
     };
 
