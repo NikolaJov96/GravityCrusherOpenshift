@@ -18,5 +18,5 @@ module.exports = function(socket){ return function(data){
     db.bannUser(data.opponent, function(socket, data) { return function(status, bannDate) {
             socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
         }
-    };}(socket, data));
+    }(socket, data));
 }};
