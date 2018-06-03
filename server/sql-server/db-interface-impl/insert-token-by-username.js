@@ -84,7 +84,7 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
                     console.log(error);
                 }
                 info.connection.query(queries.insertNewToken,
-                    [info.id, info.tokenCode], insertTokenCallback(info));
+                    [info.id, info.tokenCode, date], insertTokenCallback(info));
             });
         }
         else if (info.callback) info.callback("UserNotRegistered", false);

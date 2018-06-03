@@ -586,4 +586,8 @@ tests = {
 // }
 
 // test specific
+tests.deactivateAccountTest();
+tests.gettingUsernameByToken();
+tests.insertTokenUsername();
+tests.insertTokenEmail();
 tests.removeOldTokens();

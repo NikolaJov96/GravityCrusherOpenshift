@@ -63,7 +63,7 @@ var findTokensIdCallback = function(info) { return function(error, rows, fields)
     else {
         info.tokensInTable = [];
         for (var i = 0; i < rows.length; i++) info.tokensInTable[i] = rows[i].token_code;
-        info.connection.query(queries.deleteAllTokensFromUser, [info.user_id], tokenDeletesCallback(info));
+        info.connection.query(queries.selectAllTokenCodesFromUser, [info.user_id], tokenDeletesCallback(info));
     }
 }}
 

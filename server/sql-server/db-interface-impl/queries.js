@@ -71,7 +71,7 @@ module.exports = {
 
     //tables: TOKEN----------------------------------------------------------------------------------------------------
     //input id_user
-    insertNewToken: "INSERT INTO token(user_id, token_code) VALUES (?, ?)",
+    insertNewToken: "INSERT INTO token(user_id, token_code, token_valid_date) VALUES (?, ?, ?)",
 
     //input token id
     getTokenInfo: "SELECT * FROM token WHERE id = ?",
@@ -92,6 +92,8 @@ module.exports = {
     deleteAllTokensFromUser: "DELETE FROM token WHERE user_id = ?",
 
     deleteOldTokens: "DELETE FROM token WHERE ? > token_valid_date",
+
+    updaateTokenLifetime: "UPDATE Token SET token_valid_date = ? WHERE token_code = ?",
 
     //tables:statistics, user, user_disabled---------------------------------------------------------------------------
     //input username
