@@ -26,7 +26,11 @@
 </head>
 
 <body class="landing-page " style=" background-image: url('../img/space-2.jpg'); background-size: cover; background-position: top center;">
-    <nav class="navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
+    <div id="overlay" style="white-space: nowrap; position:fixed; top:0; left:0; background:rgba(0.0,10.0,40.0,1.0); z-index:5; width:100%; height:100%; text-align: center;">
+        <span style="display: inline-block; height: 100%; vertical-align: middle;"></span>
+        <img src="../img/loading.gif" style="width: 30%; vertical-align: middle;" />
+    </div>
+    <nav class="d-none navbar navbar-color-on-scroll navbar-transparent bg-dark fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href="/">

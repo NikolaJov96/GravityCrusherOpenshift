@@ -10,6 +10,9 @@ var signinLi = document.getElementById('li-sign-in');
 var signoutLi = document.getElementById('li-sign-out');
 var profileLi = document.getElementById('li-profile');
 
+var overlay = document.getElementById('overlay');
+var sectionsNav = document.getElementById('sectionsNav');
+
 signoutBtn.onclick = function(){
     var signOutPkg = {
         'token':getCookie('token'),
@@ -39,5 +42,7 @@ universalCallback = function(){
         signupLi.classList.add('d-none');
         signinLi.classList.add('d-none');
     }
+    sectionsNav.classList.remove('d-none');
+    overlay.classList.add('d-none');
 };
 if (callUniversalCallback) universalCallback();
