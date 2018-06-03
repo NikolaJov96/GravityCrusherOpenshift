@@ -49,7 +49,11 @@ requestPackages = [
     },
     {
         id:'getStatistics',
-        file:'./package-handlers/statistics-package-handler'
+        file:'./package-handlers/statistics-package-handler.js'
+    },
+    {
+        id:'changeAvatar',
+        file:'./package-handlers/change-avatar-handler.js'
     }
 ];
 
