@@ -50,6 +50,10 @@ requestPackages = [
     {
         id:'getStatistics',
         file:'./package-handlers/statistics-package-handler'
+    },
+    {
+        id:'bannUser',
+        file:'./package-handlers/bann-user-handler'
     }
 ];
 

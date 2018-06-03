@@ -2,8 +2,6 @@
 
 // Summary: This file contains handler for getting statistics
 
-//To ask Jovanovic - if data.data.username ili data.username
-
 var db = require('../../sql-server/database-interface.js');
 
 var callbackFunction = function(socket, data) { return function(status, table, maxRow) {

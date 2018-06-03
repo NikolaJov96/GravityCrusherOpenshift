@@ -5,7 +5,7 @@
 var queries = require('./queries');
 
 const RESULT = 0;
-
+const TOKEN_LIFETIME = 14;
 var deleteDisabledUserCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         info.connection.rollback(function() {
@@ -76,6 +76,8 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     else {
         if (!!rows.length) {
             info.id = rows[RESULT].id;
+            var date = new Date();
+            date.setDate(date.getDate() + TOKEN_LIFETIME);
             info.connection.beginTransaction(function(error) {
                 if (!!error) {
                     console.log("error: transaction failed to be started!\n");
