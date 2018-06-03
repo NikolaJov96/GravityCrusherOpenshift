@@ -3,6 +3,8 @@
 // Summary: Class representing game room in loading state
 
 var RoomStateGame = require('./room-state-game.js');
+var RoomStateGameEnd = require('./room-state-game-end.js');
+var db = require('../sql-server/database-interface.js');
 
 module.exports = function(gameRoom){
     var self = {
@@ -19,7 +21,7 @@ module.exports = function(gameRoom){
         var ret = {
             state: 'loading',
             role: 'spec',
-            host: self.room.host.name,
+            host: self.room.hostName,
             hostActive: (self.room.host.page === 'Game' ? true : false),
             hostReady: self.hostReady,
             join: (self.room.joinName),
@@ -27,7 +29,7 @@ module.exports = function(gameRoom){
             joinReady: self.joinReady,
             counter: self.counter * serverState.frameTime / 1000
         };
-        if (user.name === self.room.host.name){
+        if (user.name === self.room.hostName){
             ret.role = 'host';
         } else if (user.name === self.room.joinName){
             ret.role = 'join';
@@ -89,6 +91,18 @@ module.exports = function(gameRoom){
                 }
                 ret.action = 'gameFinished';
                 logMsg('Room ' + self.room.name + ' closed.');
+            } else if ('surrender' in self.room.hostCommand && self.room.hostCommand.surrender){
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Lost", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Won", null);
+                ret.action = 'nextState';
+                ret.nextState = RoomStateGameEnd;
+                logMsg('Room ' + self.room.name + ' loading state finished, host surrendered.');
+            } else if ('surrender' in self.room.joinCommand && self.room.joinCommand.surrender){
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
+                ret.action = 'nextState';
+                ret.nextState = RoomStateGameEnd;
+                logMsg('Room ' + self.room.name + ' loading state finished, join surrendered.');
             }
         }
 

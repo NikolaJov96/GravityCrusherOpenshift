@@ -11,7 +11,7 @@ module.exports = function(socket){ return function(data){
     
     var locked = false;
     for (i in serverState.gameRooms){
-        if (serverState.gameRooms[i].containsUser(socket.user)){
+        if (serverState.gameRooms[i].containsUserActive(socket.user)){
             locked = true;
         }
     }

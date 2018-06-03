@@ -9,7 +9,7 @@ module.exports = function(socket){ return function(data){
     
     var room = null;
     for (i in serverState.gameRooms){
-        if (serverState.gameRooms[i].containsUser(socket.user)){
+        if (serverState.gameRooms[i].containsUserActive(socket.user)){
             room = serverState.gameRooms[i];
             break;
         }

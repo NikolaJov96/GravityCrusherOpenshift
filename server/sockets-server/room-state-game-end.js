@@ -13,13 +13,13 @@ module.exports = function(gameRoom){
         var ret = {
             state: 'game-end',
             role: 'spec',
-            host: self.room.host.name,
-            hostActive: (self.room.host.page === 'Game' ? true : false),
+            host: self.room.hostName,
+            hostActive: (self.room.host && self.room.host.page === 'Game' ? true : false),
             join: (self.room.joinName),
-            joinActive: (self.room.join.page === 'Game' ? true : false),
+            joinActive: (self.room.join && self.room.join.page === 'Game' ? true : false),
             winner: self.room.winner
         };
-        if (user.name === self.room.host.name){
+        if (user.name === self.room.hostName){
             ret.role = 'host';
         } else if (user.name === self.room.joinName){
             ret.role = 'join';
@@ -30,7 +30,10 @@ module.exports = function(gameRoom){
     self.step = function(){
         var ret = { action: null };
         
-        if (self.room.host.page !== 'Game' && self.room.join.page !== 'Game'){
+        if (self.room.host && self.room.host.page !== 'Game') self.room.host = null;
+        if (self.room.join && self.room.join.page !== 'Game') self.room.join = null;
+        
+        if (!self.room.host && !self.room.join){
             ret.action = 'gameFinished';
             logMsg('Room ' + self.room.name + ' is finished.');
         }
