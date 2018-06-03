@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for changing username
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -22,7 +23,10 @@ var changeUsernameCallback = function(info) { return function(error, rows, field
                 });
             }
             else {
-                if (info.callback) info.callback("Success");
+                if (info.callback) {
+                    updateToken(info.connection, info.id);
+                    info.callback("Success");
+                }
             }
         });
     }
@@ -40,7 +44,10 @@ var newUsernameCheckCallback = function(info) { return function(error, rows, fie
             info.connection.query(queries.setNewUsername,
                 [info.newUsername, info.id], changeUsernameCallback(info));
         }
-        else if (info.callback) info.callback("UsernameTaken");
+        else if (info.callback) {
+            updateToken(info.connection, info.id);
+            info.callback("UsernameTaken");
+        }
     }
 }}
 

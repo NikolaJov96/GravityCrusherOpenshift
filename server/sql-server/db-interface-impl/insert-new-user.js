@@ -20,8 +20,9 @@ var insertNotConfirmedUserCallback = function(info) { return function(error, row
                 });
             }
             else {
-                if (info.callCreateNewUser)
+                if (info.callCreateNewUser) {
                     info.callCreateNewUser("Success", info.email, info.username, info.confirmationCode);
+                }
             }
         });
     }
@@ -57,8 +58,9 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
             });
         }
         else {
-            if (info.callCreateNewUser)
-            info.callCreateNewUser("UsernameTaken", info.email, info.username, info.confirmationCode);
+            if (info.callCreateNewUser) {
+                info.callCreateNewUser("UsernameTaken", info.email, info.username, info.confirmationCode);
+            }
         }
     }
 }}
@@ -69,8 +71,9 @@ var emailCheckcallback = function(info) { return function(error, rows, fields) {
         console.log(error);
     }
     else {
-        if (!rows.length)
+        if (!rows.length) {
             info.connection.query(queries.searchInUserByUsername, [info.username], usernameCheckCallback(info));
+        }
         else {
             if (info.callCreateNewUser)
                 info.callCreateNewUser("EmailTaken", info.email, info.username, info.confirmationCode);

@@ -13,7 +13,9 @@ var updaateTokenLifetimeCallback = function(info) { return function(error, rows,
             console.log(error);
         }
         else {
-            if (info.callback) info.callback("Success", info.result);
+            if (info.callback) {
+                info.callback("Success", info.result);
+            }
         }
 }}
 

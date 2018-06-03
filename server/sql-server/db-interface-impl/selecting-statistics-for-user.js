@@ -82,7 +82,6 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
         else {
             if (!!rows.length) {
                 for(var key in rows[0]) info.columnValue = rows[0][info.metric];
-                console.log(rows[0][info.metric]);
 
                 info.connection.query(queries.getActiveUsersCount,
                     [], callbackActiveUsers(info));

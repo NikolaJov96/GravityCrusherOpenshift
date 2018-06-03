@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for verification of user while sign up with username
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -16,6 +17,7 @@ var bannCheckCallback = function(info) { return function(error, rows, fields) {
             if (info.callback) info.callback("UserBanned", rows[RESULT].bann_date);
         }
         else {
+            updateToken(info.connection, info.id);
             if (info.callback) info.callback("Success", null);
         }
     }
@@ -29,9 +31,11 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     else {
         if (!!rows.length) {
             if (rows[RESULT].password_hash === info.hash) {
-                info.connection.query(queries.checkIfUserIsBanned, [rows[RESULT].id], bannCheckCallback(info));
+                info.id = rows[RESULT].id;
+                info.connection.query(queries.checkIfUserIsBanned, [info.id], bannCheckCallback(info));
             }
             else {
+                updateToken(info.connection, info.id);
                 if (info.callback) info.callback("PasswordNoMatch", null);
             }
         }

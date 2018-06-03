@@ -95,6 +95,8 @@ module.exports = {
 
     updaateTokenLifetime: "UPDATE Token SET token_valid_date = ? WHERE token_code = ?",
 
+    updateTokensForUsername: "UPDATE Token SET token_valid_date = ? WHERE user_id = ?",
+
     //tables:statistics, user, user_disabled---------------------------------------------------------------------------
     //input username
     selectUsersStatistics: `SELECT games_played_count, games_won_count,

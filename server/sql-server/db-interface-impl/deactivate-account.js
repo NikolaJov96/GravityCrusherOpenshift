@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for deleting token from table
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -22,8 +23,10 @@ var insertInDisableUsersCallback = function(info) { return function(error, rows,
                 });
             }
             else {
-                if (info.callback)
+                if (info.callback) {
+                    updateToken(info.connection, info.user_id);
                     info.callback("Success", info.tokensInTable);
+                }
             }
         });
     }

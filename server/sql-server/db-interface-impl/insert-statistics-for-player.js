@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for verification of user while sign up with username
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -12,7 +13,8 @@ var updateStatisticsCallback = function(info) { return function(error, rows, fie
         console.log(error);
     }
     else {
-            if (info.callback) info.callback("Success");
+        updateToken(info.connection, info.id);
+        if (info.callback) info.callback("Success");
     }
 }}
 
@@ -23,10 +25,11 @@ var usernameCheckCallback = function(info) { return function(error, rows, fields
     }
     else {
         if (!!rows.length) {
+            info.id = rows[RESULT].id;
             if (info.outcome === 'Won')
-                info.connection.query(queries.updateStatisticsWon, [rows[RESULT].id], updateStatisticsCallback(info));
+                info.connection.query(queries.updateStatisticsWon, [info.id], updateStatisticsCallback(info));
             else {
-                info.connection.query(queries.updateStatisticsLost, [rows[RESULT].id], updateStatisticsCallback(info));
+                info.connection.query(queries.updateStatisticsLost, [info.id], updateStatisticsCallback(info));
         }}
         else if (info.callback) info.callback("UserNotFound");
     }

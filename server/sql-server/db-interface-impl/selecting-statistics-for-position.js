@@ -24,6 +24,7 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                     'Games Won Percentage': (rows[i].games_played_count != 0) ?
                         (rows[i].games_won_count / rows[i].games_played_count * 100) : (0),
                 }
+                
             }
 
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;

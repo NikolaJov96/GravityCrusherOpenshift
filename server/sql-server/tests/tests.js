@@ -83,10 +83,9 @@ tests = {
 
         db.changePassword('Perica', '156164231515510', '54561661616161', '848444644664464',
                           callbackTest('UserNotRegistered'));
-        db.changePassword('Andrija', '156164231515510', '54561661616161', '848444644664464',
-                          callbackTest('PasswordNoMatch'));
-        db.changePassword('Andrija', '123456789aaaffccddd', '0123456789abcdef', '5656116151161',
-                          callbackTest('Success'));
+        db.changePassword('Andrija', '4561511111561', '54561661616161', '848444644664464', callbackTest('PasswordNoMatch'));
+        db.changePassword('Andrija', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
+            '0123456789abcdef', '5656116151161', callbackTest('Success'));
     },
     changeUsername: function(){
         var fun = 'test change username';
@@ -190,7 +189,8 @@ tests = {
         db.verifyUserByUsername('Dragana', 'tralalalalala', callbackTest('UserNotRegistered'));
         db.verifyUserByUsername('jelena', 'tralalalalalala', callbackTest('PasswordNoMatch'));
         db.verifyUserByUsername('jovan', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
-        db.verifyUserByUsername('Nikola', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
+        db.verifyUserByUsername('Nikola', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
+            callbackTest('Success'));
     },
     verifyWithEmail: function(){
         var fun = 'verification of user with email';
@@ -216,7 +216,8 @@ tests = {
         db.verifyUserByEmail('Dragana6@gmail.com', 'tralalalalala', callbackTest('UserNotRegistered'));
         db.verifyUserByEmail('jelena6@gmail.com', 'tralalalalalala', callbackTest('PasswordNoMatch'));
         db.verifyUserByEmail('jovan6@gmail.com', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
-        db.verifyUserByEmail('Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc', callbackTest('Success'));
+        db.verifyUserByEmail('Nikola6@gmail.com', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
+            callbackTest('Success'));
     },
     insertTokenUsername: function(){
         var fun = 'inserting token by username';
@@ -585,9 +586,24 @@ tests = {
 //     tests[test]();
 // }
 
-// test specific
-tests.deactivateAccountTest();
-tests.gettingUsernameByToken();
-tests.insertTokenUsername();
-tests.insertTokenEmail();
-tests.removeOldTokens();
+//tests.insertUser();
+//tests.getSaltUsername();
+//tests.changePassword();
+//tests.changeUsername();
+//tests.getSaltEmail();
+//tests.verifyWithUsername();
+//tests.verifyWithEmail();
+//tests.insertTokenUsername();
+//tests.insertTokenEmail();
+//tests.verifyRegWithUsername();
+//tests.verifyRegWithEmail();
+//tests.gettingUsernameByToken();
+//tests.removingToken();
+//tests.resetPasswordTest();
+//tests.deactivateAccountTest();
+//tests.checkUsername();
+//tests.selectingStatistics();
+//tests.bannUser();
+//tests.insertStatistics();
+//tests.removeOldBannsTest();
+//tests.removeOldTokens();

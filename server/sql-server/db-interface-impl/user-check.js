@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for checking if username exists
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -13,7 +14,11 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
         }
         else {
             if (!!rows.length) {
-                if (info.callback) info.callback("Success");
+                info.id = rows[RESULT].id;
+                if (info.callback) {
+                    updateToken(info.connection, info.id);
+                    info.callback("Success");
+                }
             } else if (info.callback) info.callback("UsernameNotExists");
         }
 }}
