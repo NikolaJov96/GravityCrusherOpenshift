@@ -3,6 +3,8 @@
 // Summary: Class representing game room in loading state
 
 var RoomStateGame = require('./room-state-game.js');
+var RoomStateGameEnd = require('./room-state-game-end.js');
+var db = require('../sql-server/database-interface.js');
 
 module.exports = function(gameRoom){
     var self = {
@@ -89,6 +91,18 @@ module.exports = function(gameRoom){
                 }
                 ret.action = 'gameFinished';
                 logMsg('Room ' + self.room.name + ' closed.');
+            } else if ('surrender' in self.room.hostCommand && self.room.hostCommand.surrender){
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.host.name, "Lost", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.join.name, "Won", null);
+                ret.action = 'nextState';
+                ret.nextState = RoomStateGameEnd;
+                logMsg('Room ' + self.room.name + ' loading state finished, host surrendered.');
+            } else if ('surrender' in self.room.joinCommand && self.room.joinCommand.surrender){
+                if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.host.name, "Won", null);
+                if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.join.name, "Lost", null);
+                ret.action = 'nextState';
+                ret.nextState = RoomStateGameEnd;
+                logMsg('Room ' + self.room.name + ' loading state finished, join surrendered.');
             }
         }
 
