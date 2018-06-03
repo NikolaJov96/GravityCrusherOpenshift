@@ -39,7 +39,7 @@ var mapCheckCallback = function(info) { return function(error, rows, fields) {
                 info.id = rows[RESULT].id;
                 info.connection.query(queries.getObjectsOnMap, [info.id], selectObjectsCallback(info));
 
-            } else if (info.callback) info.callback("MapNotFound");
+            } else if (info.callback) info.callback("MapNotFound", null);
         }
 }}
 

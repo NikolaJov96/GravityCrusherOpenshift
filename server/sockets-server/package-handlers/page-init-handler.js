@@ -66,7 +66,11 @@ module.exports = function(socket){ return function(data) {
                 logMsg('    page: CreateRoom, redirect to the game');
                 response.payload = { redirect: true };
             } else {
-                response.payload = { redirect: false };
+                var rooms = db.selectGameMaps(function(status, maps){
+                    response.payload = { redirect: false, maps: maps };
+                    socket.emit('pageInitResponse', response);
+                });
+                return;
             }
         } else if (data.page === 'Statistics'){
             var res = db.getStatisticsForPosition('Games Won', serverState.initStatNumber, 0,
@@ -82,7 +86,7 @@ module.exports = function(socket){ return function(data) {
                 });
             return;
         }
-        user.socket.emit('pageInitResponse', response);
+        socket.emit('pageInitResponse', response);
     };
     
     logMsg('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);

@@ -21,6 +21,13 @@ initCallback = function(data){
     else{
         if (data.payload.redirect){
             window.location = 'game';
+        }else{
+            if (!('maps' in data.payload)) attrMissing('maps', 'initCallback.playload', data.payload);
+            var str = '<option>Random map</option>';
+            for (i in data.payload.maps){
+                str += '<option>' + data.payload.maps[i].name + '</option>';
+            }
+            map.innerHTML = str;
         }
     }
 };
