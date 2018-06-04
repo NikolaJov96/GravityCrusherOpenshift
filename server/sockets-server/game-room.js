@@ -34,8 +34,7 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
             for (i in self.spectators){
                 if (self.spectators[i].page === 'Game'){
-                    // chage to spectator user
-                    self.spectators[i].socket.emit('initRoomState', self.state.initResponse(self.join));
+                    self.spectators[i].socket.emit('initRoomState', self.state.initResponse(self.spectators[i]));
                 }
             }
         }

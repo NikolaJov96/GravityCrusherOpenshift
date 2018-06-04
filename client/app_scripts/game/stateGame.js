@@ -104,7 +104,7 @@ StateGame = function(data){
             mat4.transpose(self.normMatrix, self.normMatrix);
             mat4.scale(self.tranMatrix, self.tranMatrix, [1.0, 1.0, 1.0]);
             mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
-            if ((self.role === 'host' && i === 0) || (self.role === 'join' && i === 1)) self.objs.shipg.draw();
+            if ((self.role !== 'join' && i === 0) || (self.role === 'join' && i === 1)) self.objs.shipg.draw();
             else self.objs.shipr.draw();
 
             // draw exhaust

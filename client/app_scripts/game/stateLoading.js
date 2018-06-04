@@ -52,7 +52,7 @@ StateLoading = function(data){
             self.joinReady = data.joinReady;
             self.counter = data.counter;
             
-            if (self.joinActive){
+            if (self.joinActive && self.role !== 'spec'){
                 surrenderBtn.innerHTML = 'surrender';
                 surrenderBtn.onclick = function(){
                     socket.emit('gameCommand', { surrender: true });
@@ -70,7 +70,8 @@ StateLoading = function(data){
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
         mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
-        self.objs.shipg.draw();
+        if (self.role === 'join') self.objs.shipr.draw();
+        else self.objs.shipg.draw();
         
         // draw host ship active indicatior
         if (self.hostActive){
@@ -96,7 +97,8 @@ StateLoading = function(data){
         mat4.invert(self.normMatrix, self.tranMatrix);
         mat4.transpose(self.normMatrix, self.normMatrix);
         mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
-        self.objs.shipr.draw();
+        if (self.role === 'join') self.objs.shipg.draw();
+        else self.objs.shipr.draw();
         
         // draw join ship active indicator
         if (self.joinActive){

@@ -55,8 +55,8 @@ StateGameEnd = function(data){
         if (self.winner === 'host') mat4.scale(self.tranMatrix, self.tranMatrix, [1.2, 1.2, 1.2]);
         else mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
         mat4.translate(self.tranMatrix, self.tranMatrix, [0, 0, 0]);
-        if (self.role === 'host') self.objs.shipg.draw();
-        else self.objs.shipr.draw();
+        if (self.role === 'join') self.objs.shipr.draw();
+        else self.objs.shipg.draw();
         
         // draw host ship active indicator
         if (self.hostActive){
