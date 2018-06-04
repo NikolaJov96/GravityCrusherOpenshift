@@ -22,7 +22,7 @@ module.exports = function(gameRoom){
             state: 'loading',
             role: 'spec',
             host: self.room.hostName,
-            hostActive: (self.room.host.page === 'Game' ? true : false),
+            hostActive: (self.room.host && self.room.host.page === 'Game' ? true : false),
             hostReady: self.hostReady,
             join: (self.room.joinName),
             joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
@@ -51,7 +51,7 @@ module.exports = function(gameRoom){
 
         var gameState = {
             hostReady: self.hostReady,
-            hostActive: (self.room.host.page === 'Game' ? true : false),
+            hostActive: ((self.room.host && self.room.host.page === 'Game') ? true : false),
             joinReady: self.joinReady,
             joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
             counter: self.counter * serverState.frameTime / 1000
@@ -94,12 +94,14 @@ module.exports = function(gameRoom){
             } else if ('surrender' in self.room.hostCommand && self.room.hostCommand.surrender){
                 if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Lost", null);
                 if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Won", null);
+                self.room.winner = 'join';
                 ret.action = 'nextState';
                 ret.nextState = RoomStateGameEnd;
                 logMsg('Room ' + self.room.name + ' loading state finished, host surrendered.');
             } else if ('surrender' in self.room.joinCommand && self.room.joinCommand.surrender){
                 if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
                 if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
+                self.room.winner = 'host';
                 ret.action = 'nextState';
                 ret.nextState = RoomStateGameEnd;
                 logMsg('Room ' + self.room.name + ' loading state finished, join surrendered.');

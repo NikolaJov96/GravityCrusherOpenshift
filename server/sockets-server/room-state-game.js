@@ -104,17 +104,20 @@ module.exports = function(gameRoom){
         if (distSq < 300){
             if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
             if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
+            self.room.winner = 'host';
             ret.action = 'nextState';
             logMsg('Room ' + self.room.name + ' game state finished.');
         } else {
             if ('surrender' in self.room.hostCommand && self.room.hostCommand.surrender){
                 if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Lost", null);
                 if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Won", null);
+                self.room.winner = 'join';
                 ret.action = 'nextState';
                 logMsg('Room ' + self.room.name + ' game state finished, host surrendered.');
             } else if ('surrender' in self.room.joinCommand && self.room.joinCommand.surrender){
                 if (!self.room.host.isGuest) db.insertStatisticsForPlayer(self.room.hostName, "Won", null);
                 if (!self.room.join.isGuest) db.insertStatisticsForPlayer(self.room.joinName, "Lost", null);
+                self.room.winner = 'host';
                 ret.action = 'nextState';
                 logMsg('Room ' + self.room.name + ' game state finished, join surrendered.');
             }
