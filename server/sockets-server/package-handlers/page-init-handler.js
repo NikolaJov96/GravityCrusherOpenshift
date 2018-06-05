@@ -112,6 +112,7 @@ module.exports = function(socket){ return function(data) {
         'username': null,
         'debugMode': debugMode,
         'avatarFile': null,
+        'admin': false
     };
 
     if (!('token' in data) || data.token === ''){
@@ -132,6 +133,7 @@ module.exports = function(socket){ return function(data) {
             if (!user.isGuest){
                 response.username = user.name;
                 response.signedIn = true;
+                response.admin = user.admin;
                 genAvatar(data, user, response);
             } else {
                 response.token = data.token;
@@ -139,13 +141,14 @@ module.exports = function(socket){ return function(data) {
             }
         } else {
             db.getUsernameByToken(data.token,
-                function(status, username){
+                function(status, username, admin){
                     var user = null;
                     if (status === 'Success'){
                         response.status = status;
                         response.username = username;
                         response.signedIn = true;
-                        user = serverState.addUser(data.token, username, socket, data.page, false);
+                        response.admin = admin;
+                        user = serverState.addUser(data.token, username, socket, data.page, false, admin);
                         logMsg('Init handler, db token match, user ' + user.name);
                         genAvatar(data, user, response);
                     } else {

@@ -2,12 +2,13 @@
 
 // Summary: Definition and methods for working with token cache.
 
-var User = function(name, socket, page, isGuest){
+var User = function(name, socket, page, isGuest, admin){
     var self = {
         name: name,
         socket: socket,
         page: page,
         isGuest: isGuest,
+        admin: admin,
         interaction: true
     };
 

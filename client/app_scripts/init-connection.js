@@ -60,6 +60,7 @@ var signedIn = false;
 var username = '';
 var debugMode = true;
 var avatar = null;
+var admin = false;
 var initCallback = null;
 var initCallbackData = null;
 var universalCallback = null;
@@ -122,9 +123,10 @@ socket.on('pageInitResponse', function(data){
     else attrMissing('debugMode', 'pageInitResponse', data);
     if ('avatarFile' in data) avatar = data.avatarFile;
     else attrMissing('avatarFile', 'pageInitResponse', data);
+    if ('admin' in data) admin = data.admin;
+    else attrMissing('admin', 'pageInitResponse', data);
     logMsg('Page init response received.');
-    logMsg('Sign in status: ' + data.signedIn);
-    logMsg('Username: ' + data.username);
+    logMsg('Sign in status: ' + data.signedIn + '  Admin: ' + data.admin + '  Username:  ' + data.username);
     if (!signedIn){
         if (data.token){
             setCookie('token', data.token, 10);
