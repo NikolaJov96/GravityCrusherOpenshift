@@ -29,18 +29,24 @@ document.onkeypress = function(event){
 };
 
 var banOverlay = function(username){
-    banUsername.innerHTML = 'Sure to bann user ' + username + '?';
+    banUsername.innerHTML = 'Ban ' + username + '?';
+    errorLabel.style.color = 'red';
+    errorLabel.innerHTML = '';
     bannBtn1.onclick = function(){
         socket.emit('bannUser', { username:username, level:0 });
+        return false;
     }
     bannBtn2.onclick = function(){
         socket.emit('bannUser', { username:username, level:1 });
+        return false;
     }
     bannBtn3.onclick = function(){
         socket.emit('bannUser', { username:username, level:2 });
+        return false;
     }
     bannBtn4.onclick = function(){
         overlay.classList.add("d-none");
+        return false;
     }
     overlay.classList.remove("d-none");
 };
@@ -54,6 +60,12 @@ socket.on('bannUserResponse', function(data){
     }else if (data.status === 'UserNotFound'){
         errorLabel.innerHTML = 'User not found';
         logMsg('On bannUserResponse - user not found');
+    }else if (data.status === 'UserAlreadyBanned'){
+        errorLabel.innerHTML = 'User is already banned';
+        logMsg('On bannUserResponse - user already banned');
+    }else if (data.status === 'UserIsAdmin'){
+        errorLabel.innerHTML = 'User is admin';
+        logMsg('On bannUserResponse - user is admin');
     }else logMsg('On bannUserResponse - unknown error: ' + data.status);
     setTimeout(function(){ overlay.classList.add("d-none"); }, 1500);
 });
