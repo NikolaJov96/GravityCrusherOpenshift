@@ -30,7 +30,8 @@ var database = function() {
     var selectGameMapNamesModule = require('./db-interface-impl/selecting-game-map-names.js');
     var selectAllObjectsOnMapModule = require('./db-interface-impl/selecting-all-objects-on-map.js');
     var removeOldNotConfirmedUsersModule = require('./db-interface-impl/remove-old-not-cofirmed-users.js');
-
+    var getAvatarModule = require('./db-interface-impl/get-avatar');
+    var changeAvatarModule = require('./db-interface-impl/change-avatar');
 
     var mysql = require('mysql');
 
@@ -183,11 +184,13 @@ var database = function() {
     }
 
     methods.changeAvatar = function(username, filename, callback) {
-        callback('Success');
+
+        changeAvatarModule(methods.connection, username, filename, callback);
     }
 
     methods.getAvatar = function(username, callback) {
-        //TOOD
+
+        getAvatarModule(methods.connection, username, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

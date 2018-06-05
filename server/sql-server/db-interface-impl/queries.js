@@ -22,6 +22,8 @@ module.exports = {
     //input newUsername, id
     setNewUsername: "UPDATE user SET username = ? WHERE id = ?",
 
+    setAvatar: "UPDATE user SET avatar = ? WHERE id = ?",
+
     //tables: USER_NOT_CONFIRMED --------------------------------------------------------------------------------------
     //input id from user
     seachInUserNotCnfirmed : "SELECT * FROM user_not_confirmed WHERE user_id = ?",

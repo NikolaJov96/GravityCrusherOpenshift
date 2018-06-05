@@ -623,6 +623,55 @@ tests = {
             };
         }
         db.removeOldNotConfirmedUsers(callbackTest('Success'));
+    },
+    changeAvatarTest: function(){
+        var fun = 'change avatar test';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Marko', "noviAvatar"],
+            ['Nikola', "noviAvatarNikola"],
+            ['Dragana', "noviAvatar"]
+        ]
+
+        db.changeAvatar('Dragana', "noviAvatar", callbackTest('UserNotRegistered'));
+        db.changeAvatar('Marko', "noviAvatar", callbackTest('Success'));
+        db.changeAvatar('Nikola', "noviAvatarNikola", callbackTest('Success'));
+    },
+    getAvatarTest: function(){
+        var fun = 'get avatar test';
+        var callbackTest = function(exprectedStatus){
+            return function(status, avatar) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log('salt: ' + avatar);
+                    console.log();
+                }
+            };
+        };
+
+        var test_ulazi = [
+            ['Marko'],
+            ['Nikola'],
+            ['Dragana']
+        ]
+
+        db.getAvatar('Dragana', callbackTest('UserNotRegistered'));
+        db.getAvatar('Marko', callbackTest('Success'));
+        db.getAvatar('Nikola', callbackTest('Success'));
     }
 };
 
@@ -630,7 +679,6 @@ tests = {
 // for (var test in tests){
 //     tests[test]();
 // }
-tests.removeOldNotConfirms();
 //tests.insertUser();
 //tests.getSaltUsername();
 //tests.changePassword();
@@ -654,3 +702,6 @@ tests.removeOldNotConfirms();
 //tests.removeOldTokens();
 //tests.selectingGameMaps();
 //tests.selectingObjectsOnMap();
+//tests.removeOldNotConfirms();
+tests.getAvatarTest();
+tests.changeAvatarTest();
