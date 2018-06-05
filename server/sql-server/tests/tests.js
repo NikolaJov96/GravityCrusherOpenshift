@@ -536,6 +536,8 @@ tests = {
         db.bannUser('Dragana', new Date('2018-07-10T17:00:00'), callbackTest('UserNotFound'));
         db.bannUser('Milica', new Date('2018-07-10T17:00:00'), callbackTest('Success'));
         db.bannUser('Jelena', new Date('2018-07-10T17:00:00'), callbackTest('Success'));
+        db.bannUser('Filip', new Date('2018-07-10T17:00:00'), callbackTest('UserIsAdmin'));
+        db.bannUser('Jovan', new Date('2018-07-10T17:00:00'), callbackTest('UserAlreadyBanned'));
     },
     insertStatistics: function() {
         var fun = 'insert into statistics';
@@ -703,7 +705,6 @@ tests = {
 //     tests[test]();
 // }
 
-tests.clearUnconfirmedUser();
 //tests.insertUser();
 //tests.getSaltUsername();
 //tests.changePassword();
@@ -729,3 +730,4 @@ tests.clearUnconfirmedUser();
 //tests.removeOldNotConfirms();
 //tests.getAvatarTest();
 //tests.changeAvatarTest();
+//tests.clearUnconfirmedUser();

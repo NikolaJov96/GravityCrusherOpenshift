@@ -44,7 +44,7 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
                 info.username = rows[RESULT].username;
                 var date = new Date();
                 date.setDate(date.getDate() + TOKEN_LIFETIME);
-                info.connection.query(queries.updaateTokenLifetime, [date, info.token],
+                info.connection.query(queries.updateTokenLifetime, [date, info.token],
                     updateTokenLifetimeCallback(info));
             }
             else if (info.callback) info.callback("TokenNoMatch", null, false);
