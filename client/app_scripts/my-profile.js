@@ -6,8 +6,10 @@ var usernameLabel = document.getElementById('username');
 var deactivateBtn = document.getElementById('deactivateBtn');
 var chAvatar = document.getElementById('chAvatar');
 var image = document.getElementById('image');
+var profileAvatar = document.getElementById('profileAvatar');
 
 initCallback = function(data){
+    if (avatar) profileAvatar.src = 'data:image/png;base64,' + avatar;
     usernameLabel.innerHTML = 'Username: ' + username;
 };
 if (initCallbackData) initCallback(initCallbackData);

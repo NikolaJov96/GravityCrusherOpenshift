@@ -46,7 +46,9 @@ universalCallback = function(){
         signupLi.classList.add('d-none');
         signinLi.classList.add('d-none');
     }
-    sectionsNav.classList.remove('d-none');
-    overlay.classList.add('d-none');
+    setTimeout(function(){
+        sectionsNav.classList.remove('d-none');
+        overlay.classList.add('d-none'); 
+    }, 250);
 };
 if (callUniversalCallback) universalCallback();
