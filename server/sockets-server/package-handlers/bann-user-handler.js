@@ -15,8 +15,11 @@ module.exports = function(socket){ return function(data){
 
     var bannToDate = new Date();
     bannToDate.setDate(bannToDate.getDate() + DAYS_TO_BANN);
-    db.bannUser(data.opponent, function(socket, data) { return function(status, bannDate) {
-            socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
-        }
-    }(socket, data));
+
+    if (socket.user.admin) {
+        db.bannUser(data.username, bannToDate, function(socket, data) { return function(status, bannDate) {
+                socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
+            }
+        }(socket, data));
+    }
 }};
