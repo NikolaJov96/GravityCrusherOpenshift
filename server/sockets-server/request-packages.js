@@ -49,15 +49,19 @@ requestPackages = [
     },
     {
         id:'getStatistics',
-        file:'./package-handlers/statistics-package-handler'
+        file:'./package-handlers/statistics-package-handler.js'
     },
     {
         id:'bannUser',
-        file:'./package-handlers/bann-user-handler'
+        file:'./package-handlers/bann-user-handler.js'
     },
     {
         id:'getMaps',
-        file:'./package-handlers/game-maps-handler'
+        file:'./package-handlers/game-maps-handler.js'
+    },
+    {
+        id:'changeAvatar',
+        file:'./package-handlers/change-avatar-handler.js'
     }
 ];
 

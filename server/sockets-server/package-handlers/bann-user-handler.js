@@ -1,6 +1,6 @@
 // Owner: Filip Mandic (mandula8)
 
-// Summary: This file contains handler that handle requests for banning user
+// Summary: This file contains handler that handles requests for banning user
 
 var db = require('../../sql-server/database-interface.js');
 
