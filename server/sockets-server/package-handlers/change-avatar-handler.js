@@ -14,12 +14,12 @@ module.exports = function(socket){ return function(data) {
             newFilename = uuidv1();
             db.changeAvatar(socket.user.name, newFilename, function(status){
                 if (status === 'Success') {
-                    fs.writeFile('server/sockets-server/avatars/'+newFilename+'.png', data.img, 'binary', function(err){
+                    fs.writeFile('server/sockets-server/avatars/' + newFilename + '.png', data.img, 'binary', function(err){
                         if (err){
                             socket.emit('changeAvatarResponse', { status: 'CannotSave' });
                         } else {
                             if (oldFilename !== 'default'){
-                                fs.unlink(oldFilename);
+                                fs.unlink('server/sockets-server/avatars/' + oldFilename + '.png');
                             }
                             socket.emit('changeAvatarResponse', { status: 'Success' });
                         }

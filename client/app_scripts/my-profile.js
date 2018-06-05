@@ -45,8 +45,10 @@ image.onchange = function(e){
 socket.on('changeAvatarResponse', function(data){
     if (!('status' in data)) attrMissing('status', 'changeAvatarResponse', data);
     
-    if (data.status === 'Success'){ logMsg('On changeAvatarResponse - success'); }
-    else logMsg('On changeAvatarResponse - unknown error: ' + data.status);
+    if (data.status === 'Success'){
+        logMsg('On changeAvatarResponse - success'); 
+        window.location = 'my-profile';
+    }else logMsg('On changeAvatarResponse - unknown error: ' + data.status);
 });
 
 // socket.on('signOutResponse', callback) already defined in 'universal', which is included in all pages
