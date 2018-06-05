@@ -59,6 +59,7 @@ var colorPassword = function(field){
 var signedIn = false;
 var username = '';
 var debugMode = true;
+var avatar = null;
 var initCallback = null;
 var initCallbackData = null;
 var universalCallback = null;
@@ -119,6 +120,8 @@ socket.on('pageInitResponse', function(data){
     else attrMissing('username', 'pageInitResponse', data);
     if ('debugMode' in data) debugMode = data.debugMode;
     else attrMissing('debugMode', 'pageInitResponse', data);
+    if ('avatarFile' in data) avatar = data.avatarFile;
+    else attrMissing('avatarFile', 'pageInitResponse', data);
     logMsg('Page init response received.');
     logMsg('Sign in status: ' + data.signedIn);
     logMsg('Username: ' + data.username);
