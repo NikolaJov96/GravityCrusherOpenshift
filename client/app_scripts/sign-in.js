@@ -61,11 +61,6 @@ socket.on('signInResponse', function(data){
             pass.value = '';
             pass.focus();
         }
-    }else if (data.status === 'CanNotSendEmail'){
-        errorLabel.innerHTML = 'We could not send you the email, sorry!';
-        logMsg('On signInResponse - email sending error');
-        pass.value = '';
-        pass.focus();
     }else if (data.status === 'UserNotConfirmed'){
         errorLabel.innerHTML = 'We could not activate your new account, check your email for the activation link!';
         logMsg('On signInResponse - could not acrivate the account.');
