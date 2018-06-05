@@ -14,7 +14,11 @@ var bannCheckCallback = function(info) { return function(error, rows, fields) {
     }
     else {
         if (!!rows.length) {
-            if (info.callback) info.callback("UserBanned", rows[RESULT].bann_date);
+            rows[RESULT].bann_date.setHours(rows[RESULT].bann_date.getHours() + 1);
+            rows[RESULT].bann_date.setMinutes(0);
+            rows[RESULT].bann_date.setSeconds(0);
+            if (info.callback)
+                info.callback("UserBanned", rows[RESULT].bann_date.toISOString().replace(/T/, ' ').replace(/\..+/, ''));
         }
         else if (info.callback) {
             updateToken(info.connection, info.id);
