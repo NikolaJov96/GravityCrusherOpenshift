@@ -7,7 +7,14 @@ var chatBtn = document.getElementById('chatBtn');
 var chatText = document.getElementById('chatText');
 var chatDiv = document.getElementById('chatDiv');
 var surrenderBtn = document.getElementById('surrenderBtn');
+
 var ovarlay = document.getElementById('ovarlay');
+var banUsername = document.getElementById('banUsername');
+var bannBtn1 = document.getElementById('bannBtn1');
+var bannBtn2 = document.getElementById('bannBtn2');
+var bannBtn3 = document.getElementById('bannBtn3');
+var bannBtn4 = document.getElementById('bannBtn4');
+var errorLabel = document.getElementById('errorLabel');
 
 document.onkeydown = function(event){
     if (roomState) roomState.onKeyDown(event);
@@ -22,8 +29,34 @@ document.onkeypress = function(event){
 };
 
 var banOverlay = function(username){
+    banUsername.innerHTML = 'Sure to bann user ' + username + '?';
+    bannBtn1.onclick = function(){
+        socket.emit('bannUser', { username:username, level:0 });
+    }
+    bannBtn2.onclick = function(){
+        socket.emit('bannUser', { username:username, level:1 });
+    }
+    bannBtn3.onclick = function(){
+        socket.emit('bannUser', { username:username, level:2 });
+    }
+    bannBtn4.onclick = function(){
+        overlay.classList.add("d-none");
+    }
     overlay.classList.remove("d-none");
 };
+
+socket.on('bannUserResponse', function(data){
+    if (!('status' in data)) attrMissing('status', 'bannUserResponse', data);
+    else if (data.status === 'Success'){
+        errorLabel.style.color = 'green';
+        errorLabel.innerHTML = 'User banned';
+        logMsg('On bannUserResponse - user banned');
+    }else if (data.status === 'UserNotFound'){
+        errorLabel.innerHTML = 'User not found';
+        logMsg('On bannUserResponse - user not found');
+    }else logMsg('On bannUserResponse - unknown error: ' + data.status);
+    setTimeout(function(){ overlay.classList.add("d-none"); }, 1500);
+});
 
 var addMessages = function(messages){
     for (i in messages){
