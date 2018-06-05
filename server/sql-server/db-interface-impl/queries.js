@@ -100,10 +100,10 @@ module.exports = {
     deleteOldTokens: "DELETE FROM token WHERE ? > token_valid_date",
 
     //input new valid date, token code
-    updaateTokenLifetime: "UPDATE Token SET token_valid_date = ? WHERE token_code = ?",
+    updaateTokenLifetime: "UPDATE token SET token_valid_date = ? WHERE token_code = ?",
 
     //input new valid date, user id
-    updateTokensForUsername: "UPDATE Token SET token_valid_date = ? WHERE user_id = ?",
+    updateTokensForUsername: "UPDATE token SET token_valid_date = ? WHERE user_id = ?",
 
     //tables:statistics, user, user_disabled---------------------------------------------------------------------------
     //input username
