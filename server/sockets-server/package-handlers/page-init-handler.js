@@ -3,6 +3,7 @@
 // Summary: Handler definitions for page initialization requests.
 
 var db = require('../../sql-server/database-interface.js');
+var fs = require('fs');
 
 module.exports = function(socket){ return function(data) {
     var genTempUser = function(socket, page){
@@ -11,8 +12,20 @@ module.exports = function(socket){ return function(data) {
         var newUser = serverState.addUser(token, token, socket, page, true);
         return newUser;
     };
-    
+
     var genPayload = function(data, user, response){
+        // read avatar file
+        var avatarFile = null
+        db.getAvatar(user.name, function(filename, status){
+            if (status === 'Success'){
+                fs.readFile('server/sockets-server/avatars/' + filename + '.png', 'utf8', function(err, data){
+                    if (!err){
+                        avatarFile = data;
+                    }
+                });
+            }
+        });
+
         if (data.page === 'Game'){
             response.payload = "redirect";
             for (var i in serverState.gameRooms){
@@ -88,7 +101,7 @@ module.exports = function(socket){ return function(data) {
         }
         socket.emit('pageInitResponse', response);
     };
-    
+
     logMsg('Page init. req: TOKEN:' + data.token + ' page: ' + data.page);
     if (socket.user) socket.user.interaction = true;
 
@@ -97,6 +110,7 @@ module.exports = function(socket){ return function(data) {
         'signedIn': false,
         'username': null,
         'debugMode': debugMode,
+        'avatarFile': avatarFile,
     };
 
     if (!('token' in data) || data.token === ''){
@@ -143,5 +157,5 @@ module.exports = function(socket){ return function(data) {
             );
         }
     }
-    
+
 };};
