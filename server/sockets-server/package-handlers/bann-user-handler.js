@@ -25,10 +25,14 @@ module.exports = function(socket){ return function(data){
     else if (data.level === SERIOUS_BANN) bannToDate.setDate(bannToDate.getDate() + SERIOUS_BANN_PERIOD);
     else return;
     
-    if (socket.user.admin) {
+    if (socket.user.admin){
         db.bannUser(data.username, bannToDate, function(socket, data) { return function(status, bannDate) {
-                socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
+            socket.emit('bannUserResponse', { status: status, bannTimeEnd: bannDate });
+            
+            if (data.username in serverState.users){
+                serverState.users[data.username].socket.emit('signOutResponse', 
+                                                             {'status':status, 'deactivated':false});
             }
-        }(socket, data));
+        };}(socket, data));
     }
 }};

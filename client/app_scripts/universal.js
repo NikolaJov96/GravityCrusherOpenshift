@@ -14,6 +14,7 @@ var navAvatar = document.getElementById('navAvatar');
 var overlay = document.getElementById('overlay');
 var sectionsNav = document.getElementById('sectionsNav');
 
+// sign out request, response is defined in the init-connection
 signoutBtn.onclick = function(){
     var signOutPkg = {
         'token':getCookie('token'),
@@ -22,18 +23,6 @@ signoutBtn.onclick = function(){
     socket.emit('signOut', signOutPkg);
     logMsg('Sign-out requested.');
 };
-
-// sign out response callback
-socket.on('signOutResponse', function(data){
-    if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
-    
-    if (data.status === 'Success'){ 
-        logMsg('On signOutResponse - success'); 
-        setCookie('token', '', 0);
-        window.location = '/'; 
-    }else if (data.status === 'TokenNoMatch') logMsg('On signOutResponse - invalid token');
-    else logMsg('On signOutResponse - unknown error: ' + data.status);
-});
 
 // show signin and signup, or sigout and profile links
 universalCallback = function(){
