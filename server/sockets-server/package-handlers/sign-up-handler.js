@@ -70,14 +70,15 @@ module.exports = function(socket){ return function(data){
                 transporter.sendMail(registrationMailOptions, function(error, info){
                     if (error){
                         logMsg(error);
+                        db.clearUser(email, null);
+                        socket.emit('signUpResponse', {'status': 'CanNotSendEmail'});
                     } else {
                         logMsg('Email sent to: ' + email);
+                        logMsg('    STATUS: Success');
+                        socket.emit('signUpResponse', {'status': 'Success'});
                     }
                 });
             }
-
-            logMsg('    STATUS:' + status);
-            socket.emit('signUpResponse', {'status': status});
         }
     );
 };};

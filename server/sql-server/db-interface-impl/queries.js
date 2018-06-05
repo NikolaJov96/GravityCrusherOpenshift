@@ -22,7 +22,11 @@ module.exports = {
     //input newUsername, id
     setNewUsername: "UPDATE user SET username = ? WHERE id = ?",
 
+    //input filename, id
     setAvatar: "UPDATE user SET avatar = ? WHERE id = ?",
+
+    //input id
+    deleteNotConfirmedUser: "DELETE FROM user WHERE id = ?",
 
     //tables: USER_NOT_CONFIRMED --------------------------------------------------------------------------------------
     //input id from user
@@ -35,6 +39,7 @@ module.exports = {
     //input id
     deleteFromUserNotConfirmed: "DELETE FROM user_not_confirmed WHERE user_id = ?",
 
+    //input create date
     deleteOldUnfinishedRegistrations: `DELETE FROM user
                                        WHERE create_date < ?
                                        AND user.id IN (SELECT user_id FROM user_not_confirmed)`,

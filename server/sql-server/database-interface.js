@@ -32,7 +32,7 @@ var database = function() {
     var removeOldNotConfirmedUsersModule = require('./db-interface-impl/remove-old-not-cofirmed-users.js');
     var getAvatarModule = require('./db-interface-impl/get-avatar');
     var changeAvatarModule = require('./db-interface-impl/change-avatar');
-
+    var deleteUnconfirmedUser = require('./db-interface-impl/delete-not-confirmed-user');
     var mysql = require('mysql');
 
     var statNamesToColumns = { 'Games Played': 'games_played_count',
@@ -191,6 +191,11 @@ var database = function() {
     methods.getAvatar = function(username, callback) {
 
         getAvatarModule(methods.connection, username, callback);
+    }
+
+    methods.clearUser = function(email, callback) {
+
+        deleteUnconfirmedUser(methods.connection, email, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

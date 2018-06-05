@@ -679,6 +679,22 @@ tests = {
         db.getAvatar('Dragana', callbackTest('UserNotRegistered'));
         db.getAvatar('Marko', callbackTest('Success'));
         db.getAvatar('Nikola', callbackTest('Success'));
+    },
+    clearUnconfirmedUser: function(){
+        var fun = 'clear user test';
+        var callbackTest = function(exprectedStatus){
+            return function(status) {
+                if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
+                else{
+                    console.log('FAIL ' + fun);
+                    console.log('expected status: ' + exprectedStatus);
+                    console.log('status: ' + status);
+                    console.log();
+                }
+            };
+        };
+
+        db.clearUser('Marko6@gmail.com', callbackTest('Success'));
     }
 };
 
@@ -686,6 +702,8 @@ tests = {
 // for (var test in tests){
 //     tests[test]();
 // }
+
+tests.clearUnconfirmedUser();
 //tests.insertUser();
 //tests.getSaltUsername();
 //tests.changePassword();
@@ -701,7 +719,7 @@ tests = {
 //tests.resetPasswordTest();
 //tests.deactivateAccountTest();
 //tests.checkUsername();
-tests.selectingStatistics();
+//tests.selectingStatistics();
 //tests.bannUser();
 //tests.insertStatistics();
 //tests.removeOldBannsTest();
