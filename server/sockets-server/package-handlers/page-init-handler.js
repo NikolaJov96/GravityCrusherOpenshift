@@ -9,7 +9,7 @@ module.exports = function(socket){ return function(data) {
     var genTempUser = function(socket, page){
         // user name is equal to the token
         var token = require('uuid/v1')(); // generates an unique string
-        var newUser = serverState.addUser(token, token, socket, page, true);
+        var newUser = serverState.addUser(token, token, socket, page, true, false);
         return newUser;
     };
     

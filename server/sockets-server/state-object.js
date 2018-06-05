@@ -47,8 +47,8 @@ var StateObject = function(frameTime){
         initStatNumber: 10,
     };
 
-    self.addUser = function(token, username, socket, page, isGuest){
-        var newUser = User(username, socket, page, isGuest);
+    self.addUser = function(token, username, socket, page, isGuest, admin){
+        var newUser = User(username, socket, page, isGuest, admin);
         self.users[username] = newUser;
         self.tokenCache.cacheToken(token, newUser);
         socket.user = newUser;
