@@ -28,13 +28,13 @@ module.exports = function(socket){ return function(data) {
 
     var genPayload = function(data, user, response){
         if (data.page === 'Game'){
-            response.payload = "redirect";
+            response.payload = { redirect: true };
             for (var i in serverState.gameRooms){
                 if (serverState.gameRooms[i].containsUserBind(user)){
                     if (serverState.gameRooms[i].joinName === user.name) serverState.gameRooms[i].join = user;
                     else if (serverState.gameRooms[i].hostName === user.name) serverState.gameRooms[i].host = user;
                     response.payload = serverState.gameRooms[i].state.initResponse(user);
-                    response.payload.messages = serverState.gameRooms[i].getMessages();
+                    response.payload.messages = serverState.gameRooms[i].messages;
                     logMsg('    page: Game, play');
                     break;
                 } else {
@@ -47,7 +47,7 @@ module.exports = function(socket){ return function(data) {
                     }
                     if (specFound){
                         response.payload = serverState.gameRooms[i].state.initResponse(user);
-                        response.payload.messages = serverState.gameRooms[i].getMessages();
+                        response.payload.messages = serverState.gameRooms[i].messages;
                         logMsg('    page: Game, spectate');
                     }
                 }

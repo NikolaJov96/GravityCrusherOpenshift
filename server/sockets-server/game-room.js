@@ -43,18 +43,18 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         self.hostCommand = {};
         self.joinCommand = {};
 
-        var text = '';
+        var msgArr = [];
         for (var i in self.newMessages){
             self.messages.push(self.newMessages[i]);
-            text += self.newMessages[i].sender + ':  ' + self.newMessages[i].text + '</br>'
+            msgArr.push(self.newMessages[i]);
         }
         self.newMessages = [];
-        if (text.length > 0){
-            if (self.host && self.host.socket && self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
-            if (self.join && self.join.socket && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
+        if (msgArr.length > 0){
+            if (self.host && self.host.socket && self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { msgArr: msgArr });
+            if (self.join && self.join.socket && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { msgArr: msgArr });
             for (i in self.spectators){
                 if (self.spectators[i].socket && self.spectators[i].page === 'Game') 
-                    self.spectators[i].socket.emit('broadcastResponse', { text: text });
+                    self.spectators[i].socket.emit('broadcastResponse', { msgArr: msgArr });
             }
         }
 
@@ -72,12 +72,6 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         if (self.join && user.name === self.joinName) return true;
         return false;
     };
-
-    self.getMessages = function(){
-        var text = '';
-        for (var i in self.messages) text += self.messages[i].sender + ':  ' + self.messages[i].text + '</br>';
-        return text;
-    }
 
     return self;
 };

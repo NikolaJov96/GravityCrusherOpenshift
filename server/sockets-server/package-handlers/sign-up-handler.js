@@ -61,16 +61,19 @@ module.exports = function(socket){ return function(data){
                                 confirmationCode);
 
                 transporter.sendMail(registrationMailOptions, function(error, info){
+                    logMsg('err: ' + error);
                     if (error){
-                        logMsg(error);
+                        db.clearUser(email, function(){
+                            logMsg('Email error, user removed');
+                            socket.emit('signUpResponse', {'status': 'CanNotSendEmail'});
+                        });
                     } else {
                         logMsg('Email sent to: ' + email);
+                        logMsg('    STATUS: Success');
+                        socket.emit('signUpResponse', {'status': 'Success'});
                     }
                 });
             }
-
-            logMsg('    STATUS:' + status);
-            socket.emit('signUpResponse', {'status': status});
         }
     );
 };};

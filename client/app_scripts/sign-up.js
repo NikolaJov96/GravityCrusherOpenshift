@@ -82,5 +82,8 @@ socket.on('signUpResponse', function(data){
         logMsg('On signUpResponse - e-mail taken');
         email.select();
         email.focus();
-    }else logMsg('On signUpResponse - unknown error');
+    }else if (data.status === 'CanNotSendEmail'){
+        errorLabel.innerHTML = 'We could not send you the email, sorry!';
+        logMsg('On signInResponse - email sending error');
+    }else logMsg('On signUpResponse - unknown error: ' + data.status);
 });

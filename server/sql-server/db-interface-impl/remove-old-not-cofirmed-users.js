@@ -9,7 +9,7 @@ const REGISTRATION_TIMEOUT = 2; //two hours
 
 var callbackQuery = function(info) { return function(error, rows, fields) {
         if (!!error) {
-            console.log("error: query which search in user for username failed!\n");
+            console.log("error: query which deletes from user failed!\n");
             console.log(error);
         }
         else if (info.callback) info.callback("Success");

@@ -22,7 +22,11 @@ module.exports = {
     //input newUsername, id
     setNewUsername: "UPDATE user SET username = ? WHERE id = ?",
 
+    //input filename, id
     setAvatar: "UPDATE user SET avatar = ? WHERE id = ?",
+
+    //input id
+    deleteNotConfirmedUser: "DELETE FROM user WHERE id = ?",
 
     //tables: USER_NOT_CONFIRMED --------------------------------------------------------------------------------------
     //input id from user
@@ -35,6 +39,7 @@ module.exports = {
     //input id
     deleteFromUserNotConfirmed: "DELETE FROM user_not_confirmed WHERE user_id = ?",
 
+    //input create date
     deleteOldUnfinishedRegistrations: `DELETE FROM user
                                        WHERE create_date < ?
                                        AND user.id IN (SELECT user_id FROM user_not_confirmed)`,
@@ -102,7 +107,7 @@ module.exports = {
     deleteOldTokens: "DELETE FROM token WHERE ? > token_valid_date",
 
     //input new valid date, token code
-    updaateTokenLifetime: "UPDATE token SET token_valid_date = ? WHERE token_code = ?",
+    updateTokenLifetime: "UPDATE token SET token_valid_date = ? WHERE token_code = ?",
 
     //input new valid date, user id
     updateTokensForUsername: "UPDATE token SET token_valid_date = ? WHERE user_id = ?",
@@ -135,7 +140,7 @@ module.exports = {
                         AND NOT EXISTS (SELECT *
                                     FROM user_disabled
                                         WHERE user_disabled.user_id = statistics.user_id)
-                        ORDER BY ?? DESC
+                        ORDER BY ?? DESC, ?? DESC
                         LIMIT ?
                         OFFSET ?`,
 

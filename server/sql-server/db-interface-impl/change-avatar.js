@@ -9,7 +9,7 @@ const RESULT = 0;
 
 var updateCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
-        console.log("error: query which checks if user is banned failed!\n");
+        console.log("error: query which updates avatar failed!\n");
         console.log(error);
     }
     else {
