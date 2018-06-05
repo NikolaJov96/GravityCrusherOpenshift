@@ -50,7 +50,7 @@ var callbackFront = function(info) { return function(error, rows, fields) {
                     offset = info.frontUsersCount - info.rowCount + info.backUsersCount + 1;
 
             info.connection.query(queries.selectStatistics,
-                [offset, info.metric, info.rowCount, offset], callbackTableToPass(info));
+                [offset, info.metric, info.secondMetric, info.rowCount, offset], callbackTableToPass(info));
         }
 }}
 
@@ -65,7 +65,7 @@ var callbackActiveUsers = function(info) { return function(error, rows, fields) 
             if (info.activeUsersCount <= info.rowCount) {
                 //pozovi upit koji odmah izvrsi dohvatanje rezultata sa offsetom 0
                 info.connection.query(queries.selectStatistics,
-                    [START_OFFSET, info.metric, info.rowCount, START_OFFSET], callbackTableToPass(info));
+                    [START_OFFSET, info.metric, info.secondMetric, info.rowCount, START_OFFSET], callbackTableToPass(info));
             }
             else {
                 info.connection.query(queries.getActiveUsersInFrontCount,
@@ -94,9 +94,13 @@ var getStatisticsModule = function(connection, metric, rowCount, username, statN
 
     if (! metric in statNamesToColumns) return;
 
+    var secondMetric = "Games Won Percentage";
+    if (metric === "Games Won Percentage") secondMetric = "Games Played";
+
     info = {
         connection : connection,
         metric : statNamesToColumns[metric],
+        secondMetric: statNamesToColumns[secondMetric],
         rowCount : rowCount,
         username : username,
         callback : callback

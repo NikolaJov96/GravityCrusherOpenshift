@@ -135,7 +135,7 @@ module.exports = {
                         AND NOT EXISTS (SELECT *
                                     FROM user_disabled
                                         WHERE user_disabled.user_id = statistics.user_id)
-                        ORDER BY ?? DESC
+                        ORDER BY ?? DESC, ?? DESC
                         LIMIT ?
                         OFFSET ?`,
 

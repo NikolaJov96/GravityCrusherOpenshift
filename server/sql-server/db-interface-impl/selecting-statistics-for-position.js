@@ -24,7 +24,7 @@ var callbackTableToPass = function(info) { return function(error, rows, fields) 
                     'Games Won Percentage': (rows[i].games_played_count != 0) ?
                         (rows[i].games_won_count / rows[i].games_played_count * 100) : (0),
                 }
-                
+
             }
 
             var maxRow = rows[rows.length - 1].row - rows[0].row + 1;
@@ -48,7 +48,7 @@ var selectCallbackQuery = function(info) { return function(error, rows, fields) 
                     info.start = info.activeUsersCount - info.rowCount;
 
             info.connection.query(queries.selectStatistics,
-                [info.start, info.metric, info.rowCount, info.start], callbackTableToPass(info));
+                [info.start, info.metric, info.secondMetric, info.rowCount, info.start], callbackTableToPass(info));
         }
 }}
 
@@ -56,9 +56,13 @@ var getStatisticsModule = function(connection, metric, rowCount, start, statName
 
     if (! metric in statNamesToColumns) return;
 
+    var secondMetric = "Games Won Percentage";
+    if (metric === "Games Won Percentage") secondMetric = "Games Played";
+
     info = {
         connection : connection,
         metric : statNamesToColumns[metric],
+        secondMetric: statNamesToColumns[secondMetric],
         rowCount : rowCount,
         start : start,
         callback : callback
