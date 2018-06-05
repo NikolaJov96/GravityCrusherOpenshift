@@ -4,7 +4,7 @@ USE `psi`;
 --
 -- Host: localhost    Database: psi
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.7.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -166,6 +166,7 @@ CREATE TABLE `user` (
   `password_hash` varchar(128) NOT NULL,
   `password_salt` varchar(256) NOT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `avatar` varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -178,7 +179,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48'),(2,'Andrija','andrija6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48'),(3,'Nikola','nikola6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48'),(4,'Nemanja','nemanja6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-06-03 12:30:48'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-06-03 12:30:48'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-06-03 12:30:48'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-06-03 12:30:48'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-06-03 12:30:48');
+INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48',''),(2,'Andrija','andrija6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48',''),(3,'Nikola','nikola6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48',''),(4,'Nemanja','nemanja6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-03 12:30:48',''),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-06-03 12:30:48',''),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-06-03 12:30:48',''),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-06-03 12:30:48',''),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-06-03 12:30:48',''),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-06-03 12:30:48','');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,4 +694,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-03 14:31:21
+-- Dump completed on 2018-06-05 10:01:42
