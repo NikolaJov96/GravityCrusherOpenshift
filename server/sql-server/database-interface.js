@@ -182,6 +182,14 @@ var database = function() {
         removeOldNotConfirmedUsersModule(methods.connection, callback);
     }
 
+    methods.changeAvatar = function(username, filename, callback) {
+        callback('Success');
+    }
+
+    methods.getAvatar = function(username, callback) {
+        //TOOD
+    }
+
     //-----------------------------------------------------------------------------------------------------------------
 
     methods.disconnect = function() {

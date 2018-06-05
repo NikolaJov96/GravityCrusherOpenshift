@@ -12,8 +12,12 @@ doc/**/*.toc
 server/sockets-server/email-service-conf.js
 server/sql-server/db-connection/db-connection-file.js
 
+# Ignore avatar (png) files
+server/sockets-server/avatars/*.png
+
 # Ignore the TODO file.
 TODO
 
 # Ignore npm's module dump folder.
 node_modules/
+
