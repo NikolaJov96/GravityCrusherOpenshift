@@ -14,7 +14,7 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
     }
     else {
         if (!!rows.length) {
-            console.log(rows[RESULT].avatar);
+            updateToken(info.connection, info.id);
             if (info.callback) info.callback("Success", rows[RESULT].avatar);
         }
         else if (info.callback) info.callback("UserNotRegistered", null);

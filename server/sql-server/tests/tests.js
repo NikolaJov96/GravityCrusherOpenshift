@@ -168,13 +168,14 @@ tests = {
     verifyWithUsername: function(){
         var fun = 'verification of user with username';
         var callbackTest = function(exprectedStatus){
-            return function(status, bannDate) {
+            return function(status, bannDate, admin) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log(bannDate);
+                    console.log(admin);
                     console.log();
                 }
             };
@@ -191,17 +192,20 @@ tests = {
         db.verifyUserByUsername('jovan', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
         db.verifyUserByUsername('Nikola', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
             callbackTest('Success'));
+        db.verifyUserByUsername('Andrija', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
+                callbackTest('Success'));
     },
     verifyWithEmail: function(){
         var fun = 'verification of user with email';
         var callbackTest = function(exprectedStatus){
-            return function(status, bannDate) {
+            return function(status, bannDate, admin) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log(bannDate);
+                    console.log(admin);
                     console.log();
                 }
             };
@@ -210,13 +214,16 @@ tests = {
         var test_ulazi = [
             ['Dragana6@gmail.com', 'tralalalalala'],
             ['jelena6@gmail.com', 'tralalalalalala'],
-            ['Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc']
+            ['Nikola6@gmail.com', 'aaaaaaaaafffffdddddcdccc'],
+            ['Andrija6@gmail.com', 'aaaaaaaaafffffdddddcdccc']
         ]
 
         db.verifyUserByEmail('Dragana6@gmail.com', 'tralalalalala', callbackTest('UserNotRegistered'));
         db.verifyUserByEmail('jelena6@gmail.com', 'tralalalalalala', callbackTest('PasswordNoMatch'));
         db.verifyUserByEmail('jovan6@gmail.com', 'dcdcdcdccdc4dc45d564', callbackTest('UserBanned'));
         db.verifyUserByEmail('Nikola6@gmail.com', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
+            callbackTest('Success'));
+        db.verifyUserByEmail('Andrija6@gmail.com', '32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25',
             callbackTest('Success'));
     },
     insertTokenUsername: function(){
@@ -684,8 +691,8 @@ tests = {
 //tests.changePassword();
 //tests.changeUsername();
 //tests.getSaltEmail();
-//tests.verifyWithUsername();
-//tests.verifyWithEmail();
+tests.verifyWithUsername();
+tests.verifyWithEmail();
 //tests.insertTokenUsername();
 //tests.insertTokenEmail();
 //tests.verifyRegWithUsername();

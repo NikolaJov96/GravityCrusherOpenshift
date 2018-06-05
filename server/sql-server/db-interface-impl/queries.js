@@ -159,5 +159,9 @@ module.exports = {
 
     //tables: GAME MAP, COSMIC OBJECT----------------------------------------------------------------------------------
     //input game map name
-    getObjectsOnMap: "SELECT * FROM cosmic_object WHERE map_id = ?"
+    getObjectsOnMap: "SELECT * FROM cosmic_object WHERE map_id = ?",
+
+    //tables: Admin----------------------------------------------------------------------------------
+    //input game map name
+    checkIfAdminExists: "SELECT * FROM admin WHERE user_id = ?"
 }

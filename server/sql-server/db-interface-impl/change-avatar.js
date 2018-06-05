@@ -13,6 +13,7 @@ var updateCallback = function(info) { return function(error, rows, fields) {
         console.log(error);
     }
     else {
+        updateToken(info.connection, info.id);
         if (info.callback) info.callback("Success");
     }
 }}
