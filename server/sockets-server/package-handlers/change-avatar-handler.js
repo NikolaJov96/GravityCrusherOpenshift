@@ -10,22 +10,25 @@ module.exports = function(socket){ return function(data) {
     if (data.img) {
         logMsg('New avatar for the user: ' + socket.user.name);
 
-        filename = uuidv1();
-        db.changeAvatar(socket.user.name, filename, function(status){
-            if (status === 'Success') {
-                fs.writeFile('server/sockets-server/avatars/' + filename + '.png', data.img, 'binary', function(err){
-                    if (err){
-                        socket.emit('changeAvatarResponse', { status: 'CannotSave' });
-                    } else {
-                        socket.emit('changeAvatarResponse', { status: 'Success' });
-                    }
-                    console.log('File saved.');
-                });
-            } else {
-                socket.emit('changeAvatarResponse', { 'status': status} );
-            }
+        db.getAvatar(socket.user.name, function(status, oldFilename){
+            newFilename = uuidv1();
+            db.changeAvatar(socket.user.name, newFilename, function(status){
+                if (status === 'Success') {
+                    fs.writeFile('server/sockets-server/avatars/'+newFilename+'.png', data.img, 'binary', function(err){
+                        if (err){
+                            socket.emit('changeAvatarResponse', { status: 'CannotSave' });
+                        } else {
+                            if (oldFilename !== 'default'){
+                                fs.unlink(oldFilename);
+                            }
+                            socket.emit('changeAvatarResponse', { status: 'Success' });
+                        }
+                        console.log('File saved.');
+                    });
+                } else {
+                    socket.emit('changeAvatarResponse', { 'status': status} );
+                }
+            });
         });
-
-
     }
 }};
