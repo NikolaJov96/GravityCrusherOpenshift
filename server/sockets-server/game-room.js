@@ -33,7 +33,7 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
             if (self.join.socket && self.join.page === 'Game')
                 self.join.socket.emit('initRoomState', self.state.initResponse(self.join));
             for (i in self.spectators){
-                if (self.spectators[i].page === 'Game'){
+                if (self.spectators[i].socket && self.spectators[i].page === 'Game'){
                     self.spectators[i].socket.emit('initRoomState', self.state.initResponse(self.spectators[i]));
                 }
             }
@@ -50,10 +50,10 @@ module.exports = function(name, host, gamePublic, joinName, map, roomPublic, cha
         }
         self.newMessages = [];
         if (text.length > 0){
-            if (self.host && self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
-            if (self.join && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
+            if (self.host && self.host.socket && self.host.page === 'Game') self.host.socket.emit('broadcastResponse', { text: text });
+            if (self.join && self.join.socket && self.join.page === 'Game') self.join.socket.emit('broadcastResponse', { text: text });
             for (i in self.spectators){
-                if (self.spectators[i].page === 'Game') 
+                if (self.spectators[i].socket && self.spectators[i].page === 'Game') 
                     self.spectators[i].socket.emit('broadcastResponse', { text: text });
             }
         }

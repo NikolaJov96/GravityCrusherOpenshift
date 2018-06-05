@@ -65,7 +65,7 @@ module.exports = function(socket){ return function(data){
                     targetRoom.join = socket.user;
                     targetRoom.joinName = socket.user.name;
                     for (var user in serverState.users){
-                        if (serverState.users[user].page === 'GameRooms'){
+                        if (serverState.users[user].socket && serverState.users[user].page === 'GameRooms'){
                             serverState.users[user].socket.emit('gameRoomsUpdate', {
                                 rooms: require('../rooms-to-display.js')(serverState.users[user])
                             });

@@ -87,14 +87,14 @@ module.exports = function(gameRoom){
             counter: self.counter * serverState.frameTime / 1000,
             playerData: self.players
         };
-        if (self.room.host.page === 'Game'){
+        if (self.room.host.socket && self.room.host.page === 'Game'){
             self.room.host.socket.emit('gameState', gameState);
         }
-        if (self.room.join.page === 'Game'){
+        if (self.room.join.socket && self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
         for (i in self.room.spectators){
-            if (self.room.spectators[i].page === 'Game'){
+            if (self.room.spectators[i].socket && self.room.spectators[i].page === 'Game'){
                 self.room.spectators[i].socket.emit('gameState', gameState);
             }
         }
@@ -127,7 +127,7 @@ module.exports = function(gameRoom){
             ret.nextState = RoomStateGameEnd;
             self.room.roomPublic = false;
             for (var user in serverState.users){
-                if (serverState.users[user].page === 'GameRooms'){
+                if (serverState.users[user].socket && serverState.users[user].page === 'GameRooms'){
                     serverState.users[user].socket.emit('gameRoomsUpdate', {
                         rooms: require('./rooms-to-display.js')(serverState.users[user])
                     });

@@ -29,7 +29,7 @@ module.exports = function(socket){ return function(data){
                                                          data.opponent, data.gameMap, data.roomPublic, true);
                 serverState.gameRooms.push(newRoom);
                 for (var user in serverState.users){
-                    if (serverState.users[user].page === 'GameRooms'){
+                    if (serverState.users[user].socket && serverState.users[user].page === 'GameRooms'){
                         serverState.users[user].socket.emit('gameRoomsUpdate', {
                             rooms: require('../rooms-to-display.js')(serverState.users[user])
                         });
@@ -44,7 +44,7 @@ module.exports = function(socket){ return function(data){
                                                  '', data.gameMap, data.roomPublic, true);
         serverState.gameRooms.push(newRoom);
         for (var user in serverState.users){
-            if (serverState.users[user].page === 'GameRooms'){
+            if (serverState.users[user].socket && serverState.users[user].page === 'GameRooms'){
                 serverState.users[user].socket.emit('gameRoomsUpdate', {
                     rooms: require('../rooms-to-display.js')(serverState.users[user])
                 });

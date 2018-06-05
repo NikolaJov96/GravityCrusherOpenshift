@@ -56,14 +56,14 @@ module.exports = function(gameRoom){
             joinActive: ((self.room.join && self.room.join.page === 'Game') ? true : false),
             counter: self.counter * serverState.frameTime / 1000
         };
-        if (self.room.host.page === 'Game'){
+        if (self.room.host.socket && self.room.host.page === 'Game'){
             self.room.host.socket.emit('gameState', gameState);
         }
-        if (self.room.join && self.room.join.page === 'Game'){
+        if (self.room.join && self.room.join.socket && self.room.join.page === 'Game'){
             self.room.join.socket.emit('gameState', gameState);
         }
         for (i in self.room.spectators){
-            if (self.room.spectators[i].page === 'Game'){
+            if (self.room.spectators[i].socket && self.room.spectators[i].page === 'Game'){
                 self.room.spectators[i].socket.emit('gameState', gameState);
             }
         }
@@ -82,10 +82,10 @@ module.exports = function(gameRoom){
             logMsg('Room ' + self.room.name + ' players ready.');
         }
         if (self.room.hostCommand){
-            if (('close' in self.room.hostCommand) && !self.room.join){
+            if (('close' in self.room.hostCommand) && !self.room.join && self.room.host.socket){
                 self.room.host.socket.emit('gameState', { redirect:true });
                 for (i in self.room.spectators){
-                    if (self.room.spectators[i].page === 'Game'){
+                    if (self.room.spectators[i].socket && self.room.spectators[i].page === 'Game'){
                         self.room.spectators[i].socket.emit('gameState', { redirect:true });
                     }
                 }
