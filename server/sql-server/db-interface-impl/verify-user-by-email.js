@@ -7,18 +7,6 @@ var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
-var adminCheckCallback = function(info) { return function(error, rows, fields) {
-    if (!!error) {
-        console.log("error: query which checks if user is banned failed!\n");
-        console.log(error);
-    }
-    else {
-        var admin = false;
-        if (!!rows.length) admin = true;
-        if (info.callback) info.callback("Success", null, admin);
-    }
-}}
-
 var bannCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if user is banned failed!\n");
@@ -26,10 +14,11 @@ var bannCheckCallback = function(info) { return function(error, rows, fields) {
     }
     else {
         if (!!rows.length) {
-            if (info.callback) info.callback("UserBanned", rows[RESULT].bann_date, null);
+            if (info.callback) info.callback("UserBanned", rows[RESULT].bann_date);
         }
-        else {
-            info.connection.query(queries.checkIfAdminExists, [info.id], adminCheckCallback(info));
+        else if (info.callback) {
+            updateToken(info.connection, info.id);
+            info.callback("Success", null);
         }
     }
 }}

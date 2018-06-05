@@ -163,5 +163,5 @@ module.exports = {
 
     //tables: Admin----------------------------------------------------------------------------------
     //input game map name
-    checkIfAdminExists: "SELECT * FROM admin WHERE user_id = ?"
+    checkIfAdminExists: "SELECT * FROM admin WHERE user_id = (SELECT id FROM user WHERE username = ?)"
 }

@@ -7,15 +7,30 @@ var queries = require('./queries');
 const RESULT = 0;
 const TOKEN_LIFETIME = 14;
 
-var updaateTokenLifetimeCallback = function(info) { return function(error, rows, fields) {
+var adminCheckCallback = function(info) { return function(error, rows, fields) {
         if (!!error) {
             console.log("error: query which updates tokens valid time failed!\n");
             console.log(error);
         }
         else {
+            var isAdmin = false;
+            if (!!rows.length) isAdmin = true;
+
             if (info.callback) {
-                info.callback("Success", info.result);
+                info.callback("Success", info.username, isAdmin);
             }
+        }
+}}
+
+var updateTokenLifetimeCallback = function(info) { return function(error, rows, fields) {
+        if (!!error) {
+            console.log("error: query which updates tokens valid time failed!\n");
+            console.log(error);
+        }
+        else {
+            info.connection.query(queries.checkIfAdminExists, [info.username],
+                adminCheckCallback(info));
+
         }
 }}
 
@@ -26,13 +41,13 @@ var callbackQuery = function(info) { return function(error, rows, fields) {
         }
         else {
             if (!!rows.length) {
-                info.result = rows[RESULT].username;
+                info.username = rows[RESULT].username;
                 var date = new Date();
                 date.setDate(date.getDate() + TOKEN_LIFETIME);
                 info.connection.query(queries.updaateTokenLifetime, [date, info.token],
-                    updaateTokenLifetimeCallback(info));
+                    updateTokenLifetimeCallback(info));
             }
-            else if (info.callback) info.callback("TokenNoMatch", null);
+            else if (info.callback) info.callback("TokenNoMatch", null, false);
         }
 }}
 

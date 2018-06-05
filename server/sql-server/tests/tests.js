@@ -168,14 +168,13 @@ tests = {
     verifyWithUsername: function(){
         var fun = 'verification of user with username';
         var callbackTest = function(exprectedStatus){
-            return function(status, bannDate, admin) {
+            return function(status, bannDate) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log(bannDate);
-                    console.log(admin);
                     console.log();
                 }
             };
@@ -198,14 +197,13 @@ tests = {
     verifyWithEmail: function(){
         var fun = 'verification of user with email';
         var callbackTest = function(exprectedStatus){
-            return function(status, bannDate, admin) {
+            return function(status, bannDate) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status + " " + bannDate);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log(bannDate);
-                    console.log(admin);
                     console.log();
                 }
             };
@@ -333,13 +331,14 @@ tests = {
     gettingUsernameByToken: function(){
         var fun = 'getting token by username';
         var callbackTest = function(exprectedStatus){
-            return function(status, username) {
+            return function(status, username, isAdmin) {
                 if (status === exprectedStatus) console.log('PASS  ' + fun + ': ' + status);
                 else{
                     console.log('FAIL ' + fun);
                     console.log('expected status: ' + exprectedStatus);
                     console.log('status: ' + status);
                     console.log('username: ' + username);
+                    console.log('isAdmin: ', isAdmin);
                     console.log();
                 }
             };
@@ -353,7 +352,7 @@ tests = {
 
         db.getUsernameByToken('5656116151161', callbackTest('TokenNoMatch'));
         db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
-        db.getUsernameByToken('aaabbbcccdddb', callbackTest('Success'));
+        db.getUsernameByToken('aaabbbcccdddc', callbackTest('Success'));
     },
     removingToken: function(){
         var fun = 'removing token';
@@ -691,13 +690,12 @@ tests = {
 //tests.changePassword();
 //tests.changeUsername();
 //tests.getSaltEmail();
-tests.verifyWithUsername();
-tests.verifyWithEmail();
+//tests.verifyWithEmail();
 //tests.insertTokenUsername();
 //tests.insertTokenEmail();
 //tests.verifyRegWithUsername();
 //tests.verifyRegWithEmail();
-//tests.gettingUsernameByToken();
+tests.gettingUsernameByToken();
 //tests.removingToken();
 //tests.resetPasswordTest();
 //tests.deactivateAccountTest();
@@ -710,5 +708,5 @@ tests.verifyWithEmail();
 //tests.selectingGameMaps();
 //tests.selectingObjectsOnMap();
 //tests.removeOldNotConfirms();
-tests.getAvatarTest();
-tests.changeAvatarTest();
+//tests.getAvatarTest();
+//tests.changeAvatarTest();
