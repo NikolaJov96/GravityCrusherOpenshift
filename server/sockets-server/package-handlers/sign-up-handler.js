@@ -31,13 +31,6 @@ var registrationMailTextFormat =
     Have a nice day.
     `;
 
-// dummy implementation of createNewUser - TO BE REMOVED
-function createNewUser(email, username, hash, salt, confrCode, callback){
-    if (callback != null){
-        callback('Success', email, username, confrCode);
-    }
-}
-
 function generateConfirmationCode(){
     return crypto.randomBytes(16).toString('hex');
 };
