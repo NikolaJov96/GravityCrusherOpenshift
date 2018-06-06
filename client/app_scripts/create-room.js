@@ -47,6 +47,9 @@ submitBtn.onclick = function(){
         errorLabel.innerHTML = 'Chose your opponent';
         logMsg('Opponent name field empti.'); opponent.focus();
     }else{
+        if (map.value === 'Random map'){
+            map.options[1 + Math.floor(Math.random() * (map.length - 1))].selected = 'selected';
+        }
         var createGameRoomPkg = {
             name:roomName.value,
             gamePublic:(gameReach.value === 'Public Game' ? true : false),

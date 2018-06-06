@@ -62,28 +62,9 @@ socket.on('gameRoomsUpdate', function(data){
     logMsg('Game rooms update.');
     if (!('rooms' in data)) attrMissing('rooms', 'gameRoomsUpdate', data);
     else{
-        //noRooms.style.display = 'none';
         rooms = data.rooms;
         drawTable();
     }
-    /*if ('added' in data){
-        for (var room in data.added){
-            // add rows to rooms table
-            logMsg('Room added: ' + room);
-        }
-    }
-    if ('removed' in data){
-        for (var room in data.removed){
-            // remove rows from rooms table
-            logMsg('Room removed: ' + room);
-        }
-    }
-    if ('slotTaken' in data){
-        for (var room in data.slotTaken){
-            // disable Play button
-            logMsg('Room slotTaken: ' + room);
-        }
-    }*/
 });
 
 // send create room request
