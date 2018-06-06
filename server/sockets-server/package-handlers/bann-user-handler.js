@@ -31,21 +31,13 @@ module.exports = function(socket){ return function(data){
                 bannToDate.setHours(bannToDate.getHours() + 1 + bannToDate.getTimezoneOffset());
                 bannToDate.setMinutes(0);
                 bannToDate.setSeconds(0);
-<<<<<<< HEAD
+
                 var toString = bannToDate.toLocaleTimeString().replace(/T/, ' ').replace(/\..+/, '');
                 socket.emit('bannUserResponse', { status: status, bannTimeEnd: toString });
 
                 if (data.username in serverState.users){
                     serverState.users[data.username].socket.emit('signOutResponse',
-                                                 {'status':status, 'deactivated':false});
-=======
-                var toString = bannToDate.toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                socket.emit('bannUserResponse', { status: status, bannTimeEnd: toString });
-
-                if (data.username in serverState.users){
-                    serverState.users[data.username].socket.emit('signOutResponse', 
                                                  {'status':'Success', 'deactivated':false});
->>>>>>> b266f1242374b27ec43b24997e8829c97aac9adf
                 }
 
             }

@@ -38,6 +38,7 @@ StateGame = function(data){
         surrenderBtn.innerHTML = 'surrender';
         surrenderBtn.onclick = function(){
             self.surrender = true;
+            return false;
         };
     }
     

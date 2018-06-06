@@ -25,7 +25,7 @@ StateLoading = function(data){
         surrenderBtn.innerHTML = 'close room';
         surrenderBtn.onclick = function(){
             socket.emit('gameCommand', { close: true });
-            return true;
+            return false;
         };
     }
     
@@ -56,7 +56,7 @@ StateLoading = function(data){
                 surrenderBtn.innerHTML = 'surrender';
                 surrenderBtn.onclick = function(){
                     socket.emit('gameCommand', { surrender: true });
-                    return true;
+                    return false;
                 };
             }
         }
