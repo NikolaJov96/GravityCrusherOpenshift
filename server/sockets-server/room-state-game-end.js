@@ -51,6 +51,11 @@ module.exports = function(gameRoom){
         
         if (!self.room.host && !self.room.join){
             ret.action = 'gameFinished';
+            for (i in self.room.spectators){
+                if (self.room.spectators[i].socket && self.room.spectators[i].page === 'Game'){
+                    self.room.spectators[i].socket.emit('gameState', { redirect: true });
+                }
+            }
             logMsg('Room ' + self.room.name + ' is finished.');
         }
         

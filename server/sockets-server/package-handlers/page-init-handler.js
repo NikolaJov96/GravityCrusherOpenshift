@@ -6,9 +6,10 @@ var db = require('../../sql-server/database-interface.js');
 var fs = require('fs');
 
 module.exports = function(socket){ return function(data) {
-    var genTempUser = function(socket, page){
+    var genTempUser = function(socket, page, response){
         // user name is equal to the token
         var token = require('uuid/v1')(); // generates an unique string
+        response.token = token;
         var name;
         do{ name = 'Guest_' + Math.round(Math.random() * 10000); }while(name in serverState.users);
         var newUser = serverState.addUser(token, name, socket, page, true, false);
@@ -119,10 +120,9 @@ module.exports = function(socket){ return function(data) {
 
     if (!('token' in data) || data.token === ''){
         // gen temp guest user
-        user = genTempUser(socket, data.page);
-        response.token = user.name;
+        user = genTempUser(socket, data.page, response);
         response.status = 'Success';
-        logMsg('Init handler, new temp user, token: ' + user.name);
+        logMsg('Init handler, new temp user, name: ' + user.name);
         genPayload(data, user, response);
     } else {
         logMsg('token: ' + data.token)
@@ -155,9 +155,8 @@ module.exports = function(socket){ return function(data) {
                         genAvatar(data, user, response);
                     } else {
                         // gen temp guest user
-                        user = genTempUser(socket, data.page);
+                        user = genTempUser(socket, data.page, response);
                         response.status = 'Success';
-                        response.token = user.name;
                         logMsg('Init handler, new temp user, token: ' + user.name);
                         genPayload(data, user, response);
                     }
