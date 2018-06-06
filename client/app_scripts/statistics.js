@@ -5,6 +5,7 @@
 var table = document.getElementById('statTable');
 var dropDown = document.getElementById('dropDown');
 var findMeDiv = document.getElementById('findMe');
+var statPage = document.getElementById('statPage');
 
 var columns = [];
 var selectedColumn = '';
@@ -30,6 +31,7 @@ var drawTable = function(rows){
     }
     innerTable += '</tbody>';
     table.innerHTML = innerTable;
+    statPage.innerHTML = (Math.floor((startIndex - 1) / 10) + 1) + '/' + (Math.floor((maxRow - 1) / 10) + 1);
 };
 
 initCallback = function(data){
