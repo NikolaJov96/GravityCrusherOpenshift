@@ -17,6 +17,7 @@ const SERIOUS_BANN_PERIOD = 14; //days
 module.exports = function(socket){ return function(data){
     logMsg('Bann user req: Data: ');
     logMsg(data);
+    socket.user.interaction = true;
 
     var bannToDate = new Date();
 

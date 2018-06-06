@@ -9,6 +9,7 @@ var db = require('../../sql-server/database-interface.js');
 module.exports = function(socket){ return function(data) {
     if (data.img) {
         logMsg('New avatar for the user: ' + socket.user.name);
+        socket.user.interaction = true;
 
         db.getAvatar(socket.user.name, function(status, oldFilename){
             newFilename = uuidv1();
