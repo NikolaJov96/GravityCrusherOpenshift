@@ -455,7 +455,7 @@ tests = {
         var fun = 'selecting statistics';
         var callbackTest = function(exprectedStatus, metric){
             return function(status, rows, maxRow) {
-                //console.log(rows);
+                console.log(rows);
                 if (status === exprectedStatus)
                     console.log('PASS  ' + fun + ': ' + status + ' ' + 'metric:' + metric + '\n');
                 else{
@@ -720,7 +720,7 @@ tests = {
 //tests.resetPasswordTest();
 //tests.deactivateAccountTest();
 //tests.checkUsername();
-//tests.selectingStatistics();
+tests.selectingStatistics();
 //tests.bannUser();
 //tests.insertStatistics();
 //tests.removeOldBannsTest();

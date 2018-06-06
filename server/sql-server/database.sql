@@ -59,7 +59,7 @@ CREATE TABLE `cosmic_object` (
   PRIMARY KEY (`id`),
   KEY `id_map_idx` (`map_id`),
   CONSTRAINT `id_map` FOREIGN KEY (`map_id`) REFERENCES `game_map` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `cosmic_object` (
 
 LOCK TABLES `cosmic_object` WRITE;
 /*!40000 ALTER TABLE `cosmic_object` DISABLE KEYS */;
-INSERT INTO `cosmic_object` VALUES (1,1,30,40,10,15,300),(2,1,20,30,40,5,20),(3,2,20,40,10,15,40),(4,2,30,40,100,150,500),(5,2,80,80,100,150,4000),(6,2,350,350,100,450,500),(7,3,20,40,10,15,300),(8,3,30,50,100,15,100),(9,3,30,40,20,120,200),(10,3,30,400,250,250,350),(11,4,350,450,150,10,800),(12,4,300,400,100,150,200),(13,4,350,450,120,125,350),(14,4,300,400,400,150,3000);
+INSERT INTO `cosmic_object` VALUES (1,1,30,40,10,15,300),(2,1,20,30,40,5,20),(3,1,20,40,10,15,40),(4,2,30,40,100,150,500),(5,2,80,80,100,150,4000),(6,2,350,350,100,450,500),(7,2,20,40,10,15,300),(8,3,30,50,100,15,100),(9,3,30,40,20,120,200),(10,3,30,400,250,250,350),(11,3,350,450,150,10,800),(12,3,300,400,100,150,200);
 /*!40000 ALTER TABLE `cosmic_object` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +84,7 @@ CREATE TABLE `game_map` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `game_map` (
 
 LOCK TABLES `game_map` WRITE;
 /*!40000 ALTER TABLE `game_map` DISABLE KEYS */;
-INSERT INTO `game_map` VALUES (4,'Apolo'),(3,'Galaksija'),(2,'Severnjaca'),(1,'Sirius');
+INSERT INTO `game_map` VALUES (3,'Apolo'),(2,'Galaxy'),(1,'Sirius');
 /*!40000 ALTER TABLE `game_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (1,1,'2018-06-05 08:59:19','aaabbbcccddda'),(2,2,'2018-06-05 08:59:19','aaabbbcccdddb'),(3,3,'2018-06-05 08:59:19','aaabbbcccdddc'),(4,1,'2018-06-05 08:59:19','aaabbbcccdddd'),(5,2,'2018-06-05 08:59:19','aaabbbcccddde'),(6,4,'2018-06-05 08:59:19','aaabbbcccdddf'),(7,5,'2018-06-05 08:59:19','aaabbbcccdddg'),(8,6,'2018-06-05 08:59:19','aaabbbcccdddh'),(9,7,'2018-06-05 08:59:20','aaabbbcccdddi'),(10,4,'2018-06-05 08:59:20','aaabbbcccdddj'),(11,7,'2018-06-05 08:59:20','aaabbbcccdddk'),(12,8,'2018-06-05 08:59:20','aaabbbcccdddl'),(13,9,'2018-06-05 08:59:20','aaabbbcccdddm');
+INSERT INTO `token` VALUES (1,1,'2018-06-06 09:35:03','aaabbbcccddda'),(2,2,'2018-06-06 09:35:03','aaabbbcccdddb'),(3,3,'2018-06-06 09:35:03','aaabbbcccdddc'),(4,1,'2018-06-06 09:35:03','aaabbbcccdddd'),(5,2,'2018-06-06 09:35:03','aaabbbcccddde'),(6,4,'2018-06-06 09:35:04','aaabbbcccdddf'),(7,5,'2018-06-06 09:35:04','aaabbbcccdddg'),(8,6,'2018-06-06 09:35:04','aaabbbcccdddh'),(9,7,'2018-06-06 09:35:04','aaabbbcccdddi'),(10,4,'2018-06-06 09:35:04','aaabbbcccdddj'),(11,7,'2018-06-06 09:35:04','aaabbbcccdddk'),(12,8,'2018-06-06 09:35:04','aaabbbcccdddl'),(13,9,'2018-06-06 09:35:04','aaabbbcccdddm');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +179,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-05 08:59:18','default'),(2,'Andrija','andrija6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-05 08:59:18','default'),(3,'Nikola','nikola6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-05 08:59:18','default'),(4,'Nemanja','nemanja6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-05 08:59:18','default'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-06-05 08:59:18','default'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-06-05 08:59:18','default'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-06-05 08:59:18','default'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-06-05 08:59:18','default'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-06-05 08:59:18','default');
+INSERT INTO `user` VALUES (1,'Filip','filipmandic80@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-06 09:35:02','default'),(2,'Andrija','andrija6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-06 09:35:03','default'),(3,'Nikola','nikola6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-06 09:35:03','default'),(4,'Nemanja','nemanja6@gmail.com','32f5481ff3e97ac727154adf90e7a90acce61ec07a4d8b6d5831b8597acad9c3ed899de42df6953387b3ae24474527ef62ee168b63528624489eeb7556776c25','f62fc60bc4bcbb3436112fe8f2ca11e450e939114b4a93500ec2bbecd825e138ef1eb39cd70e9f69233618e9b69aeccc0a9bc0bdfd362611edf1cd51f77d6f9be31ce333b6bb9a59134a2fe9d9333e04516502619646d3350d40c33ed6a4ac26d41aec1452d893a2a183e2c368f471be09ab53a4ebac84f6d57b6b6f2a898b94','2018-06-06 09:35:03','default'),(5,'Jovan','jovan6@gmail.com','dcdcdcdccdc4dc45d564','12346579898451','2018-06-06 09:35:03','default'),(6,'Jelena','jelena6@gmail.com','dc48d4c9c4d4cd484bbb','abababaababababababababbababaab','2018-06-06 09:35:03','default'),(7,'Milica','milica6@gmail.com','4b84b65b651b556b151','aaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbb','2018-06-06 09:35:03','default'),(8,'Petar','petar6@gmail.com','54f54f4f645f4f4f56','dfdfdfffddffddfdfdfdfdfdfdfdfd','2018-06-06 09:35:03','default'),(9,'Marko','marko6@gmail.com','111111111111111aaaaa111111','fffffffffffffffffffffffffffffff','2018-06-06 09:35:03','default');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +204,7 @@ CREATE TABLE `user_banned` (
 
 LOCK TABLES `user_banned` WRITE;
 /*!40000 ALTER TABLE `user_banned` DISABLE KEYS */;
-INSERT INTO `user_banned` VALUES (5,'2018-06-05 08:59:19'),(8,'2018-06-05 08:59:19');
+INSERT INTO `user_banned` VALUES (5,'2018-06-06 09:35:03'),(8,'2018-06-06 09:35:03');
 /*!40000 ALTER TABLE `user_banned` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +229,7 @@ CREATE TABLE `user_disabled` (
 
 LOCK TABLES `user_disabled` WRITE;
 /*!40000 ALTER TABLE `user_disabled` DISABLE KEYS */;
-INSERT INTO `user_disabled` VALUES (6,'2018-06-05 08:59:19'),(7,'2018-06-05 08:59:19');
+INSERT INTO `user_disabled` VALUES (6,'2018-06-06 09:35:03'),(7,'2018-06-06 09:35:03');
 /*!40000 ALTER TABLE `user_disabled` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,7 +281,7 @@ CREATE TABLE `user_password_reset` (
 
 LOCK TABLES `user_password_reset` WRITE;
 /*!40000 ALTER TABLE `user_password_reset` DISABLE KEYS */;
-INSERT INTO `user_password_reset` VALUES (5,'2018-06-05 08:59:19','jovanresetujesvojusifru'),(6,'2018-06-05 08:59:19','jelenaresetujesvojusifru'),(8,'2018-06-05 08:59:19','petarresetujesvojusifru');
+INSERT INTO `user_password_reset` VALUES (5,'2018-06-06 09:35:03','jovanresetujesvojusifru'),(6,'2018-06-06 09:35:03','jelenaresetujesvojusifru'),(8,'2018-06-06 09:35:03','petarresetujesvojusifru');
 /*!40000 ALTER TABLE `user_password_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,8 +402,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_maps_and_objects`()
 BEGIN
 
 INSERT INTO game_map(name) VALUES ("Sirius");
-INSERT INTO game_map(name) VALUES ("Severnjaca");
-INSERT INTO game_map(name) VALUES ("Galaksija");
+INSERT INTO game_map(name) VALUES ("Galaxy");
 INSERT INTO game_map(name) VALUES ("Apolo");
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
@@ -413,7 +412,7 @@ INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y
 VALUES(1, 20, 30, 40, 5, 20);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(2, 20, 40, 10, 15, 40);
+VALUES(1, 20, 40, 10, 15, 40);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(2, 30, 40, 100, 150, 500);
@@ -425,7 +424,7 @@ INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y
 VALUES(2, 350, 350, 100, 450, 500);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(3, 20, 40, 10, 15, 300);
+VALUES(2, 20, 40, 10, 15, 300);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
 VALUES(3, 30, 50, 100, 15, 100);
@@ -437,16 +436,10 @@ INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y
 VALUES(3, 30, 400, 250, 250, 350);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(4, 350, 450, 150, 10, 800);
+VALUES(3, 350, 450, 150, 10, 800);
 
 INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(4, 300, 400, 100, 150, 200);
-
-INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(4, 350, 450, 120, 125, 350);
-
-INSERT INTO cosmic_object(map_id, position_x, position_y, velocity_x, velocity_y, mass)
-VALUES(4, 300, 400, 400, 150, 3000);
+VALUES(3, 300, 400, 100, 150, 200);
 
 END ;;
 DELIMITER ;
@@ -694,4 +687,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-05 11:00:31
+-- Dump completed on 2018-06-06 11:37:20
