@@ -1,4 +1,4 @@
-2# GravityCrusher
+# GravityCrusher
 GravityCrusher is a two-player space shooter game focused on gravitational
 effects and colorful graphics.
 
