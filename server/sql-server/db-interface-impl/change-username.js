@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for changing username
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -10,7 +11,7 @@ var changeUsernameCallback = function(info) { return function(error, rows, field
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which checks inserts new username failed\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,11 +19,14 @@ var changeUsernameCallback = function(info) { return function(error, rows, field
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
-                if (info.callback) info.callback("Success");
+                if (info.callback) {
+                    updateToken(info.connection, info.id);
+                    info.callback("Success");
+                }
             }
         });
     }
@@ -32,7 +36,7 @@ var newUsernameCheckCallback = function(info) { return function(error, rows, fie
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which checks if newUsername is used failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -40,14 +44,17 @@ var newUsernameCheckCallback = function(info) { return function(error, rows, fie
             info.connection.query(queries.setNewUsername,
                 [info.newUsername, info.id], changeUsernameCallback(info));
         }
-        else if (info.callback) info.callback("UsernameTaken");
+        else if (info.callback) {
+            updateToken(info.connection, info.id);
+            info.callback("UsernameTaken");
+        }
     }
 }}
 
 var oldUsernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if oldUsername is used failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
@@ -55,7 +62,7 @@ var oldUsernameCheckCallback = function(info) { return function(error, rows, fie
             info.connection.beginTransaction(function(error) {
                 if (!!error) {
                     console.log("error: transaction failed to be started!\n");
-                    throw error;
+                    console.log(error);
                 }
                 info.connection.query(queries.searchInUserByUsername,
                     [info.newUsername], newUsernameCheckCallback(info));

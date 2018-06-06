@@ -20,14 +20,25 @@ var database = function() {
     var removingUsernameToken = require('./db-interface-impl/remove-token');
     var resetPasswordModule = require('./db-interface-impl/reset-password');
     var deactivateAccountModule = require('./db-interface-impl/deactivate-account');
-
+    var userCheckModule = require('./db-interface-impl/user-check');
+    var selectingStatisticsForUserModule = require('./db-interface-impl/selecting-statistics-for-user');
+    var selectingStatisticsForPositionModule = require('./db-interface-impl/selecting-statistics-for-position');
+    var insertStatisticsModule = require('./db-interface-impl/insert-statistics-for-player');
+    var bannUserModule = require('./db-interface-impl/bann-user');
+    var removeOldBannsModule = require('./db-interface-impl/remove-old-banns');
+    var removeUnactiveTokensModule = require('./db-interface-impl/delete-unactive-tokens.js');
+    var selectGameMapNamesModule = require('./db-interface-impl/selecting-game-map-names.js');
+    var selectAllObjectsOnMapModule = require('./db-interface-impl/selecting-all-objects-on-map.js');
+    var removeOldNotConfirmedUsersModule = require('./db-interface-impl/remove-old-not-cofirmed-users.js');
+    var getAvatarModule = require('./db-interface-impl/get-avatar');
+    var changeAvatarModule = require('./db-interface-impl/change-avatar');
+    var deleteUnconfirmedUser = require('./db-interface-impl/delete-not-confirmed-user');
     var mysql = require('mysql');
 
-    /*
-    methods = {
-        connection : connectToDB
-    }
-    */
+    var statNamesToColumns = { 'Games Played': 'games_played_count',
+                                'Games Won': 'games_won_count',
+                                'Games Won Percentage': 'win_rate' };
+
 	connectionInfo = require('./db-connection/db-connection-file');
     methods = {
         connection : mysql.createConnection({
@@ -93,7 +104,7 @@ var database = function() {
     }
 
     methods.verifyRegistrationByUsername = function(username, confirmCode, callback) {
-        
+
         verifyingRegByUsername(methods.connection, username, confirmCode, callback);
     }
 
@@ -120,6 +131,71 @@ var database = function() {
     methods.deactivateAccount = function(token, callback) {
 
         deactivateAccountModule(methods.connection, token, callback);
+    }
+
+    methods.checkIfUserExists = function(username, callback) {
+
+        userCheckModule(methods.connection, username, callback);
+    }
+
+    methods.getStatisticsForUser = function(metric, rowCount, username, callback) {
+
+        selectingStatisticsForUserModule(methods.connection, metric, rowCount, username, statNamesToColumns, callback);
+    }
+
+    methods.getStatisticsForPosition = function(metric, rowCount, start, callback) {
+
+        selectingStatisticsForPositionModule(methods.connection, metric, rowCount, start, statNamesToColumns, callback);
+    }
+
+    methods.bannUser = function(username, bannDate, callback) {
+
+        bannUserModule(methods.connection, username, bannDate, callback);
+    }
+
+    methods.insertStatisticsForPlayer = function(username, outcome, callback) {
+
+        insertStatisticsModule(methods.connection, username, outcome, callback);
+    }
+
+    methods.removeOldBanns = function(callback) {
+
+        removeOldBannsModule(methods.connection, callback);
+    }
+
+    methods.removeOldTokens = function(callback) {
+
+        removeUnactiveTokensModule(methods.connection, callback);
+    }
+
+    methods.selectGameMaps = function(callback) {
+
+        selectGameMapNamesModule(methods.connection, callback);
+    }
+
+    methods.selectObjectsOnMap = function(mapName, callback) {
+
+        selectAllObjectsOnMapModule(methods.connection, mapName, callback);
+    }
+
+    methods.removeOldNotConfirmedUsers = function(callback) {
+
+        removeOldNotConfirmedUsersModule(methods.connection, callback);
+    }
+
+    methods.changeAvatar = function(username, filename, callback) {
+
+        changeAvatarModule(methods.connection, username, filename, callback);
+    }
+
+    methods.getAvatar = function(username, callback) {
+
+        getAvatarModule(methods.connection, username, callback);
+    }
+
+    methods.clearUser = function(email, callback) {
+
+        deleteUnconfirmedUser(methods.connection, email, callback);
     }
 
     //-----------------------------------------------------------------------------------------------------------------

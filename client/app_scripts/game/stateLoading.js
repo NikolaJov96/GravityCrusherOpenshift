@@ -1,36 +1,150 @@
 // Owner: Nikola Jovanovic (NikolaJov96)
 
-// Summary: Definitions needed for loading roomState
-// Include before scripts for runing the game and game end
+// Summary: State class representing loading roomState
 
-drawFunctions[0] = function(){
-    // draw welcome message
-    var data = stateData[0];
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBufferObject);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objectShapes.ship.vert), gl.STATIC_DRAW);
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBufferObject);
-	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objectShapes.ship.ind), gl.STATIC_DRAW);
-	
-	var projMatrix = new Float32Array(16);
-	var viewMatrix = new Float32Array(16);
-	var transMatrix = new Float32Array(16);
-	mat4.perspective(projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0);
-	mat4.fromTranslation(transMatrix, [0, 0, 0.0]);
-	mat4.lookAt(viewMatrix, [0, 0, 5], [0, 0, 0], [0, 1, 0]);
-	
-	transMatrix = mat4.mul(transMatrix, viewMatrix, transMatrix);
-	transMatrix = mat4.mul(transMatrix, projMatrix, transMatrix);
-	
-	gl.uniformMatrix4fv(matTransformationUniformLocation, gl.FALSE, transMatrix);
-	
-	gl.drawElements(gl.TRIANGLES, objectShapes.ship.ind.length, gl.UNSIGNED_SHORT, 0);
-};
-
-initFunctions[0] = function(){
-    // buffer initialization
-    var data = stateData[0];
-};
-
-finishFunctions[0] = function(){
-   // free buffers 
+StateLoading = function(data){
+    // state initialization
+    console.log('current state: game loading');
+    self = abstractState();
+    self.role = data.role;
+    self.hostName = data.host;
+    self.hostActive = data.hostActive;
+    self.hostReady = data.hostReady;
+    self.joinName = data.join;
+    self.joinActive = data.joinActive;
+    self.joinReady = data.joinReady;
+    self.counter = data.counter;
+    
+    // init ship shape
+    self.createObject('ship', 'ship', 'ship');
+    self.createObject('shipg', 'ship', 'ship-g');
+    self.createObject('shipr', 'ship', 'ship-r');
+    
+    // UI update
+    if (self.role === 'host'){
+        surrenderBtn.innerHTML = 'close room';
+        surrenderBtn.onclick = function(){
+            socket.emit('gameCommand', { close: true });
+            return false;
+        };
+    }
+    
+    // init projection and view matrices used throughout this roomState
+    mat4.ortho(self.projMatrix, -screen.w / 2.0, screen.w / 2.0, 
+               screen.h / 2.0, -screen.h / 2.0, 0, 1000);
+    mat4.lookAt(self.viewMatrix, [screen.w / 2.0, screen.h / 2.0, 200], 
+                [screen.w / 2.0, screen.h / 2.0, 0], [0, 1, 0]);
+    self.lightSource = new Float32Array([0.0, 0.0, 500.0]);
+    self.ambientColor = new Float32Array([0.5, 0.5, 0.5]);
+    self.directedColor = new Float32Array([0.5, 0.5, 0.5]);
+    
+    self.handleStatePackage = function(data){
+        if ('redirect' in data) window.location = 'index';
+            
+        else if (!('hostActive' in data)) attrMissing('hostActive', 'gameState', data);
+        else if (!('hostReady' in data)) attrMissing('hostReady', 'gameState', data);
+        else if (!('joinActive' in data)) attrMissing('joinActive', 'gameState', data);
+        else if (!('joinReady' in data)) attrMissing('joinReady', 'gameState', data);
+        else{
+            self.hostActive = data.hostActive;
+            self.hostReady = data.hostReady;
+            self.joinActive = data.joinActive;
+            self.joinReady = data.joinReady;
+            self.counter = data.counter;
+            
+            if (self.joinActive && self.role !== 'spec'){
+                surrenderBtn.innerHTML = 'surrender';
+                surrenderBtn.onclick = function(){
+                    socket.emit('gameCommand', { surrender: true });
+                    return false;
+                };
+            }
+        }
+    };
+    
+    self.draw = function(){
+        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+        
+        // draw host ship
+        mat4.fromTranslation(self.tranMatrix, [screen.w * 0.25, screen.h * 0.25, 0.0]);
+        mat4.invert(self.normMatrix, self.tranMatrix);
+        mat4.transpose(self.normMatrix, self.normMatrix);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
+        if (self.role === 'join') self.objs.shipr.draw();
+        else self.objs.shipg.draw();
+        
+        // draw host ship active indicatior
+        if (self.hostActive){
+            mat4.fromTranslation(self.tranMatrix, [screen.w * 0.25, screen.h * 0.5, 0.0]);
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
+            self.objs.ship.draw();
+        }
+        
+        // draw host ship ready indicatior
+        if (self.hostReady){
+            mat4.fromTranslation(self.tranMatrix, [screen.w * 0.25, screen.h * 0.75, 0.0]);
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
+            self.objs.ship.draw();
+        }
+        
+        // draw join ship
+        mat4.fromTranslation(self.tranMatrix, [screen.w * 0.75, screen.h * 0.25, 0.0]);
+        mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
+        mat4.invert(self.normMatrix, self.tranMatrix);
+        mat4.transpose(self.normMatrix, self.normMatrix);
+        mat4.scale(self.tranMatrix, self.tranMatrix, [0.5, 0.5, 0.5]);
+        if (self.role === 'join') self.objs.shipg.draw();
+        else self.objs.shipr.draw();
+        
+        // draw join ship active indicator
+        if (self.joinActive){
+            mat4.fromTranslation(self.tranMatrix, [screen.w * 0.75, screen.h * 0.5, 0.0]);
+            mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
+            self.objs.ship.draw();
+        }
+        
+        // draw join ship ready indicator
+        if (self.joinReady){
+            mat4.fromTranslation(self.tranMatrix, [screen.w * 0.75, screen.h * 0.75, 0.0]);
+            mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI, [0.0, 0.0, 1.0]);
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [0.4, 0.4, 0.4]);
+            self.objs.ship.draw();
+        }
+        
+        // draw counter
+        for (var i = 1; i < self.counter; i++){
+            mat4.fromTranslation(self.tranMatrix, [screen.w * 0.5, screen.h * (i + 1) / 12.0, 0.0]);
+            mat4.rotate(self.tranMatrix, self.tranMatrix, Math.PI * 1.5, [0.0, 0.0, 1.0]);
+            mat4.invert(self.normMatrix, self.tranMatrix);
+            mat4.transpose(self.normMatrix, self.normMatrix);
+            mat4.scale(self.tranMatrix, self.tranMatrix, [0.2, 0.2, 0.2]);
+            self.objs.ship.draw();
+        }
+    };
+    
+    self.onKeyPress = function(event){
+        // on space pressed change ready status
+        if (event.key === ' '){
+            if (self.role === 'host') socket.emit('gameCommand', { ready: (self.hostReady ? false : true) });
+            else if (self.role === 'join') socket.emit('gameCommand', { ready: (self.joinReady ? false : true) });
+            else logMsg('Undefined role: ' + self.role);
+        }
+    };
+    
+    var superFinish = self.finish;
+    self.finish = function(){ 
+        logMsg('loading state finished');
+        superFinish();
+    };
+    
+    return self;
 };

@@ -5,12 +5,12 @@
 var queries = require('./queries');
 
 const RESULT = 0;
-
+const TOKEN_LIFETIME = 14;
 var deleteDisabledUserCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which reactivate user failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,7 +18,7 @@ var deleteDisabledUserCallback = function(info) { return function(error, rows, f
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
@@ -33,7 +33,7 @@ var checkedIfUserDisabledCallback = function(info) { return function(error, rows
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which inserts new token failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -45,7 +45,7 @@ var checkedIfUserDisabledCallback = function(info) { return function(error, rows
                 if (!!error) {
                     info.connection.rollback(function() {
                         console.log("error: transaction could not be commited, transaction rollback!\n");
-                        throw error;
+                        console.log(error);
                     });
                 }
                 else {
@@ -60,7 +60,7 @@ var insertTokenCallback = function(info) { return function(error, rows, fields) 
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which checks if user was disabled failed!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -71,18 +71,20 @@ var insertTokenCallback = function(info) { return function(error, rows, fields) 
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which checks if username exists failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
             info.id = rows[RESULT].id;
+            var date = new Date();
+            date.setDate(date.getDate() + TOKEN_LIFETIME);
             info.connection.beginTransaction(function(error) {
                 if (!!error) {
                     console.log("error: transaction failed to be started!\n");
-                    throw error;
+                    console.log(error);
                 }
                 info.connection.query(queries.insertNewToken,
-                    [info.id, info.tokenCode], insertTokenCallback(info));
+                    [info.id, info.tokenCode, date], insertTokenCallback(info));
             });
         }
         else if (info.callback) info.callback("UserNotRegistered", false);

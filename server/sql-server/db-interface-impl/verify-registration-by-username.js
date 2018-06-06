@@ -3,6 +3,7 @@
 // Summary: Functions and callbacks for verifying registration with username
 
 var queries = require('./queries');
+var updateToken = require('./token-updating-submodule');
 
 const RESULT = 0;
 
@@ -10,7 +11,7 @@ var insertIntoStatisticsCallback = function(info) { return function(error, rows,
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which insertes user into statistics table failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else {
@@ -18,10 +19,11 @@ var insertIntoStatisticsCallback = function(info) { return function(error, rows,
             if (!!error) {
                 info.connection.rollback(function() {
                     console.log("error: transaction could not be commited, transaction rollback!\n");
-                    throw error;
+                    console.log(error);
                 });
             }
             else {
+                updateToken(info.connection, info.id);
                 if (info.callback) info.callback("Success");
             }
         });
@@ -32,7 +34,7 @@ var deleteFromUserNotConfirmedCallback = function(info) { return function(error,
     if (!!error) {
         info.connection.rollback(function() {
             console.log("error: query which deletes user from not confirmed table failed, transaction rollback!\n");
-            throw error;
+            console.log(error);
         });
     }
     else info.connection.query(queries.insertUserInStatistics, [info.id], insertIntoStatisticsCallback(info));
@@ -41,7 +43,7 @@ var deleteFromUserNotConfirmedCallback = function(info) { return function(error,
 var userCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which searches if user not found failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {
@@ -49,7 +51,7 @@ var userCheckCallback = function(info) { return function(error, rows, fields) {
                 info.connection.beginTransaction(function(error) {
                     if (!!error) {
                         console.log("error: transaction failed to be started!\n");
-                        throw error;
+                        console.log(error);
                     }
                     info.connection.query(queries.deleteFromUserNotConfirmed, [info.id],
                         deleteFromUserNotConfirmedCallback(info));
@@ -64,7 +66,7 @@ var userCheckCallback = function(info) { return function(error, rows, fields) {
 var usernameCheckCallback = function(info) { return function(error, rows, fields) {
     if (!!error) {
         console.log("error: query which search for username failed!\n");
-        throw error;
+        console.log(error);
     }
     else {
         if (!!rows.length) {

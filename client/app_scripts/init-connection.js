@@ -59,7 +59,12 @@ var colorPassword = function(field){
 var signedIn = false;
 var username = '';
 var debugMode = true;
+var avatar = null;
+var admin = false;
 var initCallback = null;
+var initCallbackData = null;
+var universalCallback = null;
+var callUniversalCallback = false;
 
 // request socket connection
 var socket = io('localhost:8001');
@@ -93,16 +98,15 @@ var logMsg = function(msg){
 // missing attribute log message
 var attrMissing = function(attr, pack, data){
     if (debugMode){
-        console.log('Attribute "' + attr + '" missing from package "' +
-                    pack + '", data contents:');
-        console.log(data);
+        logMsg('Attribute "' + attr + '" missing from package "' + pack + '", data contents:');
+        logMsg(data);
     }
 };
 
 // when connection is established send init package
 socket.on('connect', function(){
     var pageInitPkg = {
-        'page':document.title,
+        'page':pageName,
         'token':getCookie('token')
     };
     socket.emit('pageInit', pageInitPkg);
@@ -117,8 +121,46 @@ socket.on('pageInitResponse', function(data){
     else attrMissing('username', 'pageInitResponse', data);
     if ('debugMode' in data) debugMode = data.debugMode;
     else attrMissing('debugMode', 'pageInitResponse', data);
+    if ('avatarFile' in data) avatar = data.avatarFile;
+    else attrMissing('avatarFile', 'pageInitResponse', data);
+    if ('admin' in data) admin = data.admin;
+    else attrMissing('admin', 'pageInitResponse', data);
     logMsg('Page init response received.');
-    logMsg('Sign in status: ' + data.signedIn);
-    logMsg('Username: ' + data.username);
-    if (initCallback) initCallback();
+    logMsg('Sign in status: ' + data.signedIn + '  Admin: ' + data.admin + '  Username:  ' + data.username);
+    if (!signedIn){
+        if (data.token){
+            setCookie('token', data.token, 10);
+            logMsg('Temp access gained.');
+        }else{
+            setCookie('token', '', 0);
+            logMsg('Login denied, token deleted.');
+        }
+    }else{
+        // extend token time
+        setCookie('token', getCookie('token'), 10);
+    }
+    if (initCallback){
+        logMsg('Calling init callback.');
+        initCallback(data);
+    }else{ 
+        logMsg('Caching init callback data.'); 
+        initCallbackData = data;
+    }
+    if (universalCallback){
+        universalCallback();
+    }else{
+        callUniversalCallback = true;
+    }
+});
+
+// sign out response callback
+socket.on('signOutResponse', function(data){
+    if (!('status' in data)) attrMissing('status', 'updateAccountResponse', data);
+    
+    if (data.status === 'Success'){ 
+        logMsg('On signOutResponse - success'); 
+        setCookie('token', '', 0);
+        window.location = '/'; 
+    }else if (data.status === 'TokenNoMatch') logMsg('On signOutResponse - invalid token');
+    else logMsg('On signOutResponse - unknown error: ' + data.status);
 });
