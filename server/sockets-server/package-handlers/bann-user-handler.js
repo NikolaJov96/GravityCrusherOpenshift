@@ -4,6 +4,8 @@
 
 var db = require('../../sql-server/database-interface.js');
 
+//TODO: different bann periods
+
 const SMALL_BANN = 0;
 const MEDIUM_BANN = 1;
 const SERIOUS_BANN = 2;
@@ -31,6 +33,12 @@ module.exports = function(socket){ return function(data){
                 bannToDate.setSeconds(0);
                 var toString = rows[RESULT].bann_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
                 socket.emit('bannUserResponse', { status: status, bannTimeEnd: toString });
+
+                if (data.username in serverState.users){
+                    serverState.users[data.username].socket.emit('signOutResponse', 
+                                                 {'status':status, 'deactivated':false});
+                }
+
             }
         }(socket, data));
     }

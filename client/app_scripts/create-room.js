@@ -97,5 +97,8 @@ socket.on('createGameRoomResponse', function(data){
     }else if (data.status === 'AlreadyInGame'){
         errorLabel.innerHTML = 'Already in the game';
         logMsg('On createGameRoomResponse - user is already in the game');
+    }else if (data.status === 'RoomNameTaken'){
+        errorLabel.innerHTML = 'Room name is already taken';
+        logMsg('On createGameRoomResponse - room name taken');
     }else logMsg('On createGameRoomResponse - unknown error: ' + data.status);
 });
