@@ -1,5 +1,15 @@
 # GravityCrusher
-Online multiplayer space game, also a University project.
+GravityCrusher is a two-player space shooter game focused on gravitational
+effects and colorful graphics.
+
+This project is also a team assignment on a Software Engineering Department's 3rd year course called *Principles of Software Engineering*, at the School of Electrical Engineering from University of Belgrade.
+
+## Features
+* Users can sign up for user accounts and become registered players
+* Everyone can create/join game rooms and play the game
+* Registered players are ranked on various scoreboards!
+* Users can join playing rooms as spectators and watch an ongoing game
+* Players and spectators can chat while the game is on!
 
 ## Requirements
 * **Node.js** runtime environment with the following Node.js JavaScript packages
@@ -31,12 +41,18 @@ packages using **npm** package manager:
 npm install express socket.io nodemailer mysql uuid
 ```
 
-5. Finally, run the server using the following command:
+5. Some configuration files are not in the repository because they contain
+information such as usernames or passwords for an email or database account,
+but the are required in order to properly run the server. Examples of how
+these files must look like and where they must be placed in the project
+directory tree can be found in the `examples` directory.
+
+6. Finally, run the server using the following command:
 ```
 node app
 ```
 
 ## Documentation
-All available documentation (description, use cases, data model etc.) can be found
-under the doc/ directory tree.
+All available documentation (description, use cases, data model etc) can be found
+under the `doc` directory tree.
 
