@@ -28,14 +28,14 @@ module.exports = function(socket){ return function(data){
     if (socket.user.admin) {
         db.bannUser(data.username, bannToDate, function(socket, data) { return function(status, bannDate) {
 
-                bannToDate.setHours(bannToDate.getHours() + 1);
+                bannToDate.setHours(bannToDate.getHours() + 1 + bannToDate.getTimezoneOffset());
                 bannToDate.setMinutes(0);
                 bannToDate.setSeconds(0);
-                var toString = rows[RESULT].bann_date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var toString = bannToDate.toLocaleTimeString().replace(/T/, ' ').replace(/\..+/, '');
                 socket.emit('bannUserResponse', { status: status, bannTimeEnd: toString });
 
                 if (data.username in serverState.users){
-                    serverState.users[data.username].socket.emit('signOutResponse', 
+                    serverState.users[data.username].socket.emit('signOutResponse',
                                                  {'status':status, 'deactivated':false});
                 }
 
