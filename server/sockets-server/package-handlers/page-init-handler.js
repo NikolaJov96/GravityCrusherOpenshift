@@ -9,7 +9,9 @@ module.exports = function(socket){ return function(data) {
     var genTempUser = function(socket, page){
         // user name is equal to the token
         var token = require('uuid/v1')(); // generates an unique string
-        var newUser = serverState.addUser(token, token, socket, page, true, false);
+        var name;
+        do{ name = 'Guest_' + Math.round(Math.random() * 10000); }while(name in serverState.users);
+        var newUser = serverState.addUser(token, name, socket, page, true, false);
         return newUser;
     };
     

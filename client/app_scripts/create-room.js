@@ -28,6 +28,7 @@ initCallback = function(data){
                 str += '<option>' + data.payload.maps[i].name + '</option>';
             }
             map.innerHTML = str;
+            roomName.value = 'Galaxy_' + Math.round(Math.random() * 10000);
         }
     }
 };

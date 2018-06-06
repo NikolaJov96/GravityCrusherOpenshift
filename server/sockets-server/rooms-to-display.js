@@ -9,8 +9,7 @@ module.exports = function(user){
         if (serverState.gameRooms[i].containsUserBind(user)){
             rooms.push({
                 name: serverState.gameRooms[i].name,
-                host: (!serverState.gameRooms[i].host || serverState.gameRooms[i].host.isGuest ?
-                       'Guest' : serverState.gameRooms[i].hostName),
+                host: serverState.gameRooms[i].hostName,
                 map: serverState.gameRooms[i].map,
                 canPlay: true,
                 canWatch: false
@@ -24,8 +23,7 @@ module.exports = function(user){
             (serverState.gameRooms[i].gamePublic && !serverState.gameRooms[i].join)){
             rooms.push({
                 name: serverState.gameRooms[i].name,
-                host: (!serverState.gameRooms[i].host || serverState.gameRooms[i].host.isGuest ?
-                       'Guest' : serverState.gameRooms[i].hostName),
+                host: serverState.gameRooms[i].hostName,
                 map: serverState.gameRooms[i].map,
                 canPlay: ((serverState.gameRooms[i].join || !serverState.gameRooms[i].gamePublic) ? false : true),
                 canWatch: (serverState.gameRooms[i].roomPublic ? true : false)
