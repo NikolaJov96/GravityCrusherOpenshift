@@ -27,8 +27,12 @@ This project is also a team assignment on a Software Engineering Department's 3r
 1. To install **Node.js**, visit the [download](https://nodejs.org/en/download/)
    page of the **Node.js** project and choose the appropriate download option
    for your operating system.
+2. Clone the repository in the desired directory:
+```
+git clone https://github.com/NikolaJov96/GravityCrusher
+```
 
-2. Make sure you have an instance of MySQL Server running on the server machine.
+3. Make sure you have an instance of MySQL Server running on the server machine.
 In order to properly run the server, you need to execute a self-contained SQL script which will
 create and populate a database. The script is located inside the `server/sql-server`
 directory. One way of doing this would be from inside MySQL Workbench by selecting
@@ -37,11 +41,6 @@ the following option:
 Server -> Data Import -> Import from Disk -> Import from Self-Contained File
 ```
 Select the previously mentioned SQL script and click on the Start Import button.
-
-3. Clone the repository in the desired directory:
-```
-git clone https://github.com/NikolaJov96/GravityCrusher
-```
 
 4. In the root directory of the **GravityCrusher** project install the required
 packages using **npm** package manager:
