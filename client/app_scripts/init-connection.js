@@ -67,7 +67,7 @@ var universalCallback = null;
 var callUniversalCallback = false;
 
 // request socket connection
-var socket = io(OPENSHIFT_NODEJS_IP + ':8001');
+var socket = io(process.env.OPENSHIFT_NODEJS_IP + ':8001');
 
 // setter for specific cookie
 var setCookie = function(name, value, days){
