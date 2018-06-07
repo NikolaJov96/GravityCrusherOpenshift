@@ -2,7 +2,7 @@
   "name": "gravitycrusher",
   "version": "1.0.0",
   "description": "multiplayer web game",
-  "main": "app.js",
+  "main": "start.js",
   "directories": {
     "doc": "doc"
   },
