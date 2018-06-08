@@ -11,7 +11,7 @@
 
 
 var databaseConnectionInfo = {
-    host: 'localhost',
+    host: 'mysql://psi:3306/',
     user: 'root',
     password: '1234',
     database: 'psi'
