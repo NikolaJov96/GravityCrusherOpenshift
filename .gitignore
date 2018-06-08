@@ -9,8 +9,8 @@ doc/**/*.toc
 *.swp
 
 # Ignore configuration files containing private information.
-server/sockets-server/email-service-conf.js
-server/sql-server/db-connection/db-connection-file.js
+!server/sockets-server/email-service-conf.js
+!server/sql-server/db-connection/db-connection-file.js
 
 # Ignore avatar (png) files
 server/sockets-server/avatars/*.png
