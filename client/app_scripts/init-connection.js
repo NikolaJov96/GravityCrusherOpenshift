@@ -67,7 +67,7 @@ var universalCallback = null;
 var callUniversalCallback = false;
 
 // request socket connection
-var socket = io('http://gravity-crusher-psi.193b.starter-ca-central-1.openshiftapps.com/:8001');
+var socket = io('http://gravity-crusher-psi.193b.starter-ca-central-1.openshiftapps.com:8001');
 
 // setter for specific cookie
 var setCookie = function(name, value, days){
